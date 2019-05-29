@@ -1,0 +1,40 @@
+{
+    "type": "record",
+    "namespace": "no.nav.personbruker.dittnav.skjema",
+    "name": "Oppgave",
+    "fields": [
+        {
+            "name": "produsent",
+            "type": "string"
+        },
+        {
+            "name": "tidspunkt",
+            "type": "long",
+            "logicalType": "timestamp-millis"
+        },
+        {
+            "name": "aktorId",
+            "type": "string"
+        },
+        {
+            "name": "eventId",
+            "type": "string"
+        },
+        {
+            "name": "dokumentId",
+            "type": "string"
+        },
+        {
+            "name": "tekst",
+            "type": "string"
+        },
+        {
+            "name": "link",
+            "type": "string"
+        },
+        {
+            "name": "sikkerhetsniva",
+            "type": "int"
+        }
+    ]
+}
