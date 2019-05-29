@@ -1,6 +1,6 @@
-# DittNAV event schema
+# DittNAV event schemas
 
-Skjemaer for eventer brukt på DittNAV sine Kafka-topics.
+Skjemaer for DittNAV sine Kafka-topics, og brukes for å sende notifikasjoner til DittNAV som kafka-events.
 
 # Kom i gang
 
