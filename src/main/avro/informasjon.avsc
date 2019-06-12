@@ -1,6 +1,6 @@
 {
     "type": "record",
-    "namespace": "no.nav.personbruker.dittnav.skjema",
+    "namespace": "no.nav.personbruker.dittnav-event-schemas",
     "name": "Informasjon",
     "fields": [
         {
