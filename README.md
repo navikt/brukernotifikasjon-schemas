@@ -1,3 +1,7 @@
+[![CircleCI](https://circleci.com/gh/navikt/dittnav-event-schemas.svg?style=svg)](https://circleci.com/gh/navikt/dittnav-event-schemas)
+
+[![Published on Maven](https://img.shields.io/maven-metadata/v/http/central.maven.org/maven2/no/nav/personbruker/dittnav/event-schemas/maven-metadata.xml.svg)](http://central.maven.org/maven2/no/nav/personbruker/dittnav/event-schemas/)
+
 # DittNAV event schemas
 
 Skjemaer for DittNAV sine Kafka-topics, og brukes for å sende notifikasjoner til DittNAV som kafka-events.
