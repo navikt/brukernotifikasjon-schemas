@@ -12,6 +12,13 @@ Generering av typer basert på skjemaene:
 
 1. `mvn clean install`
 
+## For å gjøre en release
+
+1) Kjør `mvn release:prepare` lokalt på utviklermaskinen. Du blir bedt om å oppgi et nytt versjonsnummer.
+   Kommandoen vil da opprette nye commits og git tags for deg, og pushe disse automatisk.
+2) Når denne kommandoen er ferdig, kan du nullstille arbeidsområdet; `git add --all && git reset --hard`.
+
+
 # Henvendelser
 
 Spørsmål knyttet til koden eller prosjektet kan rettes mot https://github.com/orgs/navikt/teams/personbruker
