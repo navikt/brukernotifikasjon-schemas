@@ -4,7 +4,7 @@
 
 # Brukernotifikasjon-schemas
 
-Skjemaer for brukernotifikasjon-Kafka-topic-ene som bla DittNAV bruker for å vise notifikasjoner til sluttbrukere.
+Avro-skjemaer for brukernotifikasjon-Kafka-topic-ene som bla DittNAV bruker for å vise notifikasjoner til sluttbrukere.
 
 # Kom i gang
 
