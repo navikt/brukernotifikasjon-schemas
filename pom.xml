@@ -2,14 +2,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>no.nav.personbruker.dittnav</groupId>
-    <artifactId>event-schemas</artifactId>
+    <groupId>no.nav</groupId>
+    <artifactId>brukernotifikasjon-schemas</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>dittnav-event-schemas</name>
+    <name>brukernotifikasjon-schemas</name>
     <description>Definitions for events in Ditt NAV</description>
-    <url>https://github.com/navikt/dittnav-event-schemas</url>
+    <url>https://github.com/navikt/brukernotifikasjon-schemas</url>
 
     <licenses>
         <license>
@@ -27,9 +27,9 @@
     </developers>
 
     <scm>
-        <developerConnection>scm:git:git@github.com:navikt/dittnav-event-schemas.git</developerConnection>
-        <connection>scm:git:git@github.com:navikt/dittnav-event-schemas.git</connection>
-        <url>https://github.com/navikt/dittnav-event-schemas</url>
+        <developerConnection>scm:git:git@github.com:navikt/brukernotifikasjon-schemas.git</developerConnection>
+        <connection>scm:git:git@github.com:navikt/brukernotifikasjon-schemas.git</connection>
+        <url>https://github.com/navikt/brukernotifikasjon-schemas</url>
         <tag>HEAD</tag>
     </scm>
 

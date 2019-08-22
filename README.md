@@ -1,10 +1,10 @@
-[![CircleCI](https://circleci.com/gh/navikt/dittnav-event-schemas.svg?style=svg)](https://circleci.com/gh/navikt/dittnav-event-schemas)
+[![CircleCI](https://circleci.com/gh/navikt/brukernotifikasjon-schemas.svg?style=svg)](https://circleci.com/gh/navikt/brukernotifikasjon-schemas)
 
-[![Published on Maven](https://img.shields.io/maven-metadata/v/http/central.maven.org/maven2/no/nav/personbruker/dittnav/event-schemas/maven-metadata.xml.svg)](http://central.maven.org/maven2/no/nav/personbruker/dittnav/event-schemas/)
+[![Published on Maven](https://img.shields.io/maven-metadata/v/http/central.maven.org/maven2/no/nav/brukernotifikasjon-schemas/maven-metadata.xml.svg)](http://central.maven.org/maven2/no/nav/brukernotifikasjon-schemas/)
 
-# DittNAV event schemas
+# Brukernotifikasjon-schemas
 
-Skjemaer for DittNAV sine Kafka-topics, og brukes for å sende notifikasjoner til DittNAV som kafka-events.
+Skjemaer for brukernotifikasjon-Kafka-topic-ene som bla DittNAV bruker for å vise notifikasjoner til sluttbrukere.
 
 # Kom i gang
 
