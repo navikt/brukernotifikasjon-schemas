@@ -33,7 +33,7 @@
             "type": "string"
         },
         {
-            "name": "sikkerhetsniva",
+            "name": "sikkerhetsnivaa",
             "type": "int"
         }
     ]
