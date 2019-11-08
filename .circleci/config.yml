@@ -87,12 +87,14 @@ workflows:
     jobs:
       - build
       - deploy:
+          context: Maven Central Release
           requires:
             - build
           filters:
             branches:
               only: master
       - deploy-snapshot:
+          context: Maven Central Release
           requires:
             - build
           filters:
