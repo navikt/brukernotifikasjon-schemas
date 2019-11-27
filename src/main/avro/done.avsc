@@ -13,7 +13,7 @@
             "logicalType": "timestamp-millis"
         },
         {
-            "name": "aktorId",
+            "name": "fodselsnummer",
             "type": "string"
         },
         {
@@ -21,7 +21,7 @@
             "type": "string"
         },
         {
-            "name": "dokumentId",
+            "name": "grupperingsId",
             "type": "string"
         }
     ]
