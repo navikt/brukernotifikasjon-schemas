@@ -4,20 +4,12 @@
     "name": "Done",
     "fields": [
         {
-            "name": "produsent",
-            "type": "string"
-        },
-        {
             "name": "tidspunkt",
             "type": "long",
             "logicalType": "timestamp-millis"
         },
         {
             "name": "fodselsnummer",
-            "type": "string"
-        },
-        {
-            "name": "eventId",
             "type": "string"
         },
         {
