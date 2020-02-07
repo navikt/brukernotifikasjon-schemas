@@ -4,20 +4,17 @@
     "name": "Beskjed",
     "fields": [
         {
-            "name": "produsent",
-            "type": "string"
-        },
-        {
             "name": "tidspunkt",
             "type": "long",
             "logicalType": "timestamp-millis"
         },
         {
-            "name": "fodselsnummer",
-            "type": "string"
+            "name": "synligFremTil",
+            "type": "long",
+            "logicalType": "timestamp-millis"
         },
         {
-            "name": "eventId",
+            "name": "fodselsnummer",
             "type": "string"
         },
         {
@@ -34,7 +31,8 @@
         },
         {
             "name": "sikkerhetsnivaa",
-            "type": "int"
+            "type": "int",
+            "default": 4
         }
     ]
 }

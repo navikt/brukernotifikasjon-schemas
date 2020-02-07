@@ -4,20 +4,12 @@
     "name": "Innboks",
     "fields": [
         {
-            "name": "produsent",
-            "type": "string"
-        },
-        {
             "name": "tidspunkt",
             "type": "long",
             "logicalType": "timestamp-millis"
         },
         {
             "name": "fodselsnummer",
-            "type": "string"
-        },
-        {
-            "name": "eventId",
             "type": "string"
         },
         {
@@ -34,7 +26,8 @@
         },
         {
             "name": "sikkerhetsnivaa",
-            "type": "int"
+            "type": "int",
+            "default": 4
         }
     ]
 }
