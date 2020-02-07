@@ -10,8 +10,9 @@
         },
         {
             "name": "synligFremTil",
-            "type": "long",
-            "logicalType": "timestamp-millis"
+            "type": ["null", "long"],
+            "logicalType": "timestamp-millis",
+            "default": null
         },
         {
             "name": "fodselsnummer",
