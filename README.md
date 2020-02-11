@@ -14,19 +14,19 @@ Avro-skjemaer for brukernotifikasjon-Kafka-topic-ene som bla DittNAV bruker for 
 Navn på systembruker som har produsert eventet.
 
 #### eventId 
-Den unike identifikatoren per event, og den må være unik innen for hver `systembruker` (produsent) . Det er denne `eventID`-en som benyttes for å deaktivere eventer som er utført. Dette gjøres ved å sende et event av typen done , med referanse til det eventet som ikke skal vises på DittNAV lengre.
+Den unike identifikatoren per event, og den må være unik innen for hver `systembruker` (produsent). Det er denne `eventID`-en som benyttes for å deaktivere eventer som er utført. Dette gjøres ved å sende et event av typen done, med referanse til det eventet som ikke skal vises på DittNAV lengre.
 
 
 
 ### Kafka events 
-###Oppgave, Beskjed og Innboks
+### Oppgave, Beskjed og Innboks
 Beskrivelse av feltene som er felles for disse tre eventtypene.
 
 #### tidspunkt
 Et tidspunkt som noe skjedde, f.eks. da saksbehandlingen av en søknad var ferdig.
 
 #### fodselsnummer
-Fødselsnummeret til brukeren som eventet er til.
+Fødselsnummeret til brukeren som eventet tilhører.
 
 #### grupperingsId
 Feltet grupperingsId brukes for å kunne samle alle eventer som hører til en sak, søknad eller et dokument. Dette er typisk en saksId, søknadsId eller dokumentId, men dere velger selv hvilken verdi dere putter der. Men det er viktig at det er samme verdi for alle eventer som skal gruppers samme. Typisk bruke av dette som vi ser for oss er oppbygging av tidslinjer.
@@ -42,7 +42,7 @@ Angir sikkerhetsnivået for informasjonen som eventet innholder.
 DittNAV søtter at en bruker er innlogget på nivå 3, hvis denne brukeren har eventer med nivå 4 så vil disse eventene bli "grået ut". Brukeren ser bare hvilken type event dette er, men ikke noe av innholdet. For å se innholdet må brukeren steppe opp til et høyere innloggingsnivå.
 
 #### synligFremTil
-Et tidspunkt på når eventet ikke skal være synlig mer, f.eks beskjeden skal kun være synlig 7dager.
+Et tidspunkt på når eventet ikke skal være synlig mer, f.eks beskjeden skal kun være synlig 7 dager.
 
 
 ### Done
@@ -52,7 +52,7 @@ Beskrivelse av feltene til eventet `done`.
 Et tidspunkt som noe skjedde, f.eks. da saksbehandlingen av en søknad var ferdig.
 
 #### fodselsnummer
-Fødselsnummeret til brukeren som eventet er til.
+Fødselsnummeret til brukeren som eventet tilhører.
 
 #### eventId
 `EventId`-en til eventet som nå ikke skal være aktivt lengre. Eventet med den eventId-en vil ikke dukke opp på forsiden av DittNAV lengre, men vil fortsatt være tilgjengelig i historikken over eventer på DittNAV. 
