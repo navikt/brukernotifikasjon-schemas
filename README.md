@@ -8,14 +8,19 @@ Avro-skjemaer for brukernotifikasjon-Kafka-topic-ene som bla DittNAV bruker for 
 
 # Feltbeskrivelser
 
-### Oppgave, Beskjed og Innboks
-Beskrivelse av feltene som er felles for disse tre eventtypene.
+### Kafka key (Nokkel)
 
-#### produsent
-Navn på systemet eller området som har produsert eventet.
+#### systembruker
+Navn på systembruker som har produsert eventet.
 
 #### eventId 
-Den unike identifikatoren per event, og den må være unik innen for hver `produsent`. Det er denne `eventID`-en som benyttes for å deaktivere eventer som er utført. Dette gjøres ved å sende et event av typen done , med referanse til det eventet som ikke skal vises på DittNAV lengre.
+Den unike identifikatoren per event, og den må være unik innen for hver `systembruker` (produsent) . Det er denne `eventID`-en som benyttes for å deaktivere eventer som er utført. Dette gjøres ved å sende et event av typen done , med referanse til det eventet som ikke skal vises på DittNAV lengre.
+
+
+
+### Kafka events 
+###Oppgave, Beskjed og Innboks
+Beskrivelse av feltene som er felles for disse tre eventtypene.
 
 #### tidspunkt
 Et tidspunkt som noe skjedde, f.eks. da saksbehandlingen av en søknad var ferdig.
@@ -36,10 +41,18 @@ Dette er lenken som blir aktivert i det en bruker trykker på selve eventet. Kan
 Angir sikkerhetsnivået for informasjonen som eventet innholder.
 DittNAV søtter at en bruker er innlogget på nivå 3, hvis denne brukeren har eventer med nivå 4 så vil disse eventene bli "grået ut". Brukeren ser bare hvilken type event dette er, men ikke noe av innholdet. For å se innholdet må brukeren steppe opp til et høyere innloggingsnivå.
 
+#### synligFremTil
+Et tidspunkt på når eventet ikke skal være synlig mer, f.eks beskjeden skal kun være synlig 7dager.
 
 
 ### Done
-Beskrivelse av felter som har en spesiell betydelse innen for eventtypen `done`.
+Beskrivelse av feltene til eventet `done`.
+
+#### tidspunkt
+Et tidspunkt som noe skjedde, f.eks. da saksbehandlingen av en søknad var ferdig.
+
+#### fodselsnummer
+Fødselsnummeret til brukeren som eventet er til.
 
 #### eventId
 `EventId`-en til eventet som nå ikke skal være aktivt lengre. Eventet med den eventId-en vil ikke dukke opp på forsiden av DittNAV lengre, men vil fortsatt være tilgjengelig i historikken over eventer på DittNAV. 
@@ -52,9 +65,19 @@ Dette feltet er med for eventtypen `done` for å sikre at man får med alle even
 ### Statusoppdatering
 TBA
 
-# Kom i gang
+# Kom i gang med DittNAV konsept (pilot)
 
-Generering av typer basert på skjemaene:
+Kom i gang med DittNAV konsept (send brukernotifikasjoner gjennom Kafka)
+1. Lag pull-request for å få tilgang til å produsere og konsumere fra DittNAV sine brukernotifikasjons-topics https://github.com/navikt/brukernotifikasjon-topic-iac
+
+2. Publiser events på Kafka. 
+- Java-typer basert på Avro-skjemaene blir publisert til Maven Central med artifact id: “no.nav:brukernotifikasjon-schemas”.`NB! Ta i bruk versjon 1.2020.02.07-13.16-fa9d319688b1 eller nyere.` 
+- Selve repo-et for skjemaene finnes her: https://github.com/navikt/brukernotifikasjon-schemas/tree/master/src/main/avro . Vi støtter 3 typer events: beskjed, oppgave og done.
+- Husk å send inn med Kafka Key: https://github.com/navikt/brukernotifikasjon-schemas/blob/master/src/main/avro/nokkel.avsc 
+
+Logg inn på DittNav https://www-q1.nav.no/person/dittnav/ for å se brukernotifikasjoner.
+
+# Generering av typer basert på skjemaene
 
 1. `mvn clean install`
 
@@ -70,4 +93,4 @@ Spørsmål knyttet til koden eller prosjektet kan rettes mot https://github.com/
 
 ## For NAV-ansatte
 
-Interne henvendelser kan sendes via Slack i kanalen #team-personbruker.
+Interne henvendelser kan sendes via Slack i kanalene #team-personbruker og #brukernotifikasjon_pilot 
