@@ -42,7 +42,7 @@ Angir sikkerhetsnivået for informasjonen som eventet innholder.
 DittNAV søtter at en bruker er innlogget på nivå 3, hvis denne brukeren har eventer med nivå 4 så vil disse eventene bli "grået ut". Brukeren ser bare hvilken type event dette er, men ikke noe av innholdet. For å se innholdet må brukeren steppe opp til et høyere innloggingsnivå.
 
 #### synligFremTil
-Et tidspunkt på når eventet ikke skal være synlig mer, f.eks beskjeden skal kun være synlig 7 dager.
+Et tidspunkt på når eventet ikke skal være synlig mer, f.eks beskjeden skal kun være synlig 7 dager. SynligFramTil = null -> synlig for alltid, med mindre brukeren selv krysser den ut fra forsiden av DittNAV. 
 
 
 ### Done
@@ -64,18 +64,6 @@ Dette feltet er med for eventtypen `done` for å sikre at man får med alle even
 
 ### Statusoppdatering
 TBA
-
-# Kom i gang med DittNAV konsept (pilot)
-
-Kom i gang med DittNAV konsept (send brukernotifikasjoner gjennom Kafka)
-1. Lag pull-request for å få tilgang til å produsere og konsumere fra DittNAV sine brukernotifikasjons-topics https://github.com/navikt/brukernotifikasjon-topic-iac
-
-2. Publiser events på Kafka. 
-- Java-typer basert på Avro-skjemaene blir publisert til Maven Central med artifact id: “no.nav:brukernotifikasjon-schemas”.`NB! Ta i bruk versjon 1.2020.02.07-13.16-fa9d319688b1 eller nyere.` 
-- Selve repo-et for skjemaene finnes her: https://github.com/navikt/brukernotifikasjon-schemas/tree/master/src/main/avro . Vi støtter 3 typer events: beskjed, oppgave og done.
-- Husk å send inn med Kafka Key: https://github.com/navikt/brukernotifikasjon-schemas/blob/master/src/main/avro/nokkel.avsc 
-
-Logg inn på DittNav https://www-q1.nav.no/person/dittnav/ for å se brukernotifikasjoner.
 
 # Generering av typer basert på skjemaene
 
