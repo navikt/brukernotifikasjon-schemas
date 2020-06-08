@@ -13,12 +13,12 @@ Avro-skjemaer for brukernotifikasjon-Kafka-topic-ene som bla DittNAV bruker for 
 #### systembruker
 Navn på systembruker som har produsert eventet.
 
-#### eventId 
+#### eventId
 Den unike identifikatoren per event, og den må være unik innen for hver `systembruker` (produsent). Det er denne `eventID`-en som benyttes for å deaktivere eventer som er utført. Dette gjøres ved å sende et event av typen done, med referanse til det eventet som ikke skal vises på DittNAV lengre.
 
 
 
-### Kafka events 
+### Kafka events
 ### Oppgave, Beskjed og Innboks
 Beskrivelse av feltene som er felles for disse tre eventtypene.
 
@@ -35,14 +35,14 @@ Feltet grupperingsId brukes for å kunne samle alle eventer som hører til en sa
 Dette er teksten faktisk vises i eventet. Det er ikke noen støtte for å formatere teksten som settes i dette feltet.
 
 #### link
-Dette er lenken som blir aktivert i det en bruker trykker på selve eventet. Kan være en komplett URL inkludert protokoll, f.eks. `https`.
+Dette er lenken som blir aktivert i det en bruker trykker på selve eventet. En lenke må være en komplett URL, inkludert `https` protokoll.
 
 #### sikkerhetsnivaa
 Angir sikkerhetsnivået for informasjonen som eventet innholder.
 DittNAV søtter at en bruker er innlogget på nivå 3, hvis denne brukeren har eventer med nivå 4 så vil disse eventene bli "grået ut". Brukeren ser bare hvilken type event dette er, men ikke noe av innholdet. For å se innholdet må brukeren steppe opp til et høyere innloggingsnivå.
 
 #### synligFremTil
-Et tidspunkt på når eventet ikke skal være synlig mer, f.eks beskjeden skal kun være synlig 7 dager. SynligFramTil = null -> synlig for alltid, med mindre brukeren selv krysser den ut fra forsiden av DittNAV. 
+Et tidspunkt på når eventet ikke skal være synlig mer, f.eks beskjeden skal kun være synlig 7 dager. SynligFramTil = null -> synlig for alltid, med mindre brukeren selv krysser den ut fra forsiden av DittNAV.
 
 
 ### Done
@@ -55,7 +55,7 @@ Et tidspunkt som noe skjedde, f.eks. da saksbehandlingen av en søknad var ferdi
 Fødselsnummeret til brukeren som eventet tilhører.
 
 #### eventId
-`EventId`-en til eventet som nå ikke skal være aktivt lengre. Eventet med den eventId-en vil ikke dukke opp på forsiden av DittNAV lengre, men vil fortsatt være tilgjengelig i historikken over eventer på DittNAV. 
+`EventId`-en til eventet som nå ikke skal være aktivt lengre. Eventet med den eventId-en vil ikke dukke opp på forsiden av DittNAV lengre, men vil fortsatt være tilgjengelig i historikken over eventer på DittNAV.
 
 #### grupperingsId
 Dette feltet er med for eventtypen `done` for å sikre at man får med alle eventer knyttet til en `grupperingsId`, og settet av eventer blir ikke komplett uten å ha med `done`-eventene. Dette er bla viktig for å kunne generere tidslinjer ut i fra eventer.
@@ -81,4 +81,4 @@ Spørsmål knyttet til koden eller prosjektet kan rettes mot https://github.com/
 
 ## For NAV-ansatte
 
-Interne henvendelser kan sendes via Slack i kanalene #team-personbruker og #brukernotifikasjon_pilot 
+Interne henvendelser kan sendes via Slack i kanalene #team-personbruker og #brukernotifikasjon_pilot
