@@ -20,7 +20,7 @@ jobs:
 
   release:
     name: Create Release
-    needs: build
+    needs: build-and-publish-on-master
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
