@@ -1,0 +1,19 @@
+name: Build and deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-and-publish-on-master:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Sjekk ut koden
+        uses: actions/checkout@v2
+
+      - name: Kompiler
+        uses: navikt/pb-common-gh-actions/build@v1_java8
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
