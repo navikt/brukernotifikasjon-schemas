@@ -27,3 +27,6 @@
 hs_err_pid*
 
 target
+
+# Ignore temp files crated when used from dittnav-meta-repo
+.gradle
