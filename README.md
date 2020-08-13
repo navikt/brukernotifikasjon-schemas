@@ -1,6 +1,3 @@
-[![CircleCI](https://circleci.com/gh/navikt/brukernotifikasjon-schemas.svg?style=svg)](https://circleci.com/gh/navikt/brukernotifikasjon-schemas)
-
-[![Published on Maven](https://img.shields.io/maven-metadata/v/http/central.maven.org/maven2/no/nav/brukernotifikasjon-schemas/maven-metadata.xml.svg)](http://central.maven.org/maven2/no/nav/brukernotifikasjon-schemas/)
 
 # Brukernotifikasjon-schemas
 
