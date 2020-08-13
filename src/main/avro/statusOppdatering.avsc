@@ -1,0 +1,42 @@
+{
+    "type": "record",
+    "namespace": "no.nav.brukernotifikasjon.schemas",
+    "name": "StatusOppdatering",
+    "fields": [
+        {
+            "name": "tidspunkt",
+            "type": "long",
+            "logicalType": "timestamp-millis"
+        },
+        {
+            "name": "grupperingsId",
+            "type": "string"
+        },
+        {
+            "name": "link",
+            "type": "string"
+        },
+        {
+            "name": "sikkerhetsnivaa",
+            "type": "int",
+            "default": 4
+        },
+        {
+            "name": "statusGlobal",
+            "type": "string"
+        },
+        {
+            "name": "statusIntern",
+            "type": ["null", "string"],
+            "default": null
+        },
+        {
+            "name": "sakstema",
+            "type": "string"
+        },
+        {
+            "name": "fodselsnummer",
+            "type": "string"
+        }
+    ]
+}
