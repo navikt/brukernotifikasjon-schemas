@@ -28,6 +28,11 @@
             "name": "sikkerhetsnivaa",
             "type": "int",
             "default": 4
+        },
+        {
+            "name": "eksternVarsling",
+            "type": "boolean",
+            "default": false
         }
     ]
 }
