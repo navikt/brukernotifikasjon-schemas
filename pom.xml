@@ -45,7 +45,7 @@
     </distributionManagement>
 
     <properties>
-        <java.version>13</java.version>
+        <java.version>8</java.version>
         <avro.version>1.9.1</avro.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
