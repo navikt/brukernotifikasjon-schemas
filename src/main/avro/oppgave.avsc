@@ -35,9 +35,12 @@
             "default": false
         },
         {
-            "name": "eksternVarslingskanal",
-            "type": ["null", "string"],
-            "default": null
+            "name": "eksterneVarslingskanaler",
+            "type": {
+                "type": "array",
+                "items": "string"
+            },
+            "default": []
         }
     ]
 }
