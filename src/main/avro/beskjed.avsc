@@ -39,14 +39,6 @@
             "name": "eksternVarsling",
             "type": "boolean",
             "default": false
-        },
-        {
-            "name": "eksterneVarslingskanaler",
-            "type": {
-                "type": "array",
-                "items": "string"
-            },
-            "default": []
         }
     ]
 }
