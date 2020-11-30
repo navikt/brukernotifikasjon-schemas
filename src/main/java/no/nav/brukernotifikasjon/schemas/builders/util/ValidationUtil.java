@@ -1,4 +1,6 @@
-package no.nav.brukernotifikasjon.schemas.builders;
+package no.nav.brukernotifikasjon.schemas.builders.util;
+
+import no.nav.brukernotifikasjon.schemas.builders.exception.FieldValidationException;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;

@@ -1,5 +1,6 @@
-package no.nav.brukernotifikasjon.schemas.builders;
+package no.nav.brukernotifikasjon.schemas.builders.util;
 
+import no.nav.brukernotifikasjon.schemas.builders.util.ValidationUtil;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;

@@ -1,4 +1,4 @@
-package no.nav.brukernotifikasjon.schemas.builders;
+package no.nav.brukernotifikasjon.schemas.builders.exception;
 
 import java.util.HashMap;
 import java.util.Map;
