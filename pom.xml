@@ -52,6 +52,7 @@
         <avro.version>1.9.1</avro.version>
         <hamcrest.version>2.2</hamcrest.version>
         <junit.version>5.4.1</junit.version>
+        <ulid.version>8.2.0</ulid.version>
 
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
@@ -218,7 +219,7 @@
         <dependency>
             <groupId>de.huxhorn.sulky</groupId>
             <artifactId>de.huxhorn.sulky.ulid</artifactId>
-            <version>8.2.0</version>
+            <version>${ulid.version}</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
