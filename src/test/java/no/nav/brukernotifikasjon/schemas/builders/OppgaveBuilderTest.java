@@ -37,7 +37,6 @@ class OppgaveBuilderTest {
         assertThat(oppgave.getSikkerhetsnivaa(), is(expectedSikkerhetsnivaa));
         assertThat(oppgave.getLink(), is(expectedLink.toString()));
         assertThat(oppgave.getTekst(), is(expectedTekst));
-        assertThat(oppgave.getTidspunkt(), is(notNullValue()));
         long expectedTidspunktAsUtcLong = expectedTidspunkt.toInstant(ZoneOffset.UTC).toEpochMilli();
         assertThat(oppgave.getTidspunkt(), is(expectedTidspunktAsUtcLong));
     }
