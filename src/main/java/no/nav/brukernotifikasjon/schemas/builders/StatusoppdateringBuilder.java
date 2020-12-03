@@ -60,11 +60,11 @@ public class StatusoppdateringBuilder {
 
     public Statusoppdatering build() {
         return new Statusoppdatering(
-                ValidationUtil.localDateTimeToUtcTimestamp(tidspunkt),
+                ValidationUtil.localDateTimeToUtcTimestamp(tidspunkt, "tidspunkt", true),
                 ValidationUtil.validateNonNullFieldMaxLength(grupperingsId, "grupperingsId", 100),
-                link != null ? link.toString() : null,
+                ValidationUtil.validateLink(link, "link", 200).toString(),
                 ValidationUtil.validateSikkerhetsnivaa(sikkerhetsnivaa),
-                statusGlobal.toString(),
+                ValidationUtil.validateNonNullField(statusGlobal, "statusGlobal").toString(),
                 ValidationUtil.validateNonNullFieldMaxLength(statusIntern, "statusIntern", 100),
                 ValidationUtil.validateNonNullFieldMaxLength(sakstema, "sakstema", 100),
                 ValidationUtil.validateFodselsnummer(fodselsnummer)

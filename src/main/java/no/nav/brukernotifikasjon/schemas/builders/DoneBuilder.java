@@ -28,7 +28,7 @@ public class DoneBuilder {
 
     public Done build() {
         return new Done(
-                ValidationUtil.localDateTimeToUtcTimestamp(tidspunkt),
+                ValidationUtil.localDateTimeToUtcTimestamp(tidspunkt, "tidspunkt", true),
                 ValidationUtil.validateFodselsnummer(fodselsnummer),
                 ValidationUtil.validateNonNullFieldMaxLength(grupperingsId, "grupperingsId", 100)
         );

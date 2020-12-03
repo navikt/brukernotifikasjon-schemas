@@ -6,7 +6,6 @@ import no.nav.brukernotifikasjon.schemas.builders.util.ValidationUtil;
 
 public class NokkelBuilder {
 
-    private ULID eventId;
     private String systembruker;
 
     public NokkelBuilder withSystembruker(String systembruker) {

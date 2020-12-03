@@ -53,12 +53,12 @@ public class BeskjedBuilder {
 
     public Beskjed build() {
         return new Beskjed(
-                ValidationUtil.localDateTimeToUtcTimestamp(tidspunkt),
-                ValidationUtil.localDateTimeToUtcTimestamp(synligFremTil),
+                ValidationUtil.localDateTimeToUtcTimestamp(tidspunkt, "tidspunkt", true),
+                ValidationUtil.localDateTimeToUtcTimestamp(synligFremTil, "synligFremTil", false),
                 ValidationUtil.validateFodselsnummer(fodselsnummer),
                 ValidationUtil.validateNonNullFieldMaxLength(grupperingsId, "grupperingsId", 100),
                 ValidationUtil.validateNonNullFieldMaxLength(tekst, "tekst", 500),
-                link != null ? link.toString() : null,
+                ValidationUtil.validateLink(link, "link", 200).toString(),
                 ValidationUtil.validateSikkerhetsnivaa(sikkerhetsnivaa)
         );
     }

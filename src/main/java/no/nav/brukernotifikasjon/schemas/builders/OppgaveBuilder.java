@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 
 public class OppgaveBuilder {
 
-    // TODO: Sette default-verdier, hvis ikke tilhørende with-metode har blitt brukt for hvert felt.
     private LocalDateTime tidspunkt;
     private String fodselsnummer;
     private String grupperingsId;
@@ -48,11 +47,11 @@ public class OppgaveBuilder {
 
     public Oppgave build() {
         return new Oppgave(
-                ValidationUtil.localDateTimeToUtcTimestamp(tidspunkt),
+                ValidationUtil.localDateTimeToUtcTimestamp(tidspunkt, "tidspunkt", true),
                 ValidationUtil.validateFodselsnummer(fodselsnummer),
                 ValidationUtil.validateNonNullFieldMaxLength(grupperingsId, "grupperingsId", 100),
                 ValidationUtil.validateNonNullFieldMaxLength(tekst, "tekst", 500),
-                link != null ? link.toString() : null,
+                ValidationUtil.validateLink(link, "link", 200).toString(),
                 ValidationUtil.validateSikkerhetsnivaa(sikkerhetsnivaa)
         );
     }

@@ -2,6 +2,7 @@ package no.nav.brukernotifikasjon.schemas.builders.util;
 
 import no.nav.brukernotifikasjon.schemas.builders.exception.FieldValidationException;
 
+import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.regex.Pattern;
@@ -29,28 +30,10 @@ public class ValidationUtil {
         return field;
     }
 
-    public static boolean isPossibleFodselsnummer(String field) {
-        if (isCorrectLengthForFodselsnummer(field)) {
-            return elevenDigits.matcher(field).find();
-
-        } else {
-            return false;
-        }
-    }
-
-    private static boolean isCorrectLengthForFodselsnummer(String field) {
-        return field.length() == 11;
-    }
-
-    public static String validateNonNullFieldMaxLength(String field, String fieldName, int maxLength) {
-        validateNonNullField(field, fieldName);
-        return validateMaxLength(field, fieldName, maxLength);
-    }
-
-    private static String validateMaxLength(String field, String fieldName, int maxLength) {
-        if (field.length() > maxLength) {
-            FieldValidationException fve = new FieldValidationException("Feltet " + fieldName + " kan ikke inneholde mer enn $maxLength tegn.");
-            fve.addContext("rejectedFieldValueLength", field.length());
+    public static <T> T validateNonNullField(T field, String fieldName) {
+        if(field == null) {
+            FieldValidationException fve = new FieldValidationException(fieldName + " var null.");
+            fve.addContext("null", fieldName);
             throw fve;
         }
         return field;
@@ -65,13 +48,51 @@ public class ValidationUtil {
         }
     }
 
-    public static Long localDateTimeToUtcTimestamp(LocalDateTime dataAndTime) {
+    public static Long localDateTimeToUtcTimestamp(LocalDateTime dataAndTime, String fieldName, boolean required) {
         if (dataAndTime != null) {
             return dataAndTime.toInstant(ZoneOffset.UTC).toEpochMilli();
-
         } else {
-            return null;
+            if(required) {
+                throw new FieldValidationException("Feltet " + fieldName + " kan ikke være null.");
+            } else {
+                return null;
+            }
         }
     }
 
+    public static String validateNonNullFieldMaxLength(String field, String fieldName, int maxLength) {
+        validateNonNullField(field, fieldName);
+        return validateMaxLength(field, fieldName, maxLength);
+    }
+
+    public static URL validateLink(URL field, String fieldName, int maxLength) {
+        if(field == null) {
+            throw new FieldValidationException("Feltet " + fieldName + " kan ikke være null.");
+        } else if(field.toString().length() > maxLength) {
+            throw new FieldValidationException("Feltet " + fieldName + " kan ikke inneholde mer enn " + maxLength + " tegn.");
+        } else {
+            return field;
+        }
+    }
+
+    static boolean isPossibleFodselsnummer(String field) {
+        if (isCorrectLengthForFodselsnummer(field)) {
+            return elevenDigits.matcher(field).find();
+        } else {
+            return false;
+        }
+    }
+
+    private static boolean isCorrectLengthForFodselsnummer(String field) {
+        return field.length() == 11;
+    }
+
+    private static String validateMaxLength(String field, String fieldName, int maxLength) {
+        if (field.length() > maxLength) {
+            FieldValidationException fve = new FieldValidationException("Feltet " + fieldName + " kan ikke inneholde mer enn $maxLength tegn.");
+            fve.addContext("rejectedFieldValueLength", field.length());
+            throw fve;
+        }
+        return field;
+    }
 }
