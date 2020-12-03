@@ -1,6 +1,7 @@
 package no.nav.brukernotifikasjon.schemas.builders;
 
 import no.nav.brukernotifikasjon.schemas.Statusoppdatering;
+import no.nav.brukernotifikasjon.schemas.builders.domain.StatusGlobal;
 import no.nav.brukernotifikasjon.schemas.builders.util.ValidationUtil;
 
 import java.net.URL;
@@ -66,6 +67,7 @@ public class StatusoppdateringBuilder {
                 statusGlobal.toString(),
                 ValidationUtil.validateNonNullFieldMaxLength(statusIntern, "statusIntern", 100),
                 ValidationUtil.validateNonNullFieldMaxLength(sakstema, "sakstema", 100),
-                ValidationUtil.validateFodselsnummer(fodselsnummer));
+                ValidationUtil.validateFodselsnummer(fodselsnummer)
+        );
     }
 }

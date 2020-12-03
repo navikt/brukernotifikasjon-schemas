@@ -1,6 +1,7 @@
 package no.nav.brukernotifikasjon.schemas.builders;
 
 import no.nav.brukernotifikasjon.schemas.Statusoppdatering;
+import no.nav.brukernotifikasjon.schemas.builders.domain.StatusGlobal;
 import org.junit.jupiter.api.Test;
 
 import java.net.MalformedURLException;
