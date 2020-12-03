@@ -66,7 +66,7 @@ public class StatusoppdateringBuilder {
                 ValidationUtil.validateSikkerhetsnivaa(sikkerhetsnivaa),
                 ValidationUtil.validateNonNullField(statusGlobal, "statusGlobal").toString(),
                 ValidationUtil.validateNonNullFieldMaxLength(statusIntern, "statusIntern", 100),
-                ValidationUtil.validateNonNullFieldMaxLength(sakstema, "sakstema", 100),
+                ValidationUtil.validateNonNullFieldMaxLength(sakstema, "sakstema", 50),
                 ValidationUtil.validateFodselsnummer(fodselsnummer)
         );
     }
