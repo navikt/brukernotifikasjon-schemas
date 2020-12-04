@@ -16,6 +16,7 @@ import java.util.Collections;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -105,10 +106,9 @@ public class StatusoppdateringBuilderTest {
     }
 
     @Test
-    void skalIkkeGodtaManglendeLink() {
+    void skalGodtaManglendeLink() {
         StatusoppdateringBuilder builder = getBuilderWithDefaultValues().withLink(null);
-        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
-        assertThat(exceptionThrown.getMessage(), containsString("link"));
+        assertDoesNotThrow(() -> builder.build());
     }
 
     @Test

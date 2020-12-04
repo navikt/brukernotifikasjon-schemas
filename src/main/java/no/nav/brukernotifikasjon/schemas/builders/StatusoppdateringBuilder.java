@@ -62,7 +62,7 @@ public class StatusoppdateringBuilder {
         return new Statusoppdatering(
                 ValidationUtil.localDateTimeToUtcTimestamp(tidspunkt, "tidspunkt", true),
                 ValidationUtil.validateNonNullFieldMaxLength(grupperingsId, "grupperingsId", 100),
-                ValidationUtil.validateLink(link, "link", 200).toString(),
+                ValidationUtil.validateLinkAndConvertToString(link, "link", 200, false),
                 ValidationUtil.validateSikkerhetsnivaa(sikkerhetsnivaa),
                 ValidationUtil.validateNonNullField(statusGlobal, "statusGlobal").toString(),
                 ValidationUtil.validateNonNullFieldMaxLength(statusIntern, "statusIntern", 100),

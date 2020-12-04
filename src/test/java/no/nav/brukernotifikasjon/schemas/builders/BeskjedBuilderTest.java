@@ -104,10 +104,9 @@ public class BeskjedBuilderTest {
     }
 
     @Test
-    void skalIkkeGodtaManglendeLink() {
+    void skalGodtaManglendeLink() {
         BeskjedBuilder builder = getBuilderWithDefaultValues().withLink(null);
-        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
-        assertThat(exceptionThrown.getMessage(), containsString("link"));
+        assertDoesNotThrow(() -> builder.build());
     }
 
     @Test

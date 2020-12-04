@@ -51,7 +51,7 @@ public class OppgaveBuilder {
                 ValidationUtil.validateFodselsnummer(fodselsnummer),
                 ValidationUtil.validateNonNullFieldMaxLength(grupperingsId, "grupperingsId", 100),
                 ValidationUtil.validateNonNullFieldMaxLength(tekst, "tekst", 500),
-                ValidationUtil.validateLink(link, "link", 200).toString(),
+                ValidationUtil.validateLinkAndConvertToString(link, "link", 200, true),
                 ValidationUtil.validateSikkerhetsnivaa(sikkerhetsnivaa)
         );
     }

@@ -61,12 +61,22 @@ class ValidationUtilTest {
     }
 
     @Test
-    void skalKasteExceptionHvisLinkErLengreEnnMaxLength() {
-        assertThrows(FieldValidationException.class, () -> ValidationUtil.validateLink(new URL("https://ugyldig.url"), "testlink", 10));
+    void skalKasteExceptionHvisLinkErLengreEnnMaxLengthHvisIkkePaakrevd() {
+        assertThrows(FieldValidationException.class, () -> ValidationUtil.validateLinkAndConvertToString(new URL("https://ugyldig.url"), "testlink", 10, false));
     }
 
     @Test
-    void skalKasteExceptionHvisLinkNull() {
-        assertThrows(FieldValidationException.class, () -> ValidationUtil.validateLink(null, "testlink", 10));
+    void skalKasteExceptionHvisLinkErLengreEnnMaxLengthHvisPaakrevd() {
+        assertThrows(FieldValidationException.class, () -> ValidationUtil.validateLinkAndConvertToString(new URL("https://ugyldig.url"), "testlink", 10, true));
+    }
+
+    @Test
+    void skalKasteExceptionHvisLinkErNullOgPaakrevd() {
+        assertThrows(FieldValidationException.class, () -> ValidationUtil.validateLinkAndConvertToString(null, "testlink", 10, true));
+    }
+
+    @Test
+    void skalIkkeKasteExceptionHvisLinkErNullOgIkkePaakrevd() {
+        assertDoesNotThrow(() -> ValidationUtil.validateLinkAndConvertToString(null, "testlink", 10, false));
     }
 }

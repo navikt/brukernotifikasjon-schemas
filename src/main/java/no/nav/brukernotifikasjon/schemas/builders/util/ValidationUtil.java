@@ -65,13 +65,13 @@ public class ValidationUtil {
         return validateMaxLength(field, fieldName, maxLength);
     }
 
-    public static URL validateLink(URL field, String fieldName, int maxLength) {
-        if(field == null) {
+    public static String validateLinkAndConvertToString(URL field, String fieldName, int maxLength, boolean required) {
+        if(required && field == null) {
             throw new FieldValidationException("Feltet " + fieldName + " kan ikke være null.");
-        } else if(field.toString().length() > maxLength) {
+        } else if(field != null && field.toString().length() > maxLength) {
             throw new FieldValidationException("Feltet " + fieldName + " kan ikke inneholde mer enn " + maxLength + " tegn.");
         } else {
-            return field;
+            return field != null ? field.toString() : null;
         }
     }
 
