@@ -28,7 +28,7 @@ jobs:
       - name: Set release tag
         run: |
           export TAG_NAME="1.$(TZ="Europe/Oslo" date +%Y.%m.%d-%H.%M)-$(echo $GITHUB_SHA | cut -c 1-12)"
-          echo "::set-env name=RELEASE_TAG::$TAG_NAME"
+          echo "RELEASE_TAG=$TAG_NAME" >> $GITHUB_ENV
       - name: Create Release
         id: create_release
         uses: actions/create-release@latest
