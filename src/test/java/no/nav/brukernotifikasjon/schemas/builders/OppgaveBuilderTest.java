@@ -26,6 +26,7 @@ class OppgaveBuilderTest {
     private URL expectedLink;
     private String expectedTekst;
     private LocalDateTime expectedTidspunkt;
+    private Boolean expectedEksternvarsling;
 
     @BeforeAll
     void setUp() throws MalformedURLException {
@@ -35,6 +36,7 @@ class OppgaveBuilderTest {
         expectedLink = new URL("https://gyldig.url");
         expectedTekst = "Du må sende nytt meldekort";
         expectedTidspunkt = LocalDateTime.now();
+        expectedEksternvarsling = true;
     }
 
     @Test
@@ -49,6 +51,7 @@ class OppgaveBuilderTest {
         assertThat(oppgave.getTekst(), is(expectedTekst));
         long expectedTidspunktAsUtcLong = expectedTidspunkt.toInstant(ZoneOffset.UTC).toEpochMilli();
         assertThat(oppgave.getTidspunkt(), is(expectedTidspunktAsUtcLong));
+        assertThat(oppgave.getEksternVarsling(), is(expectedEksternvarsling));
     }
 
     @Test
@@ -126,6 +129,14 @@ class OppgaveBuilderTest {
         assertThat(exceptionThrown.getMessage(), containsString("tidspunkt"));
     }
 
+    @Test
+    void skalIkkeGodtaManglendeEksternvarsling() {
+        Boolean invalidEksternvarsling = null;
+        OppgaveBuilder builder = getBuilderWithDefaultValues().withEksternvarsling(invalidEksternvarsling);
+        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
+        assertThat(exceptionThrown.getMessage(), containsString("Eksternvarsling"));
+    }
+
     private OppgaveBuilder getBuilderWithDefaultValues() {
         return new OppgaveBuilder()
                 .withFodselsnummer(expectedFodselsnr)
@@ -133,7 +144,7 @@ class OppgaveBuilderTest {
                 .withSikkerhetsnivaa(expectedSikkerhetsnivaa)
                 .withLink(expectedLink)
                 .withTekst(expectedTekst)
-                .withTidspunkt(expectedTidspunkt);
-
+                .withTidspunkt(expectedTidspunkt)
+                .withEksternvarsling(expectedEksternvarsling);
     }
 }

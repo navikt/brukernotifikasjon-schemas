@@ -48,6 +48,16 @@ public class ValidationUtil {
         }
     }
 
+    public static Boolean validateEksternvarsling(Boolean eksternvarsling) {
+        validateNonNullField(eksternvarsling, "Eksternvarsling");
+        if (eksternvarsling == true || eksternvarsling == false) {
+            return eksternvarsling;
+
+        } else {
+            throw new FieldValidationException("Eksternvarsling kan bare være true eller false.");
+        }
+    }
+
     public static Long localDateTimeToUtcTimestamp(LocalDateTime dataAndTime, String fieldName, boolean required) {
         if (dataAndTime != null) {
             return dataAndTime.toInstant(ZoneOffset.UTC).toEpochMilli();
