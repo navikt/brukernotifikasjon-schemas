@@ -61,13 +61,13 @@ public class StatusoppdateringBuilder {
 
     public Statusoppdatering build() {
         return new Statusoppdatering(
-                ValidationUtil.localDateTimeToUtcTimestamp(tidspunkt, "tidspunkt", ValidationUtil.IS_TIDSPUNKT_REQUIRED),
-                ValidationUtil.validateNonNullFieldMaxLength(grupperingsId, "grupperingsId", ValidationUtil.MAX_GRUPPERINGSID_LENGTH),
-                ValidationUtil.validateLinkAndConvertToString(link, "link", ValidationUtil.MAX_LINK_LENGTH, ValidationUtil.isLinkRequired(Eventtype.STATUSOPPDATERING)),
+                ValidationUtil.localDateTimeToUtcTimestamp(tidspunkt, "tidspunkt", ValidationUtil.IS_REQUIRED_TIDSPUNKT),
+                ValidationUtil.validateNonNullFieldMaxLength(grupperingsId, "grupperingsId", ValidationUtil.MAX_LENGTH_GRUPPERINGSID),
+                ValidationUtil.validateLinkAndConvertToString(link, "link", ValidationUtil.MAX_LENGTH_LINK, ValidationUtil.isLinkRequired(Eventtype.STATUSOPPDATERING)),
                 ValidationUtil.validateSikkerhetsnivaa(sikkerhetsnivaa),
                 ValidationUtil.validateStatusGlobal(ValidationUtil.validateNonNullField(statusGlobal, "statusGlobal").toString()),
-                ValidationUtil.validateNonNullFieldMaxLength(statusIntern, "statusIntern", ValidationUtil.MAX_STATUSINTERN_LENGTH),
-                ValidationUtil.validateNonNullFieldMaxLength(sakstema, "sakstema", ValidationUtil.MAX_SAKSTEMA_LENGTH),
+                ValidationUtil.validateNonNullFieldMaxLength(statusIntern, "statusIntern", ValidationUtil.MAX_LENGTH_STATUSINTERN),
+                ValidationUtil.validateNonNullFieldMaxLength(sakstema, "sakstema", ValidationUtil.MAX_LENGTH_SAKSTEMA),
                 ValidationUtil.validateFodselsnummer(fodselsnummer)
         );
     }

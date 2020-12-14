@@ -11,16 +11,16 @@ import java.util.regex.Pattern;
 
 public class ValidationUtil {
 
-    public static final int MAX_TEXT_LENGTH_BESKJED = 300;
-    public static final int MAX_TEXT_LENGTH_OPPGAVE = 500;
-    public static final int MAX_LINK_LENGTH = 200;
-    public static final int MAX_GRUPPERINGSID_LENGTH = 100;
-    public static final int MAX_EVENTID_LENGTH = 50;
-    public static final int MAX_SYSTEMBRUKER_LENGTH = 100;
-    public static final int MAX_STATUSINTERN_LENGTH = 100;
-    public static final int MAX_SAKSTEMA_LENGTH = 50;
-    public static final boolean IS_TIDSPUNKT_REQUIRED = true;
-    public static final boolean IS_SYNLIGFREMTIL_REQUIRED = false;
+    public static final int MAX_LENGTH_TEXT_BESKJED = 300;
+    public static final int MAX_LENGTH_TEXT_OPPGAVE = 500;
+    public static final int MAX_LENGTH_LINK = 200;
+    public static final int MAX_LENGTH_GRUPPERINGSID = 100;
+    public static final int MAX_LENGTH_EVENTID = 50;
+    public static final int MAX_LENGTH_SYSTEMBRUKER = 100;
+    public static final int MAX_LENGTH_STATUSINTERN = 100;
+    public static final int MAX_LENGTH_SAKSTEMA = 50;
+    public static final boolean IS_REQUIRED_TIDSPUNKT = true;
+    public static final boolean IS_REQUIRED_SYNLIGFREMTIL = false;
 
     private static Pattern elevenDigits = Pattern.compile("[\\d]{11}");
 
@@ -74,7 +74,9 @@ public class ValidationUtil {
         try {
             return StatusGlobal.valueOf(statusGlobal).toString();
         } catch (Exception exception) {
-            throw new FieldValidationException("StatusGlobal må matche en av de 4 statusene du finner i builders/domain/StatusGlobal. Verdien som ble sendt inn: " + statusGlobal.toString() + ", matcher ikke dette.");
+            FieldValidationException fve = new FieldValidationException("StatusGlobal må matche en av de 4 statusene du finner i builders/domain/StatusGlobal. Verdien som ble sendt inn: " + statusGlobal.toString() + ", matcher ikke dette.");
+            fve.addContext("Exception", exception);
+            throw fve;
         }
     }
 
@@ -93,7 +95,9 @@ public class ValidationUtil {
             try {
                 return dataAndTime.toInstant(ZoneOffset.UTC).toEpochMilli();
             } catch (Exception exception) {
-                throw new FieldValidationException("Feltet " + fieldName + "kunne ikke konvertere fra LocalDateTime til UtcTimestamp.");
+                FieldValidationException fve = new FieldValidationException("Feltet " + fieldName + "kunne ikke konvertere fra LocalDateTime til UtcTimestamp.");
+                fve.addContext("Exception", exception);
+                throw fve;
             }
         } else {
             if (required) {
