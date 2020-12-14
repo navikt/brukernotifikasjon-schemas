@@ -13,12 +13,15 @@ public class ValidationUtil {
 
     public static final int MAX_LENGTH_TEXT_BESKJED = 300;
     public static final int MAX_LENGTH_TEXT_OPPGAVE = 500;
+    public static final int MAX_LENGTH_TEXT_INNBOKS = 500;
     public static final int MAX_LENGTH_LINK = 200;
     public static final int MAX_LENGTH_GRUPPERINGSID = 100;
     public static final int MAX_LENGTH_EVENTID = 50;
     public static final int MAX_LENGTH_SYSTEMBRUKER = 100;
     public static final int MAX_LENGTH_STATUSINTERN = 100;
     public static final int MAX_LENGTH_SAKSTEMA = 50;
+    public static final int MAX_LENGTH_FODSELSNUMMER = 11;
+    public static final int MAX_LENGTH_UID = 100;
     public static final boolean IS_REQUIRED_TIDSPUNKT = true;
     public static final boolean IS_REQUIRED_SYNLIGFREMTIL = false;
 
@@ -83,7 +86,7 @@ public class ValidationUtil {
     public static boolean isLinkRequired(Eventtype eventtype) {
         if (eventtype == Eventtype.OPPGAVE) {
             return true;
-        } else if (eventtype == Eventtype.BESKJED || eventtype == Eventtype.STATUSOPPDATERING) {
+        } else if (eventtype == Eventtype.BESKJED || eventtype == Eventtype.STATUSOPPDATERING || eventtype == Eventtype.INNBOKS) {
             return false;
         } else {
             throw new FieldValidationException("Vi finner ikke denne eventtypen, og dermed vet vi ikke om link er obligatorisk. Blir det sendt inn en av eventtypene som ligger i builders/domain/Eventtype?");
@@ -132,10 +135,10 @@ public class ValidationUtil {
     }
 
     private static boolean isCorrectLengthForFodselsnummer(String field) {
-        return field.length() == 11;
+        return field.length() == MAX_LENGTH_FODSELSNUMMER;
     }
 
-    private static String validateMaxLength(String field, String fieldName, int maxLength) {
+    public static String validateMaxLength(String field, String fieldName, int maxLength) {
         if (field.length() > maxLength) {
             FieldValidationException fve = new FieldValidationException("Feltet " + fieldName + " kan ikke inneholde mer enn $maxLength tegn.");
             fve.addContext("rejectedFieldValueLength", field.length());
