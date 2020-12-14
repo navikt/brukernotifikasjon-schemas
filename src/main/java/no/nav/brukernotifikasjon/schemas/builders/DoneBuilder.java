@@ -28,9 +28,9 @@ public class DoneBuilder {
 
     public Done build() {
         return new Done(
-                ValidationUtil.localDateTimeToUtcTimestamp(tidspunkt, "tidspunkt", true),
+                ValidationUtil.localDateTimeToUtcTimestamp(tidspunkt, "tidspunkt", ValidationUtil.IS_TIDSPUNKT_REQUIRED),
                 ValidationUtil.validateFodselsnummer(fodselsnummer),
-                ValidationUtil.validateNonNullFieldMaxLength(grupperingsId, "grupperingsId", 100)
+                ValidationUtil.validateNonNullFieldMaxLength(grupperingsId, "grupperingsId", ValidationUtil.MAX_GRUPPERINGSID_LENGTH)
         );
     }
 }

@@ -1,6 +1,7 @@
 package no.nav.brukernotifikasjon.schemas.builders;
 
 import no.nav.brukernotifikasjon.schemas.Oppgave;
+import no.nav.brukernotifikasjon.schemas.builders.domain.Eventtype;
 import no.nav.brukernotifikasjon.schemas.builders.util.ValidationUtil;
 
 import java.net.URL;
@@ -53,11 +54,11 @@ public class OppgaveBuilder {
 
     public Oppgave build() {
         return new Oppgave(
-                ValidationUtil.localDateTimeToUtcTimestamp(tidspunkt, "tidspunkt", true),
+                ValidationUtil.localDateTimeToUtcTimestamp(tidspunkt, "tidspunkt", ValidationUtil.IS_TIDSPUNKT_REQUIRED),
                 ValidationUtil.validateFodselsnummer(fodselsnummer),
-                ValidationUtil.validateNonNullFieldMaxLength(grupperingsId, "grupperingsId", 100),
-                ValidationUtil.validateNonNullFieldMaxLength(tekst, "tekst", 500),
-                ValidationUtil.validateLinkAndConvertToString(link, "link", 200, true),
+                ValidationUtil.validateNonNullFieldMaxLength(grupperingsId, "grupperingsId", ValidationUtil.MAX_GRUPPERINGSID_LENGTH),
+                ValidationUtil.validateNonNullFieldMaxLength(tekst, "tekst", ValidationUtil.MAX_TEXT_LENGTH_OPPGAVE),
+                ValidationUtil.validateLinkAndConvertToString(link, "link", ValidationUtil.MAX_LINK_LENGTH, ValidationUtil.isLinkRequired(Eventtype.OPPGAVE)),
                 ValidationUtil.validateSikkerhetsnivaa(sikkerhetsnivaa),
                 ValidationUtil.validateEksternvarsling(eksternvarsling)
         );

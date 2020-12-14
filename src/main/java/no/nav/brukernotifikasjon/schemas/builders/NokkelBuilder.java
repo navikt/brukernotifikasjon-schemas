@@ -15,7 +15,7 @@ public class NokkelBuilder {
 
     public Nokkel build() {
         return new Nokkel(
-                ValidationUtil.validateNonNullFieldMaxLength(systembruker, "systembruker", 100),
+                ValidationUtil.validateNonNullFieldMaxLength(systembruker, "systembruker", ValidationUtil.MAX_SYSTEMBRUKER_LENGTH),
                 new ULID().nextULID()
         );
     }
