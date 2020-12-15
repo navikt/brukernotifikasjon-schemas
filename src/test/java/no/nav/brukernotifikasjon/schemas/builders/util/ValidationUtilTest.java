@@ -79,4 +79,19 @@ class ValidationUtilTest {
     void skalIkkeKasteExceptionHvisLinkErNullOgIkkePaakrevd() {
         assertDoesNotThrow(() -> ValidationUtil.validateLinkAndConvertToString(null, "testlink", 10, false));
     }
+
+    @Test
+    void skalIkkeKasteExceptionHvisLinkErEnTomString() {
+        assertDoesNotThrow(() -> ValidationUtil.validateLinkAndConvertToURL(""));
+    }
+
+    @Test
+    void skalIkkeKasteExceptionHvisLinkErEnGyldigUrl() {
+        assertDoesNotThrow(() -> ValidationUtil.validateLinkAndConvertToURL("http://dummyurl.no"));
+    }
+
+    @Test
+    void skalKasteExceptionHvisLinkIkkeKanKonverteresTilUrl() {
+        assertThrows(FieldValidationException.class, () -> ValidationUtil.validateLinkAndConvertToURL("ugyldigUrl"));
+    }
 }

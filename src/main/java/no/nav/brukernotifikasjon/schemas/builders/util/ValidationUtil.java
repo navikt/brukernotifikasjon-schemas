@@ -116,13 +116,26 @@ public class ValidationUtil {
         return validateMaxLength(field, fieldName, maxLength);
     }
 
+    public static URL validateLinkAndConvertToURL(String link) {
+        if (link.equals("")) { return null; }
+
+        try {
+            return new URL(link);
+        } catch (Exception exception) {
+            FieldValidationException fve = new FieldValidationException("Kunne ikke konvertere link til URL.");
+            fve.addContext("link-felt", link);
+            fve.addContext("exception", exception);
+            throw fve;
+        }
+    }
+
     public static String validateLinkAndConvertToString(URL field, String fieldName, int maxLength, boolean required) {
         if (required && field == null) {
             throw new FieldValidationException("Feltet " + fieldName + " kan ikke være null.");
         } else if (field != null && field.toString().length() > maxLength) {
             throw new FieldValidationException("Feltet " + fieldName + " kan ikke inneholde mer enn " + maxLength + " tegn.");
         } else {
-            return field != null ? field.toString() : null;
+            return field != null ? field.toString() : "";
         }
     }
 
