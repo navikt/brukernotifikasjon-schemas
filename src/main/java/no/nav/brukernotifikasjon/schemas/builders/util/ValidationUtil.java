@@ -64,20 +64,26 @@ public class ValidationUtil {
         }
     }
 
-    public static Boolean validateEksternvarsling(Boolean eksternvarsling) {
-        validateNonNullField(eksternvarsling, "Eksternvarsling");
-        if (eksternvarsling == true || eksternvarsling == false) {
-            return eksternvarsling;
+    public static <T> Boolean validateEksternvarsling(T field) {
+        validateNonNullField(field, "eksternvarsling");
+        if (field.equals(true)) {
+            return true;
+        } else if (field.equals(false)) {
+            return false;
         } else {
-            throw new FieldValidationException("Eksternvarsling kan bare være true eller false.");
+            FieldValidationException fve = new FieldValidationException("Eksternvarsling må være en boolean verdi.");
+            fve.addContext("Type", field.getClass().toString());
+            fve.addContext("Eksternvarsling", field);
+            throw fve;
         }
     }
 
-    public static String validateStatusGlobal(String statusGlobal) {
+    public static <T> String validateStatusGlobal(T field) {
+        validateNonNullField(field, "statusGlobal");
         try {
-            return StatusGlobal.valueOf(statusGlobal).toString();
+            return StatusGlobal.valueOf(field.toString()).toString();
         } catch (Exception exception) {
-            FieldValidationException fve = new FieldValidationException("StatusGlobal må matche en av de 4 statusene du finner i builders/domain/StatusGlobal. Verdien som ble sendt inn: " + statusGlobal.toString() + ", matcher ikke dette.");
+            FieldValidationException fve = new FieldValidationException("StatusGlobal må matche en av de 4 statusene du finner i builders/domain/StatusGlobal. Verdien som ble sendt inn: " + field.toString() + ", matcher ikke dette.");
             fve.addContext("Exception", exception);
             throw fve;
         }
@@ -117,7 +123,9 @@ public class ValidationUtil {
     }
 
     public static URL validateLinkAndConvertToURL(String link) {
-        if (link.equals("")) { return null; }
+        if (link.equals("")) {
+            return null;
+        }
 
         try {
             return new URL(link);

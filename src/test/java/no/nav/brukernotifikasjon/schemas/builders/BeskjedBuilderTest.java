@@ -144,7 +144,7 @@ public class BeskjedBuilderTest {
         Boolean invalidEksternvarsling = null;
         BeskjedBuilder builder = getBuilderWithDefaultValues().withEksternvarsling(invalidEksternvarsling);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
-        assertThat(exceptionThrown.getMessage(), containsString("Eksternvarsling"));
+        assertThat(exceptionThrown.getMessage(), containsString("eksternvarsling"));
     }
 
     private BeskjedBuilder getBuilderWithDefaultValues() {

@@ -134,7 +134,7 @@ class OppgaveBuilderTest {
         Boolean invalidEksternvarsling = null;
         OppgaveBuilder builder = getBuilderWithDefaultValues().withEksternvarsling(invalidEksternvarsling);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
-        assertThat(exceptionThrown.getMessage(), containsString("Eksternvarsling"));
+        assertThat(exceptionThrown.getMessage(), containsString("eksternvarsling"));
     }
 
     private OppgaveBuilder getBuilderWithDefaultValues() {
