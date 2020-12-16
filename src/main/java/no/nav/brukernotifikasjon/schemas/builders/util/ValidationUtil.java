@@ -3,6 +3,7 @@ package no.nav.brukernotifikasjon.schemas.builders.util;
 import no.nav.brukernotifikasjon.schemas.builders.domain.Eventtype;
 import no.nav.brukernotifikasjon.schemas.builders.domain.StatusGlobal;
 import no.nav.brukernotifikasjon.schemas.builders.exception.FieldValidationException;
+import no.nav.brukernotifikasjon.schemas.builders.exception.UnknownEventtypeException;
 
 import java.net.URL;
 import java.time.LocalDateTime;
@@ -64,20 +65,6 @@ public class ValidationUtil {
         }
     }
 
-    public static <T> Boolean validateEksternvarsling(T field) {
-        validateNonNullField(field, "eksternvarsling");
-        if (field.equals(true)) {
-            return true;
-        } else if (field.equals(false)) {
-            return false;
-        } else {
-            FieldValidationException fve = new FieldValidationException("Eksternvarsling må være en boolean verdi.");
-            fve.addContext("Type", field.getClass().toString());
-            fve.addContext("Eksternvarsling", field);
-            throw fve;
-        }
-    }
-
     public static <T> String validateStatusGlobal(T field) {
         validateNonNullField(field, "statusGlobal");
         try {
@@ -90,12 +77,12 @@ public class ValidationUtil {
     }
 
     public static boolean isLinkRequired(Eventtype eventtype) {
-        if (eventtype == Eventtype.OPPGAVE) {
+        if (Eventtype.OPPGAVE == eventtype) {
             return true;
-        } else if (eventtype == Eventtype.BESKJED || eventtype == Eventtype.STATUSOPPDATERING || eventtype == Eventtype.INNBOKS) {
+        } else if (Eventtype.BESKJED == eventtype || Eventtype.STATUSOPPDATERING == eventtype || Eventtype.INNBOKS == eventtype) {
             return false;
         } else {
-            throw new FieldValidationException("Vi finner ikke denne eventtypen, og dermed vet vi ikke om link er obligatorisk. Blir det sendt inn en av eventtypene som ligger i builders/domain/Eventtype?");
+            throw new UnknownEventtypeException("Vi finner ikke denne eventtypen, og dermed vet vi ikke om link er obligatorisk. Blir det sendt inn en av eventtypene som ligger i builders/domain/Eventtype?");
         }
     }
 

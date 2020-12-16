@@ -2,6 +2,7 @@ package no.nav.brukernotifikasjon.schemas.builders.util;
 
 import no.nav.brukernotifikasjon.schemas.builders.domain.Eventtype;
 import no.nav.brukernotifikasjon.schemas.builders.exception.FieldValidationException;
+import no.nav.brukernotifikasjon.schemas.builders.exception.UnknownEventtypeException;
 import org.junit.jupiter.api.Test;
 
 import java.net.URL;
@@ -97,31 +98,6 @@ class ValidationUtilTest {
     }
 
     @Test
-    void skalIkkeKasteExceptionHvisEksternvarslingErSattTilTrue() {
-        assertDoesNotThrow(() -> ValidationUtil.validateEksternvarsling(true));
-    }
-
-    @Test
-    void skalIkkeKasteExceptionHvisEksternvarslingErSattTilFalse() {
-        assertDoesNotThrow(() -> ValidationUtil.validateEksternvarsling(false));
-    }
-
-    @Test
-    void skalKasteExceptionHvisEksternvarslingIkkeErBoolean() {
-        assertThrows(FieldValidationException.class, () -> ValidationUtil.validateEksternvarsling("ikkeBoolean"));
-    }
-
-    @Test
-    void skalKasteExceptionHvisEksternvarslingErEnTomString() {
-        assertThrows(FieldValidationException.class, () -> ValidationUtil.validateEksternvarsling(""));
-    }
-
-    @Test
-    void skalKasteExceptionHvisEksternvarslingErNull() {
-        assertThrows(FieldValidationException.class, () -> ValidationUtil.validateEksternvarsling(null));
-    }
-
-    @Test
     void skalIkkeKasteExceptionHvisInputMatcherTypeneTilStatusGlobal() {
         assertDoesNotThrow(() -> ValidationUtil.validateStatusGlobal("FERDIG"));
         assertDoesNotThrow(() -> ValidationUtil.validateStatusGlobal("UNDER_BEHANDLING"));
@@ -154,7 +130,7 @@ class ValidationUtilTest {
 
     @Test
     void skalKasteExceptionHvisTypeeventErNull() {
-        assertThrows(FieldValidationException.class, () -> ValidationUtil.isLinkRequired(null));
+        assertThrows(UnknownEventtypeException.class, () -> ValidationUtil.isLinkRequired(null));
     }
 
 }

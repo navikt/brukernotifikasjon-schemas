@@ -29,7 +29,6 @@ public class BeskjedBuilderTest {
     private String expectedTekst;
     private LocalDateTime expectedTidspunkt;
     private LocalDateTime expectedSynligFremTil;
-    private Boolean expectedEksternvarsling;
 
     @BeforeAll
     void setUp() throws MalformedURLException {
@@ -40,7 +39,6 @@ public class BeskjedBuilderTest {
         expectedTekst = "Dette er informasjon du må lese";
         expectedTidspunkt = LocalDateTime.now(ZoneId.of("UTC"));
         expectedSynligFremTil = expectedTidspunkt.plusDays(2);
-        expectedEksternvarsling = true;
     }
 
     @Test
@@ -139,14 +137,6 @@ public class BeskjedBuilderTest {
         assertDoesNotThrow(() -> builder.build());
     }
 
-    @Test
-    void skalIkkeGodtaManglendeEksternvarsling() {
-        Boolean invalidEksternvarsling = null;
-        BeskjedBuilder builder = getBuilderWithDefaultValues().withEksternvarsling(invalidEksternvarsling);
-        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
-        assertThat(exceptionThrown.getMessage(), containsString("eksternvarsling"));
-    }
-
     private BeskjedBuilder getBuilderWithDefaultValues() {
         return new BeskjedBuilder()
                 .withFodselsnummer(expectedFodselsnr)
@@ -155,7 +145,6 @@ public class BeskjedBuilderTest {
                 .withLink(expectedLink)
                 .withTekst(expectedTekst)
                 .withTidspunkt(expectedTidspunkt)
-                .withSynligFremTil(expectedSynligFremTil)
-                .withEksternvarsling(expectedEksternvarsling);
+                .withSynligFremTil(expectedSynligFremTil);
     }
 }
