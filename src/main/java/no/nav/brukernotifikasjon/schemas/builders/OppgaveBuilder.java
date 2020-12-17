@@ -15,7 +15,7 @@ public class OppgaveBuilder {
     private String tekst;
     private URL link;
     private Integer sikkerhetsnivaa;
-    private Boolean eksternvarsling = false;
+    private Boolean eksternVarsling = false;
 
     public OppgaveBuilder withTidspunkt(LocalDateTime tidspunkt) {
         this.tidspunkt = tidspunkt;
@@ -47,6 +47,11 @@ public class OppgaveBuilder {
         return this;
     }
 
+    public OppgaveBuilder withEksternVarsling(Boolean eksternVarsling) {
+        this.eksternVarsling = eksternVarsling;
+        return this;
+    }
+
     public Oppgave build() {
         return new Oppgave(
                 ValidationUtil.localDateTimeToUtcTimestamp(tidspunkt, "tidspunkt", ValidationUtil.IS_REQUIRED_TIDSPUNKT),
@@ -55,7 +60,7 @@ public class OppgaveBuilder {
                 ValidationUtil.validateNonNullFieldMaxLength(tekst, "tekst", ValidationUtil.MAX_LENGTH_TEXT_OPPGAVE),
                 ValidationUtil.validateLinkAndConvertToString(link, "link", ValidationUtil.MAX_LENGTH_LINK, ValidationUtil.isLinkRequired(Eventtype.OPPGAVE)),
                 ValidationUtil.validateSikkerhetsnivaa(sikkerhetsnivaa),
-                eksternvarsling
+                eksternVarsling
         );
     }
 }

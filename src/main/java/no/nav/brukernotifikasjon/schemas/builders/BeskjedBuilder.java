@@ -16,7 +16,7 @@ public class BeskjedBuilder {
     private String tekst;
     private URL link;
     private Integer sikkerhetsnivaa;
-    private Boolean eksternvarsling = false;
+    private Boolean eksternVarsling = false;
 
     public BeskjedBuilder withTidspunkt(LocalDateTime tidspunkt) {
         this.tidspunkt = tidspunkt;
@@ -53,6 +53,11 @@ public class BeskjedBuilder {
         return this;
     }
 
+    public BeskjedBuilder withEksternVarsling(Boolean eksternVarsling) {
+        this.eksternVarsling = eksternVarsling;
+        return this;
+    }
+
     public Beskjed build() {
         return new Beskjed(
                 ValidationUtil.localDateTimeToUtcTimestamp(tidspunkt, "tidspunkt", ValidationUtil.IS_REQUIRED_TIDSPUNKT),
@@ -62,7 +67,7 @@ public class BeskjedBuilder {
                 ValidationUtil.validateNonNullFieldMaxLength(tekst, "tekst", ValidationUtil.MAX_LENGTH_TEXT_BESKJED),
                 ValidationUtil.validateLinkAndConvertToString(link, "link", ValidationUtil.MAX_LENGTH_LINK, ValidationUtil.isLinkRequired(Eventtype.BESKJED)),
                 ValidationUtil.validateSikkerhetsnivaa(sikkerhetsnivaa),
-                eksternvarsling
+                eksternVarsling
         );
     }
 }
