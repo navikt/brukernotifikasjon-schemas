@@ -1,5 +1,6 @@
 package no.nav.brukernotifikasjon.schemas.builders;
 
+import de.huxhorn.sulky.ulid.ULID;
 import no.nav.brukernotifikasjon.schemas.Nokkel;
 import no.nav.brukernotifikasjon.schemas.builders.exception.FieldValidationException;
 import org.junit.jupiter.api.Test;
@@ -41,7 +42,8 @@ public class NokkelBuilderTest {
 
     private NokkelBuilder getBuilderWithDefaultValues() {
         return new NokkelBuilder()
-                .withSystembruker(expectedSystembruker);
+                .withSystembruker(expectedSystembruker)
+                .withEventId(new ULID().nextValue());
     }
 
 }
