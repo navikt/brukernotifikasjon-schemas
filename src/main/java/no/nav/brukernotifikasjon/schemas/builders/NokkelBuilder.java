@@ -1,20 +1,19 @@
 package no.nav.brukernotifikasjon.schemas.builders;
 
-import de.huxhorn.sulky.ulid.ULID;
 import no.nav.brukernotifikasjon.schemas.Nokkel;
 import no.nav.brukernotifikasjon.schemas.builders.util.ValidationUtil;
 
 public class NokkelBuilder {
 
     private String systembruker;
-    private ULID.Value eventId;
+    private String eventId;
 
     public NokkelBuilder withSystembruker(String systembruker) {
         this.systembruker = systembruker;
         return this;
     }
 
-    public NokkelBuilder withEventId(ULID.Value eventId) {
+    public NokkelBuilder withEventId(String eventId) {
         this.eventId = eventId;
         return this;
     }
@@ -22,7 +21,7 @@ public class NokkelBuilder {
     public Nokkel build() {
         return new Nokkel(
                 ValidationUtil.validateNonNullFieldMaxLength(systembruker, "systembruker", ValidationUtil.MAX_LENGTH_SYSTEMBRUKER),
-                ValidationUtil.validateNonNullField(eventId, "eventId").toString()
+                ValidationUtil.validateNonNullFieldMaxLength(eventId, "eventId", ValidationUtil.MAX_LENGTH_EVENTID)
         );
     }
 }
