@@ -1,5 +1,6 @@
 package no.nav.brukernotifikasjon.schemas.builders;
 
+import no.nav.brukernotifikasjon.schemas.Beskjed;
 import no.nav.brukernotifikasjon.schemas.Statusoppdatering;
 import no.nav.brukernotifikasjon.schemas.builders.domain.StatusGlobal;
 import org.junit.jupiter.api.Test;
@@ -12,6 +13,14 @@ import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class StatusoppdateringAvroTest {
+
+    private int expectedSikkerhetsnivaa = 4;
+
+    @Test
+    void skalSetteDefaultverdiForSikkerhetsnivaa() {
+        Statusoppdatering statusoppdatering = getStatusoppdateringWithDefaultValues();
+        assertThat(statusoppdatering.getSikkerhetsnivaa(), is(expectedSikkerhetsnivaa));
+    }
 
     @Test
     void skalSetteNullSomDefaultverdiForStatusIntern() {
