@@ -1,6 +1,7 @@
 package no.nav.brukernotifikasjon.schemas.builders;
 
 import no.nav.brukernotifikasjon.schemas.Oppgave;
+import no.nav.brukernotifikasjon.schemas.builders.domain.Eventtype;
 import no.nav.brukernotifikasjon.schemas.builders.util.ValidationUtil;
 
 import java.net.URL;
@@ -14,6 +15,7 @@ public class OppgaveBuilder {
     private String tekst;
     private URL link;
     private Integer sikkerhetsnivaa;
+    private Boolean eksternVarsling = false;
 
     public OppgaveBuilder withTidspunkt(LocalDateTime tidspunkt) {
         this.tidspunkt = tidspunkt;
@@ -45,14 +47,20 @@ public class OppgaveBuilder {
         return this;
     }
 
+    public OppgaveBuilder withEksternVarsling(Boolean eksternVarsling) {
+        this.eksternVarsling = eksternVarsling;
+        return this;
+    }
+
     public Oppgave build() {
         return new Oppgave(
-                ValidationUtil.localDateTimeToUtcTimestamp(tidspunkt, "tidspunkt", true),
+                ValidationUtil.localDateTimeToUtcTimestamp(tidspunkt, "tidspunkt", ValidationUtil.IS_REQUIRED_TIDSPUNKT),
                 ValidationUtil.validateFodselsnummer(fodselsnummer),
-                ValidationUtil.validateNonNullFieldMaxLength(grupperingsId, "grupperingsId", 100),
-                ValidationUtil.validateNonNullFieldMaxLength(tekst, "tekst", 500),
-                ValidationUtil.validateLinkAndConvertToString(link, "link", 200, true),
-                ValidationUtil.validateSikkerhetsnivaa(sikkerhetsnivaa)
+                ValidationUtil.validateNonNullFieldMaxLength(grupperingsId, "grupperingsId", ValidationUtil.MAX_LENGTH_GRUPPERINGSID),
+                ValidationUtil.validateNonNullFieldMaxLength(tekst, "tekst", ValidationUtil.MAX_LENGTH_TEXT_OPPGAVE),
+                ValidationUtil.validateLinkAndConvertToString(link, "link", ValidationUtil.MAX_LENGTH_LINK, ValidationUtil.isLinkRequired(Eventtype.OPPGAVE)),
+                ValidationUtil.validateSikkerhetsnivaa(sikkerhetsnivaa),
+                eksternVarsling
         );
     }
 }

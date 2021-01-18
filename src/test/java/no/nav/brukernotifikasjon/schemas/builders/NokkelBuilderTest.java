@@ -5,6 +5,7 @@ import no.nav.brukernotifikasjon.schemas.builders.exception.FieldValidationExcep
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
+import java.util.UUID;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
@@ -14,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class NokkelBuilderTest {
 
     private String expectedSystembruker = "enSystemBruker";
+    private String expectedEventID = UUID.randomUUID().toString();
 
     @Test
     void skalGodtaEventerMedGyldigeFeltverdier() {
@@ -21,7 +23,7 @@ public class NokkelBuilderTest {
         Nokkel nokkel = builder.build();
 
         assertThat(nokkel.getSystembruker(), is(expectedSystembruker));
-        assertThat(nokkel.getEventId().length(), is(26));
+        assertThat(nokkel.getEventId(), is(expectedEventID));
     }
 
     @Test
@@ -41,7 +43,8 @@ public class NokkelBuilderTest {
 
     private NokkelBuilder getBuilderWithDefaultValues() {
         return new NokkelBuilder()
-                .withSystembruker(expectedSystembruker);
+                .withSystembruker(expectedSystembruker)
+                .withEventId(expectedEventID);
     }
 
 }

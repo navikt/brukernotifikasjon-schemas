@@ -29,6 +29,7 @@ public class BeskjedBuilderTest {
     private String expectedTekst;
     private LocalDateTime expectedTidspunkt;
     private LocalDateTime expectedSynligFremTil;
+    private Boolean expectedEksternVarsling;
 
     @BeforeAll
     void setUp() throws MalformedURLException {
@@ -39,6 +40,7 @@ public class BeskjedBuilderTest {
         expectedTekst = "Dette er informasjon du må lese";
         expectedTidspunkt = LocalDateTime.now(ZoneId.of("UTC"));
         expectedSynligFremTil = expectedTidspunkt.plusDays(2);
+        expectedEksternVarsling = false;
     }
 
     @Test
@@ -55,6 +57,7 @@ public class BeskjedBuilderTest {
         assertThat(beskjed.getTidspunkt(), is(expectedTidspunktAsUtcLong));
         long expectedSynligFremTilAsUtcLong = expectedSynligFremTil.toInstant(ZoneOffset.UTC).toEpochMilli();
         assertThat(beskjed.getSynligFremTil(), is(expectedSynligFremTilAsUtcLong));
+        assertThat(beskjed.getEksternVarsling(), is(expectedEksternVarsling));
     }
 
     @Test

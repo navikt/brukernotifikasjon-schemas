@@ -1,6 +1,7 @@
 package no.nav.brukernotifikasjon.schemas.builders;
 
 import no.nav.brukernotifikasjon.schemas.Beskjed;
+import no.nav.brukernotifikasjon.schemas.builders.domain.Eventtype;
 import no.nav.brukernotifikasjon.schemas.builders.util.ValidationUtil;
 
 import java.net.URL;
@@ -15,6 +16,7 @@ public class BeskjedBuilder {
     private String tekst;
     private URL link;
     private Integer sikkerhetsnivaa;
+    private Boolean eksternVarsling = false;
 
     public BeskjedBuilder withTidspunkt(LocalDateTime tidspunkt) {
         this.tidspunkt = tidspunkt;
@@ -51,15 +53,21 @@ public class BeskjedBuilder {
         return this;
     }
 
+    public BeskjedBuilder withEksternVarsling(Boolean eksternVarsling) {
+        this.eksternVarsling = eksternVarsling;
+        return this;
+    }
+
     public Beskjed build() {
         return new Beskjed(
-                ValidationUtil.localDateTimeToUtcTimestamp(tidspunkt, "tidspunkt", true),
-                ValidationUtil.localDateTimeToUtcTimestamp(synligFremTil, "synligFremTil", false),
+                ValidationUtil.localDateTimeToUtcTimestamp(tidspunkt, "tidspunkt", ValidationUtil.IS_REQUIRED_TIDSPUNKT),
+                ValidationUtil.localDateTimeToUtcTimestamp(synligFremTil, "synligFremTil", ValidationUtil.IS_REQUIRED_SYNLIGFREMTIL),
                 ValidationUtil.validateFodselsnummer(fodselsnummer),
-                ValidationUtil.validateNonNullFieldMaxLength(grupperingsId, "grupperingsId", 100),
-                ValidationUtil.validateNonNullFieldMaxLength(tekst, "tekst", 500),
-                ValidationUtil.validateLinkAndConvertToString(link, "link", 200, false),
-                ValidationUtil.validateSikkerhetsnivaa(sikkerhetsnivaa)
+                ValidationUtil.validateNonNullFieldMaxLength(grupperingsId, "grupperingsId", ValidationUtil.MAX_LENGTH_GRUPPERINGSID),
+                ValidationUtil.validateNonNullFieldMaxLength(tekst, "tekst", ValidationUtil.MAX_LENGTH_TEXT_BESKJED),
+                ValidationUtil.validateLinkAndConvertToString(link, "link", ValidationUtil.MAX_LENGTH_LINK, ValidationUtil.isLinkRequired(Eventtype.BESKJED)),
+                ValidationUtil.validateSikkerhetsnivaa(sikkerhetsnivaa),
+                eksternVarsling
         );
     }
 }

@@ -1,6 +1,8 @@
 package no.nav.brukernotifikasjon.schemas.builders.util;
 
+import no.nav.brukernotifikasjon.schemas.builders.domain.Eventtype;
 import no.nav.brukernotifikasjon.schemas.builders.exception.FieldValidationException;
+import no.nav.brukernotifikasjon.schemas.builders.exception.UnknownEventtypeException;
 import org.junit.jupiter.api.Test;
 
 import java.net.URL;
@@ -79,4 +81,56 @@ class ValidationUtilTest {
     void skalIkkeKasteExceptionHvisLinkErNullOgIkkePaakrevd() {
         assertDoesNotThrow(() -> ValidationUtil.validateLinkAndConvertToString(null, "testlink", 10, false));
     }
+
+    @Test
+    void skalIkkeKasteExceptionHvisLinkErEnTomString() {
+        assertDoesNotThrow(() -> ValidationUtil.validateLinkAndConvertToURL(""));
+    }
+
+    @Test
+    void skalIkkeKasteExceptionHvisLinkErEnGyldigUrl() {
+        assertDoesNotThrow(() -> ValidationUtil.validateLinkAndConvertToURL("http://dummyurl.no"));
+    }
+
+    @Test
+    void skalKasteExceptionHvisLinkIkkeKanKonverteresTilUrl() {
+        assertThrows(FieldValidationException.class, () -> ValidationUtil.validateLinkAndConvertToURL("ugyldigUrl"));
+    }
+
+    @Test
+    void skalIkkeKasteExceptionHvisInputMatcherTypeneTilStatusGlobal() {
+        assertDoesNotThrow(() -> ValidationUtil.validateStatusGlobal("FERDIG"));
+        assertDoesNotThrow(() -> ValidationUtil.validateStatusGlobal("UNDER_BEHANDLING"));
+        assertDoesNotThrow(() -> ValidationUtil.validateStatusGlobal("MOTTATT"));
+        assertDoesNotThrow(() -> ValidationUtil.validateStatusGlobal("SENDT"));
+    }
+
+    @Test
+    void skalKasteExceptionHvisInputIkkeMatcherTypeneTilStatusGlobal() {
+        assertThrows(FieldValidationException.class, () -> ValidationUtil.validateStatusGlobal("noMatch"));
+    }
+
+    @Test
+    void skalKasteExceptionHvisStatusGlobalErEnTomString() {
+        assertThrows(FieldValidationException.class, () -> ValidationUtil.validateStatusGlobal(""));
+    }
+
+    @Test
+    void skalKasteExceptionHvisStatusGlobalErNull() {
+        assertThrows(FieldValidationException.class, () -> ValidationUtil.validateStatusGlobal(null));
+    }
+
+    @Test
+    void skalIkkeKasteExceptionMedKjentTypeevent() {
+        assertDoesNotThrow(() -> ValidationUtil.isLinkRequired(Eventtype.OPPGAVE));
+        assertDoesNotThrow(() -> ValidationUtil.isLinkRequired(Eventtype.BESKJED));
+        assertDoesNotThrow(() -> ValidationUtil.isLinkRequired(Eventtype.INNBOKS));
+        assertDoesNotThrow(() -> ValidationUtil.isLinkRequired(Eventtype.STATUSOPPDATERING));
+    }
+
+    @Test
+    void skalKasteExceptionHvisTypeeventErNull() {
+        assertThrows(UnknownEventtypeException.class, () -> ValidationUtil.isLinkRequired(null));
+    }
+
 }

@@ -26,6 +26,7 @@ class OppgaveBuilderTest {
     private URL expectedLink;
     private String expectedTekst;
     private LocalDateTime expectedTidspunkt;
+    private Boolean eksternVarsling;
 
     @BeforeAll
     void setUp() throws MalformedURLException {
@@ -35,6 +36,7 @@ class OppgaveBuilderTest {
         expectedLink = new URL("https://gyldig.url");
         expectedTekst = "Du må sende nytt meldekort";
         expectedTidspunkt = LocalDateTime.now();
+        eksternVarsling = false;
     }
 
     @Test
@@ -49,6 +51,7 @@ class OppgaveBuilderTest {
         assertThat(oppgave.getTekst(), is(expectedTekst));
         long expectedTidspunktAsUtcLong = expectedTidspunkt.toInstant(ZoneOffset.UTC).toEpochMilli();
         assertThat(oppgave.getTidspunkt(), is(expectedTidspunktAsUtcLong));
+        assertThat(oppgave.getEksternVarsling(), is(eksternVarsling));
     }
 
     @Test
@@ -134,6 +137,5 @@ class OppgaveBuilderTest {
                 .withLink(expectedLink)
                 .withTekst(expectedTekst)
                 .withTidspunkt(expectedTidspunkt);
-
     }
 }

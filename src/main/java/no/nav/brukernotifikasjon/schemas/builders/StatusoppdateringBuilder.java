@@ -1,6 +1,7 @@
 package no.nav.brukernotifikasjon.schemas.builders;
 
 import no.nav.brukernotifikasjon.schemas.Statusoppdatering;
+import no.nav.brukernotifikasjon.schemas.builders.domain.Eventtype;
 import no.nav.brukernotifikasjon.schemas.builders.domain.StatusGlobal;
 import no.nav.brukernotifikasjon.schemas.builders.util.ValidationUtil;
 
@@ -60,13 +61,13 @@ public class StatusoppdateringBuilder {
 
     public Statusoppdatering build() {
         return new Statusoppdatering(
-                ValidationUtil.localDateTimeToUtcTimestamp(tidspunkt, "tidspunkt", true),
-                ValidationUtil.validateNonNullFieldMaxLength(grupperingsId, "grupperingsId", 100),
-                ValidationUtil.validateLinkAndConvertToString(link, "link", 200, false),
+                ValidationUtil.localDateTimeToUtcTimestamp(tidspunkt, "tidspunkt", ValidationUtil.IS_REQUIRED_TIDSPUNKT),
+                ValidationUtil.validateNonNullFieldMaxLength(grupperingsId, "grupperingsId", ValidationUtil.MAX_LENGTH_GRUPPERINGSID),
+                ValidationUtil.validateLinkAndConvertToString(link, "link", ValidationUtil.MAX_LENGTH_LINK, ValidationUtil.isLinkRequired(Eventtype.STATUSOPPDATERING)),
                 ValidationUtil.validateSikkerhetsnivaa(sikkerhetsnivaa),
-                ValidationUtil.validateNonNullField(statusGlobal, "statusGlobal").toString(),
-                ValidationUtil.validateNonNullFieldMaxLength(statusIntern, "statusIntern", 100),
-                ValidationUtil.validateNonNullFieldMaxLength(sakstema, "sakstema", 50),
+                ValidationUtil.validateStatusGlobal(statusGlobal),
+                ValidationUtil.validateNonNullFieldMaxLength(statusIntern, "statusIntern", ValidationUtil.MAX_LENGTH_STATUSINTERN),
+                ValidationUtil.validateNonNullFieldMaxLength(sakstema, "sakstema", ValidationUtil.MAX_LENGTH_SAKSTEMA),
                 ValidationUtil.validateFodselsnummer(fodselsnummer)
         );
     }
