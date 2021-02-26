@@ -76,16 +76,6 @@ public class ValidationUtil {
         }
     }
 
-    public static boolean isLinkRequired(Eventtype eventtype) {
-        if (Eventtype.OPPGAVE == eventtype) {
-            return true;
-        } else if (Eventtype.BESKJED == eventtype || Eventtype.STATUSOPPDATERING == eventtype || Eventtype.INNBOKS == eventtype) {
-            return false;
-        } else {
-            throw new UnknownEventtypeException("Vi finner ikke denne eventtypen, og dermed vet vi ikke om link er obligatorisk. Blir det sendt inn en av eventtypene som ligger i builders/domain/Eventtype?");
-        }
-    }
-
     public static Long localDateTimeToUtcTimestamp(LocalDateTime dataAndTime, String fieldName, boolean required) {
         if (dataAndTime != null) {
             try {
@@ -109,31 +99,6 @@ public class ValidationUtil {
         return validateMaxLength(field, fieldName, maxLength);
     }
 
-    public static URL validateLinkAndConvertToURL(String link) {
-        if (link.equals("")) {
-            return null;
-        }
-
-        try {
-            return new URL(link);
-        } catch (Exception exception) {
-            FieldValidationException fve = new FieldValidationException("Kunne ikke konvertere link til URL.");
-            fve.addContext("link-felt", link);
-            fve.addContext("exception", exception);
-            throw fve;
-        }
-    }
-
-    public static String validateLinkAndConvertToString(URL field, String fieldName, int maxLength, boolean required) {
-        if (required && field == null) {
-            throw new FieldValidationException("Feltet " + fieldName + " kan ikke være null.");
-        } else if (field != null && field.toString().length() > maxLength) {
-            throw new FieldValidationException("Feltet " + fieldName + " kan ikke inneholde mer enn " + maxLength + " tegn.");
-        } else {
-            return field != null ? field.toString() : "";
-        }
-    }
-
     static boolean isPossibleFodselsnummer(String field) {
         if (isCorrectLengthForFodselsnummer(field)) {
             return elevenDigits.matcher(field).find();
@@ -153,5 +118,40 @@ public class ValidationUtil {
             throw fve;
         }
         return field;
+    }
+
+    public static <T> String validateLinkAndConvertToString(T field, String fieldName, int maxLength, boolean required) {
+        if (required) {
+            validateNonNullField(field, fieldName);
+        }
+        if (field != null) {
+            validateMaxLength(field.toString(), fieldName, maxLength);
+        }
+        return validateUrl(field);
+    }
+
+    private static <T> String validateUrl(T link) {
+        if (link == null || link.equals("")) {
+            return "";
+        }
+
+        try {
+            return new URL(link.toString()).toString();
+        } catch (Exception exception) {
+            FieldValidationException fve = new FieldValidationException("Kunne ikke konvertere link til URL.");
+            fve.addContext("link-felt", link);
+            fve.addContext("exception", exception);
+            throw fve;
+        }
+    }
+
+    public static boolean isLinkRequired(Eventtype eventtype) {
+        if (Eventtype.OPPGAVE == eventtype) {
+            return true;
+        } else if (Eventtype.BESKJED == eventtype || Eventtype.STATUSOPPDATERING == eventtype || Eventtype.INNBOKS == eventtype) {
+            return false;
+        } else {
+            throw new UnknownEventtypeException("Vi finner ikke denne eventtypen, og dermed vet vi ikke om link er obligatorisk. Blir det sendt inn en av eventtypene som ligger i builders/domain/Eventtype?");
+        }
     }
 }
