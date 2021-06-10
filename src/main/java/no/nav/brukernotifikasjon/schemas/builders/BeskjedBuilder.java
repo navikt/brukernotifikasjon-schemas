@@ -2,6 +2,7 @@ package no.nav.brukernotifikasjon.schemas.builders;
 
 import no.nav.brukernotifikasjon.schemas.Beskjed;
 import no.nav.brukernotifikasjon.schemas.builders.domain.Eventtype;
+import no.nav.brukernotifikasjon.schemas.builders.domain.PreferertKanal;
 import no.nav.brukernotifikasjon.schemas.builders.util.ValidationUtil;
 
 import java.net.URL;
@@ -17,6 +18,7 @@ public class BeskjedBuilder {
     private URL link;
     private Integer sikkerhetsnivaa;
     private Boolean eksternVarsling = false;
+    private PreferertKanal preferertKanal;
 
     public BeskjedBuilder withTidspunkt(LocalDateTime tidspunkt) {
         this.tidspunkt = tidspunkt;
@@ -58,6 +60,11 @@ public class BeskjedBuilder {
         return this;
     }
 
+    public BeskjedBuilder withPreferertKanal(PreferertKanal preferertKanal) {
+        this.preferertKanal = preferertKanal;
+        return this;
+    }
+
     public Beskjed build() {
         return new Beskjed(
                 ValidationUtil.localDateTimeToUtcTimestamp(tidspunkt, "tidspunkt", ValidationUtil.IS_REQUIRED_TIDSPUNKT),
@@ -67,7 +74,8 @@ public class BeskjedBuilder {
                 ValidationUtil.validateNonNullFieldMaxLength(tekst, "tekst", ValidationUtil.MAX_LENGTH_TEXT_BESKJED),
                 ValidationUtil.validateLinkAndConvertToString(link, "link", ValidationUtil.MAX_LENGTH_LINK, ValidationUtil.isLinkRequired(Eventtype.BESKJED)),
                 ValidationUtil.validateSikkerhetsnivaa(sikkerhetsnivaa),
-                eksternVarsling
+                eksternVarsling,
+                ValidationUtil.validatePreferertKanal(eksternVarsling, preferertKanal)
         );
     }
 }

@@ -1,6 +1,7 @@
 package no.nav.brukernotifikasjon.schemas.builders;
 
 import no.nav.brukernotifikasjon.schemas.Oppgave;
+import no.nav.brukernotifikasjon.schemas.builders.domain.PreferertKanal;
 import no.nav.brukernotifikasjon.schemas.builders.exception.FieldValidationException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -15,6 +16,7 @@ import java.util.Collections;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -26,7 +28,8 @@ class OppgaveBuilderTest {
     private URL expectedLink;
     private String expectedTekst;
     private LocalDateTime expectedTidspunkt;
-    private Boolean eksternVarsling;
+    private Boolean expectedEksternVarsling;
+    private PreferertKanal expectedPreferertKanal;
 
     @BeforeAll
     void setUp() throws MalformedURLException {
@@ -36,7 +39,8 @@ class OppgaveBuilderTest {
         expectedLink = new URL("https://gyldig.url");
         expectedTekst = "Du må sende nytt meldekort";
         expectedTidspunkt = LocalDateTime.now();
-        eksternVarsling = false;
+        expectedEksternVarsling = true;
+        expectedPreferertKanal = PreferertKanal.SMS;
     }
 
     @Test
@@ -51,7 +55,7 @@ class OppgaveBuilderTest {
         assertThat(oppgave.getTekst(), is(expectedTekst));
         long expectedTidspunktAsUtcLong = expectedTidspunkt.toInstant(ZoneOffset.UTC).toEpochMilli();
         assertThat(oppgave.getTidspunkt(), is(expectedTidspunktAsUtcLong));
-        assertThat(oppgave.getEksternVarsling(), is(eksternVarsling));
+        assertThat(oppgave.getEksternVarsling(), is(expectedEksternVarsling));
     }
 
     @Test
@@ -129,6 +133,23 @@ class OppgaveBuilderTest {
         assertThat(exceptionThrown.getMessage(), containsString("tidspunkt"));
     }
 
+    @Test
+    void skalIkkeGodtaPrefertKanalHvisIkkeEksternVarslingErSatt() {
+        OppgaveBuilder builder = getBuilderWithDefaultValues()
+                .withEksternVarsling(false)
+                .withPreferertKanal(PreferertKanal.SMS);
+        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
+        assertThat(exceptionThrown.getMessage(), containsString("preferertKanal"));
+    }
+
+    @Test
+    void skalGodtaManglendePreferertKanal() {
+        OppgaveBuilder builder = getBuilderWithDefaultValues()
+                .withEksternVarsling(true)
+                .withPreferertKanal(null);
+        assertDoesNotThrow(() -> builder.build());
+    }
+
     private OppgaveBuilder getBuilderWithDefaultValues() {
         return new OppgaveBuilder()
                 .withFodselsnummer(expectedFodselsnr)
@@ -136,6 +157,8 @@ class OppgaveBuilderTest {
                 .withSikkerhetsnivaa(expectedSikkerhetsnivaa)
                 .withLink(expectedLink)
                 .withTekst(expectedTekst)
-                .withTidspunkt(expectedTidspunkt);
+                .withTidspunkt(expectedTidspunkt)
+                .withEksternVarsling(expectedEksternVarsling)
+                .withPreferertKanal(expectedPreferertKanal);
     }
 }

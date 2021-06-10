@@ -1,6 +1,7 @@
 package no.nav.brukernotifikasjon.schemas.builders.util;
 
 import no.nav.brukernotifikasjon.schemas.builders.domain.Eventtype;
+import no.nav.brukernotifikasjon.schemas.builders.domain.PreferertKanal;
 import no.nav.brukernotifikasjon.schemas.builders.domain.StatusGlobal;
 import no.nav.brukernotifikasjon.schemas.builders.exception.FieldValidationException;
 import no.nav.brukernotifikasjon.schemas.builders.exception.UnknownEventtypeException;
@@ -134,16 +135,28 @@ public class ValidationUtil {
         }
     }
 
+    public static <T> String validatePreferertKanal(boolean eksternVarsling, T field) {
+        String fieldName = "preferertKanal";
+        if(!eksternVarsling && field != null) {
+            throw new FieldValidationException("Feltet " + fieldName + " kan ikke settes så lenge eksternVarsling er satt til false.");
+        } else if(field != null) {
+            try {
+                return PreferertKanal.valueOf(field.toString()).toString();
+            } catch (Exception exception) {
+                FieldValidationException fve = new FieldValidationException("PreferertKanal må matche en av kanalene du finner i builders/domain/PreferertKanal. Verdien som ble sendt inn: " + field.toString() + ", matcher ikke dette.");
+                fve.addContext("Exception", exception);
+                throw fve;
+            }
+        }
+        return null;
+    }
+
     static boolean isPossibleFodselsnummer(String field) {
         if (isCorrectLengthForFodselsnummer(field)) {
             return elevenDigits.matcher(field).find();
         } else {
             return false;
         }
-    }
-
-    private static boolean isCorrectLengthForFodselsnummer(String field) {
-        return field.length() == MAX_LENGTH_FODSELSNUMMER;
     }
 
     public static String validateMaxLength(String field, String fieldName, int maxLength) {
@@ -153,5 +166,9 @@ public class ValidationUtil {
             throw fve;
         }
         return field;
+    }
+
+    private static boolean isCorrectLengthForFodselsnummer(String field) {
+        return field.length() == MAX_LENGTH_FODSELSNUMMER;
     }
 }

@@ -1,6 +1,7 @@
 package no.nav.brukernotifikasjon.schemas.builders.util;
 
 import no.nav.brukernotifikasjon.schemas.builders.domain.Eventtype;
+import no.nav.brukernotifikasjon.schemas.builders.domain.PreferertKanal;
 import no.nav.brukernotifikasjon.schemas.builders.exception.FieldValidationException;
 import no.nav.brukernotifikasjon.schemas.builders.exception.UnknownEventtypeException;
 import org.junit.jupiter.api.Test;
@@ -133,4 +134,19 @@ class ValidationUtilTest {
         assertThrows(UnknownEventtypeException.class, () -> ValidationUtil.isLinkRequired(null));
     }
 
+    @Test
+    void skalIkkeKasteExceptionHvisInputMatcherTypeneTilPrefertKanal() {
+        assertDoesNotThrow(() -> ValidationUtil.validatePreferertKanal(true, PreferertKanal.EPOST));
+        assertDoesNotThrow(() -> ValidationUtil.validatePreferertKanal(true, PreferertKanal.SMS));
+    }
+
+    @Test
+    void skalKasteExceptionHvisInputIkkeMatcherTypeneTilPreferertKanal() {
+        assertThrows(FieldValidationException.class, () -> ValidationUtil.validatePreferertKanal(true, "noMatch"));
+    }
+
+    @Test
+    void skalKasteExceptionHvisPrefertKanalSettesUtenAtEksternVarslingErSattTilTrue() {
+        assertThrows(FieldValidationException.class, () -> ValidationUtil.validatePreferertKanal(false, PreferertKanal.SMS));
+    }
 }

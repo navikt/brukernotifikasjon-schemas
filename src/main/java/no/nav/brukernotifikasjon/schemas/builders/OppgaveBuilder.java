@@ -2,6 +2,7 @@ package no.nav.brukernotifikasjon.schemas.builders;
 
 import no.nav.brukernotifikasjon.schemas.Oppgave;
 import no.nav.brukernotifikasjon.schemas.builders.domain.Eventtype;
+import no.nav.brukernotifikasjon.schemas.builders.domain.PreferertKanal;
 import no.nav.brukernotifikasjon.schemas.builders.util.ValidationUtil;
 
 import java.net.URL;
@@ -16,6 +17,7 @@ public class OppgaveBuilder {
     private URL link;
     private Integer sikkerhetsnivaa;
     private Boolean eksternVarsling = false;
+    private PreferertKanal preferertKanal;
 
     public OppgaveBuilder withTidspunkt(LocalDateTime tidspunkt) {
         this.tidspunkt = tidspunkt;
@@ -52,6 +54,11 @@ public class OppgaveBuilder {
         return this;
     }
 
+    public OppgaveBuilder withPreferertKanal(PreferertKanal preferertKanal) {
+        this.preferertKanal = preferertKanal;
+        return this;
+    }
+
     public Oppgave build() {
         return new Oppgave(
                 ValidationUtil.localDateTimeToUtcTimestamp(tidspunkt, "tidspunkt", ValidationUtil.IS_REQUIRED_TIDSPUNKT),
@@ -60,7 +67,8 @@ public class OppgaveBuilder {
                 ValidationUtil.validateNonNullFieldMaxLength(tekst, "tekst", ValidationUtil.MAX_LENGTH_TEXT_OPPGAVE),
                 ValidationUtil.validateLinkAndConvertToString(link, "link", ValidationUtil.MAX_LENGTH_LINK, ValidationUtil.isLinkRequired(Eventtype.OPPGAVE)),
                 ValidationUtil.validateSikkerhetsnivaa(sikkerhetsnivaa),
-                eksternVarsling
+                eksternVarsling,
+                ValidationUtil.validatePreferertKanal(eksternVarsling, preferertKanal)
         );
     }
 }
