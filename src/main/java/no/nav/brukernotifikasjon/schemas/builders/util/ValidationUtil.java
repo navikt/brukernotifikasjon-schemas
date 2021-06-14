@@ -1,7 +1,7 @@
 package no.nav.brukernotifikasjon.schemas.builders.util;
 
+import no.nav.brukernotifikasjon.schemas.PreferertKanal;
 import no.nav.brukernotifikasjon.schemas.builders.domain.Eventtype;
-import no.nav.brukernotifikasjon.schemas.builders.domain.PreferertKanal;
 import no.nav.brukernotifikasjon.schemas.builders.domain.StatusGlobal;
 import no.nav.brukernotifikasjon.schemas.builders.exception.FieldValidationException;
 import no.nav.brukernotifikasjon.schemas.builders.exception.UnknownEventtypeException;
@@ -9,6 +9,7 @@ import no.nav.brukernotifikasjon.schemas.builders.exception.UnknownEventtypeExce
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.List;
 import java.util.regex.Pattern;
 
 public class ValidationUtil {
@@ -135,20 +136,13 @@ public class ValidationUtil {
         }
     }
 
-    public static <T> String validatePreferertKanal(boolean eksternVarsling, T field) {
-        String fieldName = "preferertKanal";
-        if(!eksternVarsling && field != null) {
+    public static <T> List<PreferertKanal> validatePrefererteKanaler(boolean eksternVarsling, List<PreferertKanal> field) {
+        String fieldName = "prefererteKanaler";
+        if(!eksternVarsling && (field != null || !field.isEmpty())) {
             throw new FieldValidationException("Feltet " + fieldName + " kan ikke settes så lenge eksternVarsling er satt til false.");
-        } else if(field != null) {
-            try {
-                return PreferertKanal.valueOf(field.toString()).toString();
-            } catch (Exception exception) {
-                FieldValidationException fve = new FieldValidationException("PreferertKanal må matche en av kanalene du finner i builders/domain/PreferertKanal. Verdien som ble sendt inn: " + field.toString() + ", matcher ikke dette.");
-                fve.addContext("Exception", exception);
-                throw fve;
-            }
+        } else {
+            return field;
         }
-        return null;
     }
 
     static boolean isPossibleFodselsnummer(String field) {

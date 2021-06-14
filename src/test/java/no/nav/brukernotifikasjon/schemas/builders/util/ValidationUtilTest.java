@@ -1,13 +1,17 @@
 package no.nav.brukernotifikasjon.schemas.builders.util;
 
+import no.nav.brukernotifikasjon.schemas.PreferertKanal;
 import no.nav.brukernotifikasjon.schemas.builders.domain.Eventtype;
-import no.nav.brukernotifikasjon.schemas.builders.domain.PreferertKanal;
 import no.nav.brukernotifikasjon.schemas.builders.exception.FieldValidationException;
 import no.nav.brukernotifikasjon.schemas.builders.exception.UnknownEventtypeException;
 import org.junit.jupiter.api.Test;
 
 import java.net.URL;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
+import static java.util.Collections.emptyList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -135,18 +139,13 @@ class ValidationUtilTest {
     }
 
     @Test
-    void skalIkkeKasteExceptionHvisInputMatcherTypeneTilPrefertKanal() {
-        assertDoesNotThrow(() -> ValidationUtil.validatePreferertKanal(true, PreferertKanal.EPOST));
-        assertDoesNotThrow(() -> ValidationUtil.validatePreferertKanal(true, PreferertKanal.SMS));
+    void skalIkkeKasteExceptionHvisPreferteKanalerHvisPreferteKanalerIkkeErSatt() {
+        assertDoesNotThrow(() -> ValidationUtil.validatePrefererteKanaler(true, null));
+        assertDoesNotThrow(() -> ValidationUtil.validatePrefererteKanaler(true, emptyList()));
     }
 
     @Test
-    void skalKasteExceptionHvisInputIkkeMatcherTypeneTilPreferertKanal() {
-        assertThrows(FieldValidationException.class, () -> ValidationUtil.validatePreferertKanal(true, "noMatch"));
-    }
-
-    @Test
-    void skalKasteExceptionHvisPrefertKanalSettesUtenAtEksternVarslingErSattTilTrue() {
-        assertThrows(FieldValidationException.class, () -> ValidationUtil.validatePreferertKanal(false, PreferertKanal.SMS));
+    void skalKasteExceptionHvisPreferteKanalerSettesUtenAtEksternVarslingErSattTilTrue() {
+        assertThrows(FieldValidationException.class, () -> ValidationUtil.validatePrefererteKanaler(false, Arrays.asList(PreferertKanal.EPOST)));
     }
 }

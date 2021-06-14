@@ -1,7 +1,7 @@
 package no.nav.brukernotifikasjon.schemas.builders;
 
 import no.nav.brukernotifikasjon.schemas.Beskjed;
-import no.nav.brukernotifikasjon.schemas.builders.domain.PreferertKanal;
+import no.nav.brukernotifikasjon.schemas.PreferertKanal;
 import no.nav.brukernotifikasjon.schemas.builders.exception.FieldValidationException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -13,7 +13,9 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.util.Collections;
+import java.util.List;
 
+import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -31,7 +33,7 @@ public class BeskjedBuilderTest {
     private LocalDateTime expectedTidspunkt;
     private LocalDateTime expectedSynligFremTil;
     private Boolean expectedEksternVarsling;
-    private PreferertKanal expectedPreferertKanal;
+    private List<PreferertKanal> expectedPrefererteKanaler;
 
     @BeforeAll
     void setUp() throws MalformedURLException {
@@ -43,7 +45,7 @@ public class BeskjedBuilderTest {
         expectedTidspunkt = LocalDateTime.now(ZoneId.of("UTC"));
         expectedSynligFremTil = expectedTidspunkt.plusDays(2);
         expectedEksternVarsling = true;
-        expectedPreferertKanal = PreferertKanal.SMS;
+        expectedPrefererteKanaler = asList(PreferertKanal.SMS);
     }
 
     @Test
@@ -61,7 +63,7 @@ public class BeskjedBuilderTest {
         long expectedSynligFremTilAsUtcLong = expectedSynligFremTil.toInstant(ZoneOffset.UTC).toEpochMilli();
         assertThat(beskjed.getSynligFremTil(), is(expectedSynligFremTilAsUtcLong));
         assertThat(beskjed.getEksternVarsling(), is(expectedEksternVarsling));
-        assertThat(beskjed.getPreferertKanal(), is(PreferertKanal.SMS.toString()));
+        assertThat(beskjed.getPrefererteKanaler(), is(expectedPrefererteKanaler));
     }
 
     @Test
@@ -148,16 +150,16 @@ public class BeskjedBuilderTest {
     void skalIkkeGodtaPrefertKanalHvisIkkeEksternVarslingErSatt() {
         BeskjedBuilder builder = getBuilderWithDefaultValues()
                 .withEksternVarsling(false)
-                .withPreferertKanal(PreferertKanal.SMS);
+                .withPrefererteKanaler(PreferertKanal.SMS);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
-        assertThat(exceptionThrown.getMessage(), containsString("preferertKanal"));
+        assertThat(exceptionThrown.getMessage(), containsString("prefererteKanaler"));
     }
 
     @Test
     void skalGodtaManglendePreferertKanal() {
         BeskjedBuilder builder = getBuilderWithDefaultValues()
                 .withEksternVarsling(true)
-                .withPreferertKanal(null);
+                .withPrefererteKanaler(null);
         assertDoesNotThrow(() -> builder.build());
     }
 
@@ -171,6 +173,6 @@ public class BeskjedBuilderTest {
                 .withTidspunkt(expectedTidspunkt)
                 .withSynligFremTil(expectedSynligFremTil)
                 .withEksternVarsling(expectedEksternVarsling)
-                .withPreferertKanal(expectedPreferertKanal);
+                .withPrefererteKanaler(expectedPrefererteKanaler.toArray(new PreferertKanal[1]));
     }
 }

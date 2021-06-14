@@ -1,12 +1,14 @@
 package no.nav.brukernotifikasjon.schemas.builders;
 
 import no.nav.brukernotifikasjon.schemas.Oppgave;
+import no.nav.brukernotifikasjon.schemas.PreferertKanal;
 import no.nav.brukernotifikasjon.schemas.builders.domain.Eventtype;
-import no.nav.brukernotifikasjon.schemas.builders.domain.PreferertKanal;
 import no.nav.brukernotifikasjon.schemas.builders.util.ValidationUtil;
 
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
 
 public class OppgaveBuilder {
 
@@ -17,7 +19,7 @@ public class OppgaveBuilder {
     private URL link;
     private Integer sikkerhetsnivaa;
     private Boolean eksternVarsling = false;
-    private PreferertKanal preferertKanal;
+    private List<PreferertKanal> prefererteKanaler;
 
     public OppgaveBuilder withTidspunkt(LocalDateTime tidspunkt) {
         this.tidspunkt = tidspunkt;
@@ -54,8 +56,10 @@ public class OppgaveBuilder {
         return this;
     }
 
-    public OppgaveBuilder withPreferertKanal(PreferertKanal preferertKanal) {
-        this.preferertKanal = preferertKanal;
+    public OppgaveBuilder withPrefererteKanaler(PreferertKanal... prefererteKanaler) {
+        if(prefererteKanaler != null) {
+            this.prefererteKanaler = Arrays.asList(prefererteKanaler);
+        }
         return this;
     }
 
@@ -68,7 +72,7 @@ public class OppgaveBuilder {
                 ValidationUtil.validateLinkAndConvertToString(link, "link", ValidationUtil.MAX_LENGTH_LINK, ValidationUtil.isLinkRequired(Eventtype.OPPGAVE)),
                 ValidationUtil.validateSikkerhetsnivaa(sikkerhetsnivaa),
                 eksternVarsling,
-                ValidationUtil.validatePreferertKanal(eksternVarsling, preferertKanal)
+                ValidationUtil.validatePrefererteKanaler(eksternVarsling, prefererteKanaler)
         );
     }
 }

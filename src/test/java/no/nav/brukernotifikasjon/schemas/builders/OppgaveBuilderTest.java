@@ -1,7 +1,7 @@
 package no.nav.brukernotifikasjon.schemas.builders;
 
 import no.nav.brukernotifikasjon.schemas.Oppgave;
-import no.nav.brukernotifikasjon.schemas.builders.domain.PreferertKanal;
+import no.nav.brukernotifikasjon.schemas.PreferertKanal;
 import no.nav.brukernotifikasjon.schemas.builders.exception.FieldValidationException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -11,8 +11,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
+import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -29,7 +32,7 @@ class OppgaveBuilderTest {
     private String expectedTekst;
     private LocalDateTime expectedTidspunkt;
     private Boolean expectedEksternVarsling;
-    private PreferertKanal expectedPreferertKanal;
+    private List<PreferertKanal> expectedPrefererteKanaler;
 
     @BeforeAll
     void setUp() throws MalformedURLException {
@@ -40,7 +43,7 @@ class OppgaveBuilderTest {
         expectedTekst = "Du må sende nytt meldekort";
         expectedTidspunkt = LocalDateTime.now();
         expectedEksternVarsling = true;
-        expectedPreferertKanal = PreferertKanal.SMS;
+        expectedPrefererteKanaler = asList(PreferertKanal.SMS);
     }
 
     @Test
@@ -137,16 +140,16 @@ class OppgaveBuilderTest {
     void skalIkkeGodtaPrefertKanalHvisIkkeEksternVarslingErSatt() {
         OppgaveBuilder builder = getBuilderWithDefaultValues()
                 .withEksternVarsling(false)
-                .withPreferertKanal(PreferertKanal.SMS);
+                .withPrefererteKanaler(PreferertKanal.SMS);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
-        assertThat(exceptionThrown.getMessage(), containsString("preferertKanal"));
+        assertThat(exceptionThrown.getMessage(), containsString("prefererteKanaler"));
     }
 
     @Test
     void skalGodtaManglendePreferertKanal() {
         OppgaveBuilder builder = getBuilderWithDefaultValues()
                 .withEksternVarsling(true)
-                .withPreferertKanal(null);
+                .withPrefererteKanaler(null);
         assertDoesNotThrow(() -> builder.build());
     }
 
@@ -159,6 +162,6 @@ class OppgaveBuilderTest {
                 .withTekst(expectedTekst)
                 .withTidspunkt(expectedTidspunkt)
                 .withEksternVarsling(expectedEksternVarsling)
-                .withPreferertKanal(expectedPreferertKanal);
+                .withPrefererteKanaler(expectedPrefererteKanaler.toArray(new PreferertKanal[1]));
     }
 }
