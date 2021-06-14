@@ -41,17 +41,12 @@
             "default": false
         },
         {
-            "default": [],
             "name": "prefererteKanaler",
             "type": {
                "type": "array",
-               "name": "preferertKanal",
-               "items": {
-                    "type": "enum",
-                    "symbols": ["SMS", "EPOST"],
-                    "name": "PreferertKanal"
-                }
-            }
+               "items": "string"
+            },
+            "default": []
         }
     ]
 }
