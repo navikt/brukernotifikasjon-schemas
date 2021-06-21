@@ -1,6 +1,7 @@
 package no.nav.brukernotifikasjon.schemas.builders.util;
 
 import no.nav.brukernotifikasjon.schemas.builders.domain.Eventtype;
+import no.nav.brukernotifikasjon.schemas.builders.domain.PreferertKanal;
 import no.nav.brukernotifikasjon.schemas.builders.domain.StatusGlobal;
 import no.nav.brukernotifikasjon.schemas.builders.exception.FieldValidationException;
 import no.nav.brukernotifikasjon.schemas.builders.exception.UnknownEventtypeException;
@@ -8,7 +9,10 @@ import no.nav.brukernotifikasjon.schemas.builders.exception.UnknownEventtypeExce
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.List;
 import java.util.regex.Pattern;
+
+import static java.util.stream.Collectors.toList;
 
 public class ValidationUtil {
 
@@ -134,16 +138,26 @@ public class ValidationUtil {
         }
     }
 
+    public static List<String> validatePrefererteKanaler(boolean eksternVarsling, List<PreferertKanal> field) {
+        String fieldName = "prefererteKanaler";
+        if(field == null) {
+            return null;
+        } else if(!eksternVarsling && !field.isEmpty()) {
+            throw new FieldValidationException("Feltet " + fieldName + " kan ikke settes så lenge eksternVarsling er satt til true.");
+        } else if(field != null){
+            List<String> prefererteKanaler = field.stream().map(preferertKanal -> preferertKanal.toString()).collect(toList());
+            return prefererteKanaler;
+        } else {
+            return null;
+        }
+    }
+
     static boolean isPossibleFodselsnummer(String field) {
         if (isCorrectLengthForFodselsnummer(field)) {
             return elevenDigits.matcher(field).find();
         } else {
             return false;
         }
-    }
-
-    private static boolean isCorrectLengthForFodselsnummer(String field) {
-        return field.length() == MAX_LENGTH_FODSELSNUMMER;
     }
 
     public static String validateMaxLength(String field, String fieldName, int maxLength) {
@@ -153,5 +167,9 @@ public class ValidationUtil {
             throw fve;
         }
         return field;
+    }
+
+    private static boolean isCorrectLengthForFodselsnummer(String field) {
+        return field.length() == MAX_LENGTH_FODSELSNUMMER;
     }
 }

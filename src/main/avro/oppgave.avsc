@@ -33,6 +33,14 @@
             "name": "eksternVarsling",
             "type": "boolean",
             "default": false
+        },
+        {
+            "name": "prefererteKanaler",
+            "type": {
+               "type": "array",
+               "items": "string"
+            },
+            "default": []
         }
     ]
 }

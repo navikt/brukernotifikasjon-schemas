@@ -1,12 +1,15 @@
 package no.nav.brukernotifikasjon.schemas.builders.util;
 
 import no.nav.brukernotifikasjon.schemas.builders.domain.Eventtype;
+import no.nav.brukernotifikasjon.schemas.builders.domain.PreferertKanal;
 import no.nav.brukernotifikasjon.schemas.builders.exception.FieldValidationException;
 import no.nav.brukernotifikasjon.schemas.builders.exception.UnknownEventtypeException;
 import org.junit.jupiter.api.Test;
 
 import java.net.URL;
+import java.util.Arrays;
 
+import static java.util.Collections.emptyList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -133,4 +136,16 @@ class ValidationUtilTest {
         assertThrows(UnknownEventtypeException.class, () -> ValidationUtil.isLinkRequired(null));
     }
 
+    @Test
+    void skalIkkeKasteExceptionHvisPreferteKanalerHvisPreferteKanalerIkkeErSatt() {
+        assertDoesNotThrow(() -> ValidationUtil.validatePrefererteKanaler(true, null));
+        assertDoesNotThrow(() -> ValidationUtil.validatePrefererteKanaler(true, emptyList()));
+        assertDoesNotThrow(() -> ValidationUtil.validatePrefererteKanaler(false, null));
+        assertDoesNotThrow(() -> ValidationUtil.validatePrefererteKanaler(false, emptyList()));
+    }
+
+    @Test
+    void skalKasteExceptionHvisPreferteKanalerSettesUtenAtEksternVarslingErSattTilTrue() {
+        assertThrows(FieldValidationException.class, () -> ValidationUtil.validatePrefererteKanaler(false, Arrays.asList(PreferertKanal.EPOST)));
+    }
 }
