@@ -9,9 +9,11 @@ import no.nav.brukernotifikasjon.schemas.builders.exception.UnknownEventtypeExce
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
 
 public class ValidationUtil {
@@ -141,14 +143,14 @@ public class ValidationUtil {
     public static List<String> validatePrefererteKanaler(boolean eksternVarsling, List<PreferertKanal> field) {
         String fieldName = "prefererteKanaler";
         if(field == null) {
-            return null;
+            return emptyList();
         } else if(!eksternVarsling && !field.isEmpty()) {
-            throw new FieldValidationException("Feltet " + fieldName + " kan ikke settes så lenge eksternVarsling er satt til true.");
+            throw new FieldValidationException("Feltet " + fieldName + " kan ikke settes hvis eksternVarsling er satt til false.");
         } else if(field != null){
             List<String> prefererteKanaler = field.stream().map(preferertKanal -> preferertKanal.toString()).collect(toList());
             return prefererteKanaler;
         } else {
-            return null;
+            return emptyList();
         }
     }
 

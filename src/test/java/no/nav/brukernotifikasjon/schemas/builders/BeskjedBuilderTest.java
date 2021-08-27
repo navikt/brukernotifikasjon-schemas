@@ -157,10 +157,24 @@ public class BeskjedBuilderTest {
     }
 
     @Test
-    void skalGodtaManglendePreferertKanal() {
+    void skalGodtaNullSomPreferertKanal() {
         BeskjedBuilder builder = getBuilderWithDefaultValues()
                 .withEksternVarsling(true)
                 .withPrefererteKanaler(null);
+        assertDoesNotThrow(() -> builder.build());
+    }
+
+    @Test
+    void skalGodtaManglendePreferertKanal() {
+        BeskjedBuilder builder = new BeskjedBuilder()
+                .withFodselsnummer(expectedFodselsnr)
+                .withGrupperingsId(expectedGrupperingsId)
+                .withSikkerhetsnivaa(expectedSikkerhetsnivaa)
+                .withLink(expectedLink)
+                .withTekst(expectedTekst)
+                .withTidspunkt(expectedTidspunkt)
+                .withSynligFremTil(expectedSynligFremTil)
+                .withEksternVarsling(true);
         assertDoesNotThrow(() -> builder.build());
     }
 
