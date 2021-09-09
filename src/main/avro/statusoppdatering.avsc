@@ -33,10 +33,6 @@
         {
             "name": "sakstema",
             "type": "string"
-        },
-        {
-            "name": "fodselsnummer",
-            "type": "string"
         }
     ]
 }

@@ -1,6 +1,5 @@
 package no.nav.brukernotifikasjon.schemas.builders;
 
-import no.nav.brukernotifikasjon.schemas.Beskjed;
 import no.nav.brukernotifikasjon.schemas.Statusoppdatering;
 import no.nav.brukernotifikasjon.schemas.builders.domain.StatusGlobal;
 import org.junit.jupiter.api.Test;
@@ -35,7 +34,6 @@ public class StatusoppdateringAvroTest {
                 .setLink("https://gyldig.url")
                 .setStatusGlobal(StatusGlobal.UNDER_BEHANDLING.toString())
                 .setSakstema("FP")
-                .setFodselsnummer("12345678901")
                 .build();
     }
 }

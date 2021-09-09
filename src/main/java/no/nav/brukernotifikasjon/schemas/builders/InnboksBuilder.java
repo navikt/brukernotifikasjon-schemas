@@ -1,13 +1,13 @@
-package no.nav.brukernotifikasjon.schemas.builders.input;
+package no.nav.brukernotifikasjon.schemas.builders;
 
-import no.nav.brukernotifikasjon.schemas.input.InnboksInput;
+import no.nav.brukernotifikasjon.schemas.Innboks;
 import no.nav.brukernotifikasjon.schemas.builders.domain.Eventtype;
 import no.nav.brukernotifikasjon.schemas.builders.util.ValidationUtil;
 
 import java.net.URL;
 import java.time.LocalDateTime;
 
-public class InnboksInputBuilder {
+public class InnboksBuilder {
 
     private LocalDateTime tidspunkt;
     private String grupperingsId;
@@ -15,33 +15,33 @@ public class InnboksInputBuilder {
     private URL link;
     private Integer sikkerhetsnivaa;
 
-    public InnboksInputBuilder withTidspunkt(LocalDateTime tidspunkt) {
+    public InnboksBuilder withTidspunkt(LocalDateTime tidspunkt) {
         this.tidspunkt = tidspunkt;
         return this;
     }
 
-    public InnboksInputBuilder withGrupperingsId(String grupperingsId) {
+    public InnboksBuilder withGrupperingsId(String grupperingsId) {
         this.grupperingsId = grupperingsId;
         return this;
     }
 
-    public InnboksInputBuilder withTekst(String tekst) {
+    public InnboksBuilder withTekst(String tekst) {
         this.tekst = tekst;
         return this;
     }
 
-    public InnboksInputBuilder withLink(URL link) {
+    public InnboksBuilder withLink(URL link) {
         this.link = link;
         return this;
     }
 
-    public InnboksInputBuilder withSikkerhetsnivaa(Integer sikkerhetsnivaa) {
+    public InnboksBuilder withSikkerhetsnivaa(Integer sikkerhetsnivaa) {
         this.sikkerhetsnivaa = sikkerhetsnivaa;
         return this;
     }
 
-    public InnboksInput build() {
-        return new InnboksInput(
+    public Innboks build() {
+        return new Innboks(
                 ValidationUtil.localDateTimeToUtcTimestamp(tidspunkt, "tidspunkt", ValidationUtil.IS_REQUIRED_TIDSPUNKT),
                 ValidationUtil.validateNonNullFieldMaxLength(grupperingsId, "grupperingsId", ValidationUtil.MAX_LENGTH_GRUPPERINGSID),
                 ValidationUtil.validateNonNullFieldMaxLength(tekst, "tekst", ValidationUtil.MAX_LENGTH_TEXT_INNBOKS),

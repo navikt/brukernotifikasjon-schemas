@@ -16,7 +16,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class DoneBuilderTest {
 
-    private String expectedFodselsnr = "12345678901";
     private String expectedGrupperingsId = "3456789123456";
     private LocalDateTime expectedTidspunkt = LocalDateTime.now(ZoneId.of("UTC"));
 
@@ -25,25 +24,9 @@ public class DoneBuilderTest {
         DoneBuilder builder = getBuilderWithDefaultValues();
         Done done = builder.build();
 
-        assertThat(done.getFodselsnummer(), is(expectedFodselsnr));
         assertThat(done.getGrupperingsId(), is(expectedGrupperingsId));
         long expectedTidspunktAsUtcLong = expectedTidspunkt.toInstant(ZoneOffset.UTC).toEpochMilli();
         assertThat(done.getTidspunkt(), is(expectedTidspunktAsUtcLong));
-    }
-
-    @Test
-    void skalIkkeGodtaForLangtFodselsnummer() {
-        String tooLongFodselsnummer = String.join("", Collections.nCopies(11, "12"));
-        DoneBuilder builder = getBuilderWithDefaultValues().withFodselsnummer(tooLongFodselsnummer);
-        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
-        assertThat(exceptionThrown.getMessage(), containsString("fodselsnummer"));
-    }
-
-    @Test
-    void skalIkkeGodtaManglendeFodselsnummer() {
-        DoneBuilder builder = getBuilderWithDefaultValues().withFodselsnummer(null);
-        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
-        assertThat(exceptionThrown.getMessage(), containsString("fodselsnummer"));
     }
 
     @Test
@@ -70,7 +53,6 @@ public class DoneBuilderTest {
 
     private DoneBuilder getBuilderWithDefaultValues() {
         return new DoneBuilder()
-                .withFodselsnummer(expectedFodselsnr)
                 .withGrupperingsId(expectedGrupperingsId)
                 .withTidspunkt(expectedTidspunkt);
     }

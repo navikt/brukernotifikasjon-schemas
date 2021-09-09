@@ -1,5 +1,6 @@
 package no.nav.brukernotifikasjon.schemas.builders;
 
+
 import no.nav.brukernotifikasjon.schemas.Beskjed;
 import no.nav.brukernotifikasjon.schemas.builders.domain.Eventtype;
 import no.nav.brukernotifikasjon.schemas.builders.domain.PreferertKanal;
@@ -14,7 +15,6 @@ public class BeskjedBuilder {
 
     private LocalDateTime tidspunkt;
     private LocalDateTime synligFremTil;
-    private String fodselsnummer;
     private String grupperingsId;
     private String tekst;
     private URL link;
@@ -29,11 +29,6 @@ public class BeskjedBuilder {
 
     public BeskjedBuilder withSynligFremTil(LocalDateTime synligFremTil) {
         this.synligFremTil = synligFremTil;
-        return this;
-    }
-
-    public BeskjedBuilder withFodselsnummer(String fodselsnummer) {
-        this.fodselsnummer = fodselsnummer;
         return this;
     }
 
@@ -73,7 +68,6 @@ public class BeskjedBuilder {
         return new Beskjed(
                 ValidationUtil.localDateTimeToUtcTimestamp(tidspunkt, "tidspunkt", ValidationUtil.IS_REQUIRED_TIDSPUNKT),
                 ValidationUtil.localDateTimeToUtcTimestamp(synligFremTil, "synligFremTil", ValidationUtil.IS_REQUIRED_SYNLIGFREMTIL),
-                ValidationUtil.validateFodselsnummer(fodselsnummer),
                 ValidationUtil.validateNonNullFieldMaxLength(grupperingsId, "grupperingsId", ValidationUtil.MAX_LENGTH_GRUPPERINGSID),
                 ValidationUtil.validateNonNullFieldMaxLength(tekst, "tekst", ValidationUtil.MAX_LENGTH_TEXT_BESKJED),
                 ValidationUtil.validateLinkAndConvertToString(link, "link", ValidationUtil.MAX_LENGTH_LINK, ValidationUtil.isLinkRequired(Eventtype.BESKJED)),

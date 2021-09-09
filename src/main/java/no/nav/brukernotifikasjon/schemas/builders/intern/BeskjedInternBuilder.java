@@ -1,7 +1,6 @@
-package no.nav.brukernotifikasjon.schemas.builders.input;
+package no.nav.brukernotifikasjon.schemas.builders.intern;
 
-
-import no.nav.brukernotifikasjon.schemas.input.OppgaveInput;
+import no.nav.brukernotifikasjon.schemas.intern.BeskjedIntern;
 import no.nav.brukernotifikasjon.schemas.builders.domain.Eventtype;
 import no.nav.brukernotifikasjon.schemas.builders.domain.PreferertKanal;
 import no.nav.brukernotifikasjon.schemas.builders.util.ValidationUtil;
@@ -11,9 +10,11 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
-public class OppgaveInputBuilder {
+public class BeskjedInternBuilder {
 
     private LocalDateTime tidspunkt;
+    private LocalDateTime synligFremTil;
+    private String fodselsnummer;
     private String grupperingsId;
     private String tekst;
     private URL link;
@@ -21,49 +22,61 @@ public class OppgaveInputBuilder {
     private Boolean eksternVarsling = false;
     private List<PreferertKanal> prefererteKanaler;
 
-    public OppgaveInputBuilder withTidspunkt(LocalDateTime tidspunkt) {
+    public BeskjedInternBuilder withTidspunkt(LocalDateTime tidspunkt) {
         this.tidspunkt = tidspunkt;
         return this;
     }
 
-    public OppgaveInputBuilder withGrupperingsId(String grupperingsId) {
+    public BeskjedInternBuilder withSynligFremTil(LocalDateTime synligFremTil) {
+        this.synligFremTil = synligFremTil;
+        return this;
+    }
+
+    public BeskjedInternBuilder withFodselsnummer(String fodselsnummer) {
+        this.fodselsnummer = fodselsnummer;
+        return this;
+    }
+
+    public BeskjedInternBuilder withGrupperingsId(String grupperingsId) {
         this.grupperingsId = grupperingsId;
         return this;
     }
 
-    public OppgaveInputBuilder withTekst(String tekst) {
+    public BeskjedInternBuilder withTekst(String tekst) {
         this.tekst = tekst;
         return this;
     }
 
-    public OppgaveInputBuilder withLink(URL link) {
+    public BeskjedInternBuilder withLink(URL link) {
         this.link = link;
         return this;
     }
 
-    public OppgaveInputBuilder withSikkerhetsnivaa(Integer sikkerhetsnivaa) {
+    public BeskjedInternBuilder withSikkerhetsnivaa(Integer sikkerhetsnivaa) {
         this.sikkerhetsnivaa = sikkerhetsnivaa;
         return this;
     }
 
-    public OppgaveInputBuilder withEksternVarsling(Boolean eksternVarsling) {
+    public BeskjedInternBuilder withEksternVarsling(Boolean eksternVarsling) {
         this.eksternVarsling = eksternVarsling;
         return this;
     }
 
-    public OppgaveInputBuilder withPrefererteKanaler(PreferertKanal... prefererteKanaler) {
+    public BeskjedInternBuilder withPrefererteKanaler(PreferertKanal... prefererteKanaler) {
         if(prefererteKanaler != null) {
             this.prefererteKanaler = Arrays.asList(prefererteKanaler);
         }
         return this;
     }
 
-    public OppgaveInput build() {
-        return new OppgaveInput(
+    public BeskjedIntern build() {
+        return new BeskjedIntern(
                 ValidationUtil.localDateTimeToUtcTimestamp(tidspunkt, "tidspunkt", ValidationUtil.IS_REQUIRED_TIDSPUNKT),
+                ValidationUtil.localDateTimeToUtcTimestamp(synligFremTil, "synligFremTil", ValidationUtil.IS_REQUIRED_SYNLIGFREMTIL),
+                ValidationUtil.validateFodselsnummer(fodselsnummer),
                 ValidationUtil.validateNonNullFieldMaxLength(grupperingsId, "grupperingsId", ValidationUtil.MAX_LENGTH_GRUPPERINGSID),
-                ValidationUtil.validateNonNullFieldMaxLength(tekst, "tekst", ValidationUtil.MAX_LENGTH_TEXT_OPPGAVE),
-                ValidationUtil.validateLinkAndConvertToString(link, "link", ValidationUtil.MAX_LENGTH_LINK, ValidationUtil.isLinkRequired(Eventtype.OPPGAVE)),
+                ValidationUtil.validateNonNullFieldMaxLength(tekst, "tekst", ValidationUtil.MAX_LENGTH_TEXT_BESKJED),
+                ValidationUtil.validateLinkAndConvertToString(link, "link", ValidationUtil.MAX_LENGTH_LINK, ValidationUtil.isLinkRequired(Eventtype.BESKJED)),
                 ValidationUtil.validateSikkerhetsnivaa(sikkerhetsnivaa),
                 eksternVarsling,
                 ValidationUtil.validatePrefererteKanaler(eksternVarsling, prefererteKanaler)

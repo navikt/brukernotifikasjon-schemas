@@ -1,5 +1,6 @@
 package no.nav.brukernotifikasjon.schemas.builders;
 
+
 import no.nav.brukernotifikasjon.schemas.Oppgave;
 import no.nav.brukernotifikasjon.schemas.builders.domain.Eventtype;
 import no.nav.brukernotifikasjon.schemas.builders.domain.PreferertKanal;
@@ -13,7 +14,6 @@ import java.util.List;
 public class OppgaveBuilder {
 
     private LocalDateTime tidspunkt;
-    private String fodselsnummer;
     private String grupperingsId;
     private String tekst;
     private URL link;
@@ -23,11 +23,6 @@ public class OppgaveBuilder {
 
     public OppgaveBuilder withTidspunkt(LocalDateTime tidspunkt) {
         this.tidspunkt = tidspunkt;
-        return this;
-    }
-
-    public OppgaveBuilder withFodselsnummer(String fodselsnummer) {
-        this.fodselsnummer = fodselsnummer;
         return this;
     }
 
@@ -66,7 +61,6 @@ public class OppgaveBuilder {
     public Oppgave build() {
         return new Oppgave(
                 ValidationUtil.localDateTimeToUtcTimestamp(tidspunkt, "tidspunkt", ValidationUtil.IS_REQUIRED_TIDSPUNKT),
-                ValidationUtil.validateFodselsnummer(fodselsnummer),
                 ValidationUtil.validateNonNullFieldMaxLength(grupperingsId, "grupperingsId", ValidationUtil.MAX_LENGTH_GRUPPERINGSID),
                 ValidationUtil.validateNonNullFieldMaxLength(tekst, "tekst", ValidationUtil.MAX_LENGTH_TEXT_OPPGAVE),
                 ValidationUtil.validateLinkAndConvertToString(link, "link", ValidationUtil.MAX_LENGTH_LINK, ValidationUtil.isLinkRequired(Eventtype.OPPGAVE)),

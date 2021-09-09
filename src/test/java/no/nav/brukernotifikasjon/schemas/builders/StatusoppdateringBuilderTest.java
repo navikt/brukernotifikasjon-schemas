@@ -22,7 +22,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class StatusoppdateringBuilderTest {
 
-    private String expectedFodselsnr;
     private String expectedGrupperingsId;
     private int expectedSikkerhetsnivaa;
     private URL expectedLink;
@@ -33,7 +32,6 @@ public class StatusoppdateringBuilderTest {
 
     @BeforeAll
     void setUp() throws MalformedURLException {
-        expectedFodselsnr = "12345678901";
         expectedGrupperingsId = "3456789123456";
         expectedSikkerhetsnivaa = 4;
         expectedLink = new URL("https://gyldig.url");
@@ -48,7 +46,6 @@ public class StatusoppdateringBuilderTest {
         StatusoppdateringBuilder builder = getBuilderWithDefaultValues();
         Statusoppdatering statusoppdatering = builder.build();
 
-        assertThat(statusoppdatering.getFodselsnummer(), is(expectedFodselsnr));
         assertThat(statusoppdatering.getGrupperingsId(), is(expectedGrupperingsId));
         assertThat(statusoppdatering.getSikkerhetsnivaa(), is(expectedSikkerhetsnivaa));
         assertThat(statusoppdatering.getLink(), is(expectedLink.toString()));
@@ -57,21 +54,6 @@ public class StatusoppdateringBuilderTest {
         assertThat(statusoppdatering.getSakstema(), is(expectedSakstema));
         long expectedTidspunktAsUtcLong = expectedTidspunkt.toInstant(ZoneOffset.UTC).toEpochMilli();
         assertThat(statusoppdatering.getTidspunkt(), is(expectedTidspunktAsUtcLong));
-    }
-
-    @Test
-    void skalIkkeGodtaUgyldigFodselsnummer() {
-        String tooLongFodselsnummer = String.join("", Collections.nCopies(11, "12"));
-        StatusoppdateringBuilder builder = getBuilderWithDefaultValues().withFodselsnummer(tooLongFodselsnummer);
-        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
-        assertThat(exceptionThrown.getMessage(), containsString("fodselsnummer"));
-    }
-
-    @Test
-    void skalIkkeGodtaManglendeFodselsnummer() {
-        StatusoppdateringBuilder builder = getBuilderWithDefaultValues().withFodselsnummer(null);
-        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
-        assertThat(exceptionThrown.getMessage(), containsString("fodselsnummer"));
     }
 
     @Test
@@ -158,7 +140,6 @@ public class StatusoppdateringBuilderTest {
 
     private StatusoppdateringBuilder getBuilderWithDefaultValues() {
         return new StatusoppdateringBuilder()
-                .withFodselsnummer(expectedFodselsnr)
                 .withGrupperingsId(expectedGrupperingsId)
                 .withSikkerhetsnivaa(expectedSikkerhetsnivaa)
                 .withLink(expectedLink)

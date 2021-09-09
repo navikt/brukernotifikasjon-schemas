@@ -26,7 +26,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class BeskjedBuilderTest {
 
-    private String expectedFodselsnr;
     private String expectedGrupperingsId;
     private int expectedSikkerhetsnivaa;
     private URL expectedLink;
@@ -38,7 +37,6 @@ public class BeskjedBuilderTest {
 
     @BeforeAll
     void setUp() throws MalformedURLException {
-        expectedFodselsnr = "12345678901";
         expectedGrupperingsId = "3456789123456";
         expectedSikkerhetsnivaa = 4;
         expectedLink = new URL("https://gyldig.url");
@@ -54,7 +52,6 @@ public class BeskjedBuilderTest {
         BeskjedBuilder builder = getBuilderWithDefaultValues();
         Beskjed beskjed = builder.build();
 
-        assertThat(beskjed.getFodselsnummer(), is(expectedFodselsnr));
         assertThat(beskjed.getGrupperingsId(), is(expectedGrupperingsId));
         assertThat(beskjed.getSikkerhetsnivaa(), is(expectedSikkerhetsnivaa));
         assertThat(beskjed.getLink(), is(expectedLink.toString()));
@@ -65,21 +62,6 @@ public class BeskjedBuilderTest {
         assertThat(beskjed.getSynligFremTil(), is(expectedSynligFremTilAsUtcLong));
         assertThat(beskjed.getEksternVarsling(), is(expectedEksternVarsling));
         assertThat(beskjed.getPrefererteKanaler(), is(expectedPrefererteKanaler.stream().map(preferertKanal -> preferertKanal.toString()).collect(toList())));
-    }
-
-    @Test
-    void skalIkkeGodtaUgyldigFodselsnummer() {
-        String tooLongFodselsnummer = String.join("", Collections.nCopies(11, "12"));
-        BeskjedBuilder builder = getBuilderWithDefaultValues().withFodselsnummer(tooLongFodselsnummer);
-        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
-        assertThat(exceptionThrown.getMessage(), containsString("fodselsnummer"));
-    }
-
-    @Test
-    void skalIkkeGodtaManglendeFodselsnummer() {
-        BeskjedBuilder builder = getBuilderWithDefaultValues().withFodselsnummer(null);
-        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
-        assertThat(exceptionThrown.getMessage(), containsString("fodselsnummer"));
     }
 
     @Test
@@ -167,7 +149,6 @@ public class BeskjedBuilderTest {
     @Test
     void skalGodtaManglendePreferertKanal() {
         BeskjedBuilder builder = new BeskjedBuilder()
-                .withFodselsnummer(expectedFodselsnr)
                 .withGrupperingsId(expectedGrupperingsId)
                 .withSikkerhetsnivaa(expectedSikkerhetsnivaa)
                 .withLink(expectedLink)
@@ -180,7 +161,6 @@ public class BeskjedBuilderTest {
 
     private BeskjedBuilder getBuilderWithDefaultValues() {
         return new BeskjedBuilder()
-                .withFodselsnummer(expectedFodselsnr)
                 .withGrupperingsId(expectedGrupperingsId)
                 .withSikkerhetsnivaa(expectedSikkerhetsnivaa)
                 .withLink(expectedLink)

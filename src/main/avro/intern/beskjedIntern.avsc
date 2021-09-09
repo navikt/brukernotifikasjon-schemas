@@ -1,7 +1,7 @@
 {
     "type": "record",
-    "namespace": "no.nav.brukernotifikasjon.schemas.input",
-    "name": "BeskjedInput",
+    "namespace": "no.nav.brukernotifikasjon.schemas.intern",
+    "name": "BeskjedIntern",
     "fields": [
         {
             "name": "tidspunkt",
@@ -13,6 +13,10 @@
             "type": ["null", "long"],
             "logicalType": "timestamp-millis",
             "default": null
+        },
+        {
+            "name": "fodselsnummer",
+            "type": "string"
         },
         {
             "name": "grupperingsId",

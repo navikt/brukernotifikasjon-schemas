@@ -1,0 +1,15 @@
+{
+    "type": "record",
+    "namespace": "no.nav.brukernotifikasjon.schemas.intern",
+    "name": "NokkelIntern",
+    "fields": [
+        {
+            "name": "systembruker",
+            "type": "string"
+        },
+        {
+            "name": "eventId",
+            "type": "string"
+        }
+    ]
+}

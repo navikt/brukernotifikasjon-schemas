@@ -1,27 +1,43 @@
 package no.nav.brukernotifikasjon.schemas.builders;
 
+
 import no.nav.brukernotifikasjon.schemas.Nokkel;
 import no.nav.brukernotifikasjon.schemas.builders.util.ValidationUtil;
 
 public class NokkelBuilder {
 
-    private String systembruker;
     private String eventId;
-
-    public NokkelBuilder withSystembruker(String systembruker) {
-        this.systembruker = systembruker;
-        return this;
-    }
+    private String fodselsnummer;
+    private String namespace;
+    private String appnavn;
 
     public NokkelBuilder withEventId(String eventId) {
         this.eventId = eventId;
         return this;
     }
 
+    public NokkelBuilder withFodselsnummer(String fodselsnummer) {
+        this.fodselsnummer = fodselsnummer;
+        return this;
+    }
+
+    public NokkelBuilder withNamespace(String namespace) {
+        this.namespace = namespace;
+        return this;
+    }
+
+    public NokkelBuilder withAppnavn(String appnavn) {
+        this.appnavn = appnavn;
+        return this;
+    }
+
+
     public Nokkel build() {
         return new Nokkel(
-                ValidationUtil.validateNonNullFieldMaxLength(systembruker, "systembruker", ValidationUtil.MAX_LENGTH_SYSTEMBRUKER),
-                ValidationUtil.validateNonNullFieldMaxLength(eventId, "eventId", ValidationUtil.MAX_LENGTH_EVENTID)
+                ValidationUtil.validateEventId(eventId),
+                ValidationUtil.validateFodselsnummer(fodselsnummer),
+                ValidationUtil.validateNonNullFieldMaxLength(namespace, "namespace", ValidationUtil.MAX_LENGTH_NAMESPACE),
+                ValidationUtil.validateNonNullFieldMaxLength(appnavn, "appnavn", ValidationUtil.MAX_LENGTH_APP_NAME)
         );
     }
 }

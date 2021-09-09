@@ -15,10 +15,6 @@
             "default": null
         },
         {
-            "name": "fodselsnummer",
-            "type": "string"
-        },
-        {
             "name": "grupperingsId",
             "type": "string"
         },

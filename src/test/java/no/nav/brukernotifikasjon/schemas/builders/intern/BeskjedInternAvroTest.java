@@ -1,6 +1,6 @@
-package no.nav.brukernotifikasjon.schemas.builders.input;
+package no.nav.brukernotifikasjon.schemas.builders.intern;
 
-import no.nav.brukernotifikasjon.schemas.input.BeskjedInput;
+import no.nav.brukernotifikasjon.schemas.intern.BeskjedIntern;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -10,32 +10,33 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class BeskjedInputAvroTest {
+public class BeskjedInternAvroTest {
 
     private int expectedSikkerhetsnivaa = 4;
     private boolean expectedEksternVarsling = false;
 
     @Test
     void skalSetteDefaultverdiForSikkerhetsnivaa() {
-        BeskjedInput beskjedInput = getBeskjedInputWithDefaultValues();
-        assertThat(beskjedInput.getSikkerhetsnivaa(), is(expectedSikkerhetsnivaa));
+        BeskjedIntern beskjedIntern = getBeskjedInternWithDefaultValues();
+        assertThat(beskjedIntern.getSikkerhetsnivaa(), is(expectedSikkerhetsnivaa));
     }
 
     @Test
     void skalSetteDefaultverdiForEksternVarsling() {
-        BeskjedInput beskjedInput = getBeskjedInputWithDefaultValues();
-        assertThat(beskjedInput.getEksternVarsling(), is(expectedEksternVarsling));
+        BeskjedIntern beskjedIntern = getBeskjedInternWithDefaultValues();
+        assertThat(beskjedIntern.getEksternVarsling(), is(expectedEksternVarsling));
     }
 
     @Test
     void skalSetteNullSomDefaultverdiForSynligFremTil() {
-        BeskjedInput beskjedInput = getBeskjedInputWithDefaultValues();
-        assertThat(beskjedInput.getSynligFremTil(), is(nullValue()));
+        BeskjedIntern beskjedIntern = getBeskjedInternWithDefaultValues();
+        assertThat(beskjedIntern.getSynligFremTil(), is(nullValue()));
     }
 
-    private BeskjedInput getBeskjedInputWithDefaultValues() {
-        return BeskjedInput.newBuilder()
+    private BeskjedIntern getBeskjedInternWithDefaultValues() {
+        return BeskjedIntern.newBuilder()
                 .setTidspunkt(LocalDateTime.now().toEpochSecond(ZoneOffset.UTC))
+                .setFodselsnummer("12345678901")
                 .setGrupperingsId("3456789123456")
                 .setTekst("Dette er informasjon du må lese")
                 .setLink("https://gyldig.url")

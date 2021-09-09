@@ -1,12 +1,16 @@
 {
     "type": "record",
-    "namespace": "no.nav.brukernotifikasjon.schemas.input",
-    "name": "InnboksInput",
+    "namespace": "no.nav.brukernotifikasjon.schemas.intern",
+    "name": "InnboksIntern",
     "fields": [
         {
             "name": "tidspunkt",
             "type": "long",
             "logicalType": "timestamp-millis"
+        },
+        {
+            "name": "fodselsnummer",
+            "type": "string"
         },
         {
             "name": "grupperingsId",
