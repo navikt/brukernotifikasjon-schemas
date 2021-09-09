@@ -1,0 +1,29 @@
+{
+    "type": "record",
+    "namespace": "no.nav.brukernotifikasjon.schemas.input",
+    "name": "InnboksInput",
+    "fields": [
+        {
+            "name": "tidspunkt",
+            "type": "long",
+            "logicalType": "timestamp-millis"
+        },
+        {
+            "name": "grupperingsId",
+            "type": "string"
+        },
+        {
+            "name": "tekst",
+            "type": "string"
+        },
+        {
+            "name": "link",
+            "type": "string"
+        },
+        {
+            "name": "sikkerhetsnivaa",
+            "type": "int",
+            "default": 4
+        }
+    ]
+}
