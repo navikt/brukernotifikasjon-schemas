@@ -9,10 +9,6 @@
             "logicalType": "timestamp-millis"
         },
         {
-            "name": "grupperingsId",
-            "type": "string"
-        },
-        {
             "name": "link",
             "type": "string"
         },

@@ -10,18 +10,12 @@ import java.time.LocalDateTime;
 public class InnboksBuilder {
 
     private LocalDateTime tidspunkt;
-    private String grupperingsId;
     private String tekst;
     private URL link;
     private Integer sikkerhetsnivaa;
 
     public InnboksBuilder withTidspunkt(LocalDateTime tidspunkt) {
         this.tidspunkt = tidspunkt;
-        return this;
-    }
-
-    public InnboksBuilder withGrupperingsId(String grupperingsId) {
-        this.grupperingsId = grupperingsId;
         return this;
     }
 
@@ -43,7 +37,6 @@ public class InnboksBuilder {
     public Innboks build() {
         return new Innboks(
                 ValidationUtil.localDateTimeToUtcTimestamp(tidspunkt, "tidspunkt", ValidationUtil.IS_REQUIRED_TIDSPUNKT),
-                ValidationUtil.validateNonNullFieldMaxLength(grupperingsId, "grupperingsId", ValidationUtil.MAX_LENGTH_GRUPPERINGSID),
                 ValidationUtil.validateNonNullFieldMaxLength(tekst, "tekst", ValidationUtil.MAX_LENGTH_TEXT_INNBOKS),
                 ValidationUtil.validateLinkAndConvertToString(link, "link", ValidationUtil.MAX_LENGTH_LINK, ValidationUtil.isLinkRequired(Eventtype.INNBOKS)),
                 ValidationUtil.validateSikkerhetsnivaa(sikkerhetsnivaa)

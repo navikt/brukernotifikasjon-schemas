@@ -8,6 +8,10 @@
             "type": "string"
         },
         {
+            "name": "grupperingsId",
+            "type": "string"
+        },
+        {
             "name": "fodselsnummer",
             "type": "string"
         },

@@ -30,7 +30,6 @@ public class StatusoppdateringAvroTest {
     private Statusoppdatering getStatusoppdateringWithDefaultValues() {
         return Statusoppdatering.newBuilder()
                 .setTidspunkt(LocalDateTime.now().toEpochSecond(ZoneOffset.UTC))
-                .setGrupperingsId("3456789123456")
                 .setLink("https://gyldig.url")
                 .setStatusGlobal(StatusGlobal.UNDER_BEHANDLING.toString())
                 .setSakstema("FP")

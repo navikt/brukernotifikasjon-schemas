@@ -29,7 +29,6 @@ public class OppgaveAvroTest {
     private Oppgave getOppgaveWithDefaultValues() {
         return Oppgave.newBuilder()
                 .setTidspunkt(LocalDateTime.now().toEpochSecond(ZoneOffset.UTC))
-                .setGrupperingsId("3456789123456")
                 .setTekst("Du må sende nytt meldekort")
                 .setLink("https://gyldig.url")
                 .build();

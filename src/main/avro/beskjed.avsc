@@ -15,10 +15,6 @@
             "default": null
         },
         {
-            "name": "grupperingsId",
-            "type": "string"
-        },
-        {
             "name": "tekst",
             "type": "string"
         },

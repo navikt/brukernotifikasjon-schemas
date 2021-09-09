@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
-import java.util.Collections;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
@@ -16,7 +15,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class DoneBuilderTest {
 
-    private String expectedGrupperingsId = "3456789123456";
     private LocalDateTime expectedTidspunkt = LocalDateTime.now(ZoneId.of("UTC"));
 
     @Test
@@ -24,25 +22,10 @@ public class DoneBuilderTest {
         DoneBuilder builder = getBuilderWithDefaultValues();
         Done done = builder.build();
 
-        assertThat(done.getGrupperingsId(), is(expectedGrupperingsId));
         long expectedTidspunktAsUtcLong = expectedTidspunkt.toInstant(ZoneOffset.UTC).toEpochMilli();
         assertThat(done.getTidspunkt(), is(expectedTidspunktAsUtcLong));
     }
 
-    @Test
-    void skalIkkeGodtaForLangGrupperingsId() {
-        String tooLongGrupperingsId = String.join("", Collections.nCopies(101, "1"));
-        DoneBuilder builder = getBuilderWithDefaultValues().withGrupperingsId(tooLongGrupperingsId);
-        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
-        assertThat(exceptionThrown.getMessage(), containsString("grupperingsId"));
-    }
-
-    @Test
-    void skalIkkeGodtaManglendeGrupperingsId() {
-        DoneBuilder builder = getBuilderWithDefaultValues().withGrupperingsId(null);
-        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
-        assertThat(exceptionThrown.getMessage(), containsString("grupperingsId"));
-    }
 
     @Test
     void skalIkkeGodtaManglendeEventtidspunkt() {
@@ -53,7 +36,6 @@ public class DoneBuilderTest {
 
     private DoneBuilder getBuilderWithDefaultValues() {
         return new DoneBuilder()
-                .withGrupperingsId(expectedGrupperingsId)
                 .withTidspunkt(expectedTidspunkt);
     }
 }

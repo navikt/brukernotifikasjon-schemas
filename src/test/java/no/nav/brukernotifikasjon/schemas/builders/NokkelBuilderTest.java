@@ -16,9 +16,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class NokkelBuilderTest {
 
     private String expectedEventID = UUID.randomUUID().toString();
+    private String expectedGrupperingsId = "3456789123456";
     private String expectedFodselsnr = "12345678901";
     private String expectedNamespace = "default";
     private String expectedAppnavn = "appName";
+
 
     @Test
     void skalGodtaEventerMedGyldigeFeltverdier() {
@@ -104,10 +106,26 @@ public class NokkelBuilderTest {
         assertThat(exceptionThrown.getMessage(), containsString("appnavn"));
     }
 
+    @Test
+    void skalIkkeGodtaForLangGrupperingsId() {
+        String tooLongGrupperingsId = String.join("", Collections.nCopies(101, "1"));
+        NokkelBuilder builder = getBuilderWithDefaultValues().withGrupperingsId(tooLongGrupperingsId);
+        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
+        assertThat(exceptionThrown.getMessage(), containsString("grupperingsId"));
+    }
+
+    @Test
+    void skalIkkeGodtaManglendeGrupperingsId() {
+        NokkelBuilder builder = getBuilderWithDefaultValues().withGrupperingsId(null);
+        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
+        assertThat(exceptionThrown.getMessage(), containsString("grupperingsId"));
+    }
+
 
     private NokkelBuilder getBuilderWithDefaultValues() {
         return new NokkelBuilder()
                 .withEventId(expectedEventID)
+                .withGrupperingsId(expectedGrupperingsId)
                 .withFodselsnummer(expectedFodselsnr)
                 .withNamespace(expectedNamespace)
                 .withAppnavn(expectedAppnavn);

@@ -22,7 +22,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class InnboksBuilderTest {
 
-    private String expectedGrupperingsId;
     private int expectedSikkerhetsnivaa;
     private URL expectedLink;
     private String expectedTekst;
@@ -30,7 +29,6 @@ public class InnboksBuilderTest {
 
     @BeforeAll
     void setUp() throws MalformedURLException {
-        expectedGrupperingsId = "3456789123456";
         expectedSikkerhetsnivaa = 4;
         expectedLink = new URL("https://gyldig.url");
         expectedTekst = "Dette er informasjon du må lese";
@@ -42,27 +40,11 @@ public class InnboksBuilderTest {
         InnboksBuilder builder = getBuilderWithDefaultValues();
         Innboks innboks = builder.build();
 
-        assertThat(innboks.getGrupperingsId(), is(expectedGrupperingsId));
         assertThat(innboks.getSikkerhetsnivaa(), is(expectedSikkerhetsnivaa));
         assertThat(innboks.getLink(), is(expectedLink.toString()));
         assertThat(innboks.getTekst(), is(expectedTekst));
         long expectedTidspunktAsUtcLong = expectedTidspunkt.toInstant(ZoneOffset.UTC).toEpochMilli();
         assertThat(innboks.getTidspunkt(), is(expectedTidspunktAsUtcLong));
-    }
-
-    @Test
-    void skalIkkeGodtaForLangGrupperingsId() {
-        String tooLongGrupperingsId = String.join("", Collections.nCopies(101, "1"));
-        InnboksBuilder builder = getBuilderWithDefaultValues().withGrupperingsId(tooLongGrupperingsId);
-        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
-        assertThat(exceptionThrown.getMessage(), containsString("grupperingsId"));
-    }
-
-    @Test
-    void skalIkkeGodtaManglendeGrupperingsId() {
-        InnboksBuilder builder = getBuilderWithDefaultValues().withGrupperingsId(null);
-        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
-        assertThat(exceptionThrown.getMessage(), containsString("grupperingsId"));
     }
 
     @Test
@@ -111,7 +93,6 @@ public class InnboksBuilderTest {
 
     private InnboksBuilder getBuilderWithDefaultValues() {
         return new InnboksBuilder()
-                .withGrupperingsId(expectedGrupperingsId)
                 .withSikkerhetsnivaa(expectedSikkerhetsnivaa)
                 .withLink(expectedLink)
                 .withTekst(expectedTekst)

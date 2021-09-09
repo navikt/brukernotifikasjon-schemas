@@ -25,7 +25,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class OppgaveBuilderTest {
 
-    private String expectedGrupperingsId;
     private int expectedSikkerhetsnivaa;
     private URL expectedLink;
     private String expectedTekst;
@@ -35,7 +34,6 @@ class OppgaveBuilderTest {
 
     @BeforeAll
     void setUp() throws MalformedURLException {
-        expectedGrupperingsId = "3456789123456";
         expectedSikkerhetsnivaa = 4;
         expectedLink = new URL("https://gyldig.url");
         expectedTekst = "Du må sende nytt meldekort";
@@ -49,7 +47,6 @@ class OppgaveBuilderTest {
         OppgaveBuilder builder = getBuilderWithDefaultValues();
         Oppgave oppgave = builder.build();
 
-        assertThat(oppgave.getGrupperingsId(), is(expectedGrupperingsId));
         assertThat(oppgave.getSikkerhetsnivaa(), is(expectedSikkerhetsnivaa));
         assertThat(oppgave.getLink(), is(expectedLink.toString()));
         assertThat(oppgave.getTekst(), is(expectedTekst));
@@ -57,21 +54,6 @@ class OppgaveBuilderTest {
         assertThat(oppgave.getTidspunkt(), is(expectedTidspunktAsUtcLong));
         assertThat(oppgave.getEksternVarsling(), is(expectedEksternVarsling));
         assertThat(oppgave.getPrefererteKanaler(), is(expectedPrefererteKanaler.stream().map(preferertKanal -> preferertKanal.toString()).collect(toList())));
-    }
-
-    @Test
-    void skalIkkeGodtaForLangGrupperingsId() {
-        String tooLongGrupperingsId = String.join("", Collections.nCopies(101, "1"));
-        OppgaveBuilder builder = getBuilderWithDefaultValues().withGrupperingsId(tooLongGrupperingsId);
-        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
-        assertThat(exceptionThrown.getMessage(), containsString("grupperingsId"));
-    }
-
-    @Test
-    void skalIkkeGodtaManglendeGrupperingsId() {
-        OppgaveBuilder builder = getBuilderWithDefaultValues().withGrupperingsId(null);
-        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
-        assertThat(exceptionThrown.getMessage(), containsString("grupperingsId"));
     }
 
     @Test
@@ -138,7 +120,6 @@ class OppgaveBuilderTest {
 
     private OppgaveBuilder getBuilderWithDefaultValues() {
         return new OppgaveBuilder()
-                .withGrupperingsId(expectedGrupperingsId)
                 .withSikkerhetsnivaa(expectedSikkerhetsnivaa)
                 .withLink(expectedLink)
                 .withTekst(expectedTekst)

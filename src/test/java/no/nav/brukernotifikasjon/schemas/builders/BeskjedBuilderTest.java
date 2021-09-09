@@ -26,7 +26,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class BeskjedBuilderTest {
 
-    private String expectedGrupperingsId;
     private int expectedSikkerhetsnivaa;
     private URL expectedLink;
     private String expectedTekst;
@@ -37,7 +36,6 @@ public class BeskjedBuilderTest {
 
     @BeforeAll
     void setUp() throws MalformedURLException {
-        expectedGrupperingsId = "3456789123456";
         expectedSikkerhetsnivaa = 4;
         expectedLink = new URL("https://gyldig.url");
         expectedTekst = "Dette er informasjon du må lese";
@@ -52,7 +50,6 @@ public class BeskjedBuilderTest {
         BeskjedBuilder builder = getBuilderWithDefaultValues();
         Beskjed beskjed = builder.build();
 
-        assertThat(beskjed.getGrupperingsId(), is(expectedGrupperingsId));
         assertThat(beskjed.getSikkerhetsnivaa(), is(expectedSikkerhetsnivaa));
         assertThat(beskjed.getLink(), is(expectedLink.toString()));
         assertThat(beskjed.getTekst(), is(expectedTekst));
@@ -62,21 +59,6 @@ public class BeskjedBuilderTest {
         assertThat(beskjed.getSynligFremTil(), is(expectedSynligFremTilAsUtcLong));
         assertThat(beskjed.getEksternVarsling(), is(expectedEksternVarsling));
         assertThat(beskjed.getPrefererteKanaler(), is(expectedPrefererteKanaler.stream().map(preferertKanal -> preferertKanal.toString()).collect(toList())));
-    }
-
-    @Test
-    void skalIkkeGodtaForLangGrupperingsId() {
-        String tooLongGrupperingsId = String.join("", Collections.nCopies(101, "1"));
-        BeskjedBuilder builder = getBuilderWithDefaultValues().withGrupperingsId(tooLongGrupperingsId);
-        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
-        assertThat(exceptionThrown.getMessage(), containsString("grupperingsId"));
-    }
-
-    @Test
-    void skalIkkeGodtaManglendeGrupperingsId() {
-        BeskjedBuilder builder = getBuilderWithDefaultValues().withGrupperingsId(null);
-        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
-        assertThat(exceptionThrown.getMessage(), containsString("grupperingsId"));
     }
 
     @Test
@@ -149,7 +131,6 @@ public class BeskjedBuilderTest {
     @Test
     void skalGodtaManglendePreferertKanal() {
         BeskjedBuilder builder = new BeskjedBuilder()
-                .withGrupperingsId(expectedGrupperingsId)
                 .withSikkerhetsnivaa(expectedSikkerhetsnivaa)
                 .withLink(expectedLink)
                 .withTekst(expectedTekst)
@@ -161,7 +142,6 @@ public class BeskjedBuilderTest {
 
     private BeskjedBuilder getBuilderWithDefaultValues() {
         return new BeskjedBuilder()
-                .withGrupperingsId(expectedGrupperingsId)
                 .withSikkerhetsnivaa(expectedSikkerhetsnivaa)
                 .withLink(expectedLink)
                 .withTekst(expectedTekst)

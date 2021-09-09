@@ -22,7 +22,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class StatusoppdateringBuilderTest {
 
-    private String expectedGrupperingsId;
     private int expectedSikkerhetsnivaa;
     private URL expectedLink;
     private StatusGlobal expectedStatusGlobal;
@@ -32,7 +31,6 @@ public class StatusoppdateringBuilderTest {
 
     @BeforeAll
     void setUp() throws MalformedURLException {
-        expectedGrupperingsId = "3456789123456";
         expectedSikkerhetsnivaa = 4;
         expectedLink = new URL("https://gyldig.url");
         expectedStatusGlobal = StatusGlobal.UNDER_BEHANDLING;
@@ -46,7 +44,6 @@ public class StatusoppdateringBuilderTest {
         StatusoppdateringBuilder builder = getBuilderWithDefaultValues();
         Statusoppdatering statusoppdatering = builder.build();
 
-        assertThat(statusoppdatering.getGrupperingsId(), is(expectedGrupperingsId));
         assertThat(statusoppdatering.getSikkerhetsnivaa(), is(expectedSikkerhetsnivaa));
         assertThat(statusoppdatering.getLink(), is(expectedLink.toString()));
         assertThat(statusoppdatering.getStatusGlobal(), is(expectedStatusGlobal.toString()));
@@ -54,21 +51,6 @@ public class StatusoppdateringBuilderTest {
         assertThat(statusoppdatering.getSakstema(), is(expectedSakstema));
         long expectedTidspunktAsUtcLong = expectedTidspunkt.toInstant(ZoneOffset.UTC).toEpochMilli();
         assertThat(statusoppdatering.getTidspunkt(), is(expectedTidspunktAsUtcLong));
-    }
-
-    @Test
-    void skalIkkeGodtaForLangGrupperingsId() {
-        String tooLongGrupperingsId = String.join("", Collections.nCopies(101, "1"));
-        StatusoppdateringBuilder builder = getBuilderWithDefaultValues().withGrupperingsId(tooLongGrupperingsId);
-        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
-        assertThat(exceptionThrown.getMessage(), containsString("grupperingsId"));
-    }
-
-    @Test
-    void skalIkkeGodtaManglendeGrupperingsId() {
-        StatusoppdateringBuilder builder = getBuilderWithDefaultValues().withGrupperingsId(null);
-        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
-        assertThat(exceptionThrown.getMessage(), containsString("grupperingsId"));
     }
 
     @Test
@@ -140,7 +122,6 @@ public class StatusoppdateringBuilderTest {
 
     private StatusoppdateringBuilder getBuilderWithDefaultValues() {
         return new StatusoppdateringBuilder()
-                .withGrupperingsId(expectedGrupperingsId)
                 .withSikkerhetsnivaa(expectedSikkerhetsnivaa)
                 .withLink(expectedLink)
                 .withStatusGlobal(expectedStatusGlobal)

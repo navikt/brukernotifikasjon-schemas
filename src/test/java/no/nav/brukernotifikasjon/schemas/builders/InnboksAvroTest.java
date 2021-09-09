@@ -23,7 +23,6 @@ public class InnboksAvroTest {
     private Innboks getInnboksWithDefaultValues() {
         return Innboks.newBuilder()
                 .setTidspunkt(LocalDateTime.now().toEpochSecond(ZoneOffset.UTC))
-                .setGrupperingsId("3456789123456")
                 .setTekst("Dette er informasjon du må lese")
                 .setLink("https://gyldig.url")
                 .build();
