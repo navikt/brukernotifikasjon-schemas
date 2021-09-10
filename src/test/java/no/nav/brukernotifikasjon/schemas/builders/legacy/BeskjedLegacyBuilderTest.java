@@ -1,8 +1,8 @@
-package no.nav.brukernotifikasjon.schemas.builders.intern;
+package no.nav.brukernotifikasjon.schemas.builders.legacy;
 
 import no.nav.brukernotifikasjon.schemas.builders.domain.PreferertKanal;
 import no.nav.brukernotifikasjon.schemas.builders.exception.FieldValidationException;
-import no.nav.brukernotifikasjon.schemas.intern.BeskjedIntern;
+import no.nav.brukernotifikasjon.schemas.legacy.BeskjedLegacy;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class BeskjedInternBuilderTest {
+public class BeskjedLegacyBuilderTest {
 
     private String expectedFodselsnr;
     private String expectedGrupperingsId;
@@ -51,33 +51,33 @@ public class BeskjedInternBuilderTest {
 
     @Test
     void skalGodtaEventerMedGyldigeFeltverdier() {
-        BeskjedInternBuilder builder = getBuilderWithDefaultValues();
-        BeskjedIntern beskjedIntern = builder.build();
+        BeskjedLegacyBuilder builder = getBuilderWithDefaultValues();
+        BeskjedLegacy beskjedLegacy = builder.build();
 
-        assertThat(beskjedIntern.getFodselsnummer(), is(expectedFodselsnr));
-        assertThat(beskjedIntern.getGrupperingsId(), is(expectedGrupperingsId));
-        assertThat(beskjedIntern.getSikkerhetsnivaa(), is(expectedSikkerhetsnivaa));
-        assertThat(beskjedIntern.getLink(), is(expectedLink.toString()));
-        assertThat(beskjedIntern.getTekst(), is(expectedTekst));
+        assertThat(beskjedLegacy.getFodselsnummer(), is(expectedFodselsnr));
+        assertThat(beskjedLegacy.getGrupperingsId(), is(expectedGrupperingsId));
+        assertThat(beskjedLegacy.getSikkerhetsnivaa(), is(expectedSikkerhetsnivaa));
+        assertThat(beskjedLegacy.getLink(), is(expectedLink.toString()));
+        assertThat(beskjedLegacy.getTekst(), is(expectedTekst));
         long expectedTidspunktAsUtcLong = expectedTidspunkt.toInstant(ZoneOffset.UTC).toEpochMilli();
-        assertThat(beskjedIntern.getTidspunkt(), is(expectedTidspunktAsUtcLong));
+        assertThat(beskjedLegacy.getTidspunkt(), is(expectedTidspunktAsUtcLong));
         long expectedSynligFremTilAsUtcLong = expectedSynligFremTil.toInstant(ZoneOffset.UTC).toEpochMilli();
-        assertThat(beskjedIntern.getSynligFremTil(), is(expectedSynligFremTilAsUtcLong));
-        assertThat(beskjedIntern.getEksternVarsling(), is(expectedEksternVarsling));
-        assertThat(beskjedIntern.getPrefererteKanaler(), is(expectedPrefererteKanaler.stream().map(preferertKanal -> preferertKanal.toString()).collect(toList())));
+        assertThat(beskjedLegacy.getSynligFremTil(), is(expectedSynligFremTilAsUtcLong));
+        assertThat(beskjedLegacy.getEksternVarsling(), is(expectedEksternVarsling));
+        assertThat(beskjedLegacy.getPrefererteKanaler(), is(expectedPrefererteKanaler.stream().map(preferertKanal -> preferertKanal.toString()).collect(toList())));
     }
 
     @Test
     void skalIkkeGodtaUgyldigFodselsnummer() {
         String tooLongFodselsnummer = String.join("", Collections.nCopies(11, "12"));
-        BeskjedInternBuilder builder = getBuilderWithDefaultValues().withFodselsnummer(tooLongFodselsnummer);
+        BeskjedLegacyBuilder builder = getBuilderWithDefaultValues().withFodselsnummer(tooLongFodselsnummer);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("fodselsnummer"));
     }
 
     @Test
     void skalIkkeGodtaManglendeFodselsnummer() {
-        BeskjedInternBuilder builder = getBuilderWithDefaultValues().withFodselsnummer(null);
+        BeskjedLegacyBuilder builder = getBuilderWithDefaultValues().withFodselsnummer(null);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("fodselsnummer"));
     }
@@ -85,14 +85,14 @@ public class BeskjedInternBuilderTest {
     @Test
     void skalIkkeGodtaForLangGrupperingsId() {
         String tooLongGrupperingsId = String.join("", Collections.nCopies(101, "1"));
-        BeskjedInternBuilder builder = getBuilderWithDefaultValues().withGrupperingsId(tooLongGrupperingsId);
+        BeskjedLegacyBuilder builder = getBuilderWithDefaultValues().withGrupperingsId(tooLongGrupperingsId);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("grupperingsId"));
     }
 
     @Test
     void skalIkkeGodtaManglendeGrupperingsId() {
-        BeskjedInternBuilder builder = getBuilderWithDefaultValues().withGrupperingsId(null);
+        BeskjedLegacyBuilder builder = getBuilderWithDefaultValues().withGrupperingsId(null);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("grupperingsId"));
     }
@@ -100,7 +100,7 @@ public class BeskjedInternBuilderTest {
     @Test
     void skalIkkeGodtaForLavtSikkerhetsnivaa() {
         int invalidSikkerhetsnivaa = 2;
-        BeskjedInternBuilder builder = getBuilderWithDefaultValues().withSikkerhetsnivaa(invalidSikkerhetsnivaa);
+        BeskjedLegacyBuilder builder = getBuilderWithDefaultValues().withSikkerhetsnivaa(invalidSikkerhetsnivaa);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("Sikkerhetsnivaa"));
     }
@@ -108,48 +108,48 @@ public class BeskjedInternBuilderTest {
     @Test
     void skalIkkeGodtaForLangLink() throws MalformedURLException {
         URL invalidLink = new URL("https://" + String.join("", Collections.nCopies(201, "n")));
-        BeskjedInternBuilder builder = getBuilderWithDefaultValues().withLink(invalidLink);
+        BeskjedLegacyBuilder builder = getBuilderWithDefaultValues().withLink(invalidLink);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("link"));
     }
 
     @Test
     void skalGodtaManglendeLink() {
-        BeskjedInternBuilder builder = getBuilderWithDefaultValues().withLink(null);
+        BeskjedLegacyBuilder builder = getBuilderWithDefaultValues().withLink(null);
         assertDoesNotThrow(() -> builder.build());
     }
 
     @Test
     void skalIkkeGodtaForLangTekst() {
         String tooLongTekst = String.join("", Collections.nCopies(501, "n"));
-        BeskjedInternBuilder builder = getBuilderWithDefaultValues().withTekst(tooLongTekst);
+        BeskjedLegacyBuilder builder = getBuilderWithDefaultValues().withTekst(tooLongTekst);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("tekst"));
     }
 
     @Test
     void skalIkkeGodtaTomTekst() {
-        BeskjedInternBuilder builder = getBuilderWithDefaultValues().withTekst("");
+        BeskjedLegacyBuilder builder = getBuilderWithDefaultValues().withTekst("");
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("tekst"));
     }
 
     @Test
     void skalIkkeGodtaManglendeEventtidspunkt() {
-        BeskjedInternBuilder builder = getBuilderWithDefaultValues().withTidspunkt(null);
+        BeskjedLegacyBuilder builder = getBuilderWithDefaultValues().withTidspunkt(null);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("tidspunkt"));
     }
 
     @Test
     void skalGodtaMangledeSynligFremTil() {
-        BeskjedInternBuilder builder = getBuilderWithDefaultValues().withSynligFremTil(null);
+        BeskjedLegacyBuilder builder = getBuilderWithDefaultValues().withSynligFremTil(null);
         assertDoesNotThrow(() -> builder.build());
     }
 
     @Test
     void skalIkkeGodtaPrefertKanalHvisIkkeEksternVarslingErSatt() {
-        BeskjedInternBuilder builder = getBuilderWithDefaultValues()
+        BeskjedLegacyBuilder builder = getBuilderWithDefaultValues()
                 .withEksternVarsling(false)
                 .withPrefererteKanaler(PreferertKanal.SMS);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
@@ -158,7 +158,7 @@ public class BeskjedInternBuilderTest {
 
     @Test
     void skalGodtaNullSomPreferertKanal() {
-        BeskjedInternBuilder builder = getBuilderWithDefaultValues()
+        BeskjedLegacyBuilder builder = getBuilderWithDefaultValues()
                 .withEksternVarsling(true)
                 .withPrefererteKanaler(null);
         assertDoesNotThrow(() -> builder.build());
@@ -166,7 +166,7 @@ public class BeskjedInternBuilderTest {
 
     @Test
     void skalGodtaManglendePreferertKanal() {
-        BeskjedInternBuilder builder = new BeskjedInternBuilder()
+        BeskjedLegacyBuilder builder = new BeskjedLegacyBuilder()
                 .withFodselsnummer(expectedFodselsnr)
                 .withGrupperingsId(expectedGrupperingsId)
                 .withSikkerhetsnivaa(expectedSikkerhetsnivaa)
@@ -178,8 +178,8 @@ public class BeskjedInternBuilderTest {
         assertDoesNotThrow(() -> builder.build());
     }
 
-    private BeskjedInternBuilder getBuilderWithDefaultValues() {
-        return new BeskjedInternBuilder()
+    private BeskjedLegacyBuilder getBuilderWithDefaultValues() {
+        return new BeskjedLegacyBuilder()
                 .withFodselsnummer(expectedFodselsnr)
                 .withGrupperingsId(expectedGrupperingsId)
                 .withSikkerhetsnivaa(expectedSikkerhetsnivaa)

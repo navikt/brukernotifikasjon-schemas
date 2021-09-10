@@ -1,7 +1,7 @@
-package no.nav.brukernotifikasjon.schemas.builders.intern;
+package no.nav.brukernotifikasjon.schemas.builders.legacy;
 
 import no.nav.brukernotifikasjon.schemas.builders.exception.FieldValidationException;
-import no.nav.brukernotifikasjon.schemas.intern.NokkelIntern;
+import no.nav.brukernotifikasjon.schemas.legacy.NokkelLegacy;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
@@ -12,37 +12,37 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class NokkelInternBuilderTest {
+public class NokkelLegacyBuilderTest {
 
     private String expectedSystembruker = "enSystemBruker";
     private String expectedEventID = UUID.randomUUID().toString();
 
     @Test
     void skalGodtaEventerMedGyldigeFeltverdier() {
-        NokkelInternBuilder builder = getBuilderWithDefaultValues();
-        NokkelIntern nokkelIntern = builder.build();
+        NokkelLegacyBuilder builder = getBuilderWithDefaultValues();
+        NokkelLegacy nokkelLegacy = builder.build();
 
-        assertThat(nokkelIntern.getSystembruker(), is(expectedSystembruker));
-        assertThat(nokkelIntern.getEventId(), is(expectedEventID));
+        assertThat(nokkelLegacy.getSystembruker(), is(expectedSystembruker));
+        assertThat(nokkelLegacy.getEventId(), is(expectedEventID));
     }
 
     @Test
     void skalIkkeGodtaForLangSystembruker() {
         String tooLongSystembruker = String.join("", Collections.nCopies(101, "n"));
-        NokkelInternBuilder builder = getBuilderWithDefaultValues().withSystembruker(tooLongSystembruker);
+        NokkelLegacyBuilder builder = getBuilderWithDefaultValues().withSystembruker(tooLongSystembruker);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("systembruker"));
     }
 
     @Test
     void skalIkkeGodtaManglendeSystembruker() {
-        NokkelInternBuilder builder = getBuilderWithDefaultValues().withSystembruker(null);
+        NokkelLegacyBuilder builder = getBuilderWithDefaultValues().withSystembruker(null);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("systembruker"));
     }
 
-    private NokkelInternBuilder getBuilderWithDefaultValues() {
-        return new NokkelInternBuilder()
+    private NokkelLegacyBuilder getBuilderWithDefaultValues() {
+        return new NokkelLegacyBuilder()
                 .withSystembruker(expectedSystembruker)
                 .withEventId(expectedEventID);
     }

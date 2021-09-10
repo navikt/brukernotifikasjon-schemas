@@ -1,7 +1,7 @@
 {
     "type": "record",
-    "namespace": "no.nav.brukernotifikasjon.schemas.intern",
-    "name": "DoneIntern",
+    "namespace": "no.nav.brukernotifikasjon.schemas.legacy",
+    "name": "DoneLegacy",
     "fields": [
         {
             "name": "tidspunkt",

@@ -1,25 +1,25 @@
-package no.nav.brukernotifikasjon.schemas.builders.intern;
+package no.nav.brukernotifikasjon.schemas.builders.legacy;
 
-import no.nav.brukernotifikasjon.schemas.intern.NokkelIntern;
+import no.nav.brukernotifikasjon.schemas.legacy.NokkelLegacy;
 import no.nav.brukernotifikasjon.schemas.builders.util.ValidationUtil;
 
-public class NokkelInternBuilder {
+public class NokkelLegacyBuilder {
 
     private String systembruker;
     private String eventId;
 
-    public NokkelInternBuilder withSystembruker(String systembruker) {
+    public NokkelLegacyBuilder withSystembruker(String systembruker) {
         this.systembruker = systembruker;
         return this;
     }
 
-    public NokkelInternBuilder withEventId(String eventId) {
+    public NokkelLegacyBuilder withEventId(String eventId) {
         this.eventId = eventId;
         return this;
     }
 
-    public NokkelIntern build() {
-        return new NokkelIntern(
+    public NokkelLegacy build() {
+        return new NokkelLegacy(
                 ValidationUtil.validateNonNullFieldMaxLength(systembruker, "systembruker", ValidationUtil.MAX_LENGTH_SYSTEMBRUKER),
                 ValidationUtil.validateNonNullFieldMaxLength(eventId, "eventId", ValidationUtil.MAX_LENGTH_EVENTID)
         );

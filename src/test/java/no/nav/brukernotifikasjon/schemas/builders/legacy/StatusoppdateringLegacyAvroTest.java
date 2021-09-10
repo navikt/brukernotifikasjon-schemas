@@ -1,7 +1,7 @@
-package no.nav.brukernotifikasjon.schemas.builders.intern;
+package no.nav.brukernotifikasjon.schemas.builders.legacy;
 
 import no.nav.brukernotifikasjon.schemas.builders.domain.StatusGlobal;
-import no.nav.brukernotifikasjon.schemas.intern.StatusoppdateringIntern;
+import no.nav.brukernotifikasjon.schemas.legacy.StatusoppdateringLegacy;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -11,24 +11,24 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class StatusoppdateringInternAvroTest {
+public class StatusoppdateringLegacyAvroTest {
 
     private int expectedSikkerhetsnivaa = 4;
 
     @Test
     void skalSetteDefaultverdiForSikkerhetsnivaa() {
-        StatusoppdateringIntern statusoppdateringIntern = getStatusoppdateringInternWithDefaultValues();
-        assertThat(statusoppdateringIntern.getSikkerhetsnivaa(), is(expectedSikkerhetsnivaa));
+        StatusoppdateringLegacy statusoppdateringLegacy = getStatusoppdateringLegacyWithDefaultValues();
+        assertThat(statusoppdateringLegacy.getSikkerhetsnivaa(), is(expectedSikkerhetsnivaa));
     }
 
     @Test
     void skalSetteNullSomDefaultverdiForStatusIntern() {
-        StatusoppdateringIntern statusoppdateringIntern = getStatusoppdateringInternWithDefaultValues();
-        assertThat(statusoppdateringIntern.getStatusIntern(), is(nullValue()));
+        StatusoppdateringLegacy statusoppdateringLegacy = getStatusoppdateringLegacyWithDefaultValues();
+        assertThat(statusoppdateringLegacy.getStatusIntern(), is(nullValue()));
     }
 
-    private StatusoppdateringIntern getStatusoppdateringInternWithDefaultValues() {
-        return StatusoppdateringIntern.newBuilder()
+    private StatusoppdateringLegacy getStatusoppdateringLegacyWithDefaultValues() {
+        return StatusoppdateringLegacy.newBuilder()
                 .setTidspunkt(LocalDateTime.now().toEpochSecond(ZoneOffset.UTC))
                 .setGrupperingsId("3456789123456")
                 .setLink("https://gyldig.url")

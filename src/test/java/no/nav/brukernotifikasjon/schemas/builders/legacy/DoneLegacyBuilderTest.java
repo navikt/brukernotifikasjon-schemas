@@ -1,7 +1,7 @@
-package no.nav.brukernotifikasjon.schemas.builders.intern;
+package no.nav.brukernotifikasjon.schemas.builders.legacy;
 
 import no.nav.brukernotifikasjon.schemas.builders.exception.FieldValidationException;
-import no.nav.brukernotifikasjon.schemas.intern.DoneIntern;
+import no.nav.brukernotifikasjon.schemas.legacy.DoneLegacy;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -14,7 +14,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class DoneInternBuilderTest {
+public class DoneLegacyBuilderTest {
 
     private String expectedFodselsnr = "12345678901";
     private String expectedGrupperingsId = "3456789123456";
@@ -22,26 +22,26 @@ public class DoneInternBuilderTest {
 
     @Test
     void skalGodtaEventerMedGyldigeFeltverdier() {
-        DoneInternBuilder builder = getBuilderWithDefaultValues();
-        DoneIntern doneIntern = builder.build();
+        DoneLegacyBuilder builder = getBuilderWithDefaultValues();
+        DoneLegacy doneLegacy = builder.build();
 
-        assertThat(doneIntern.getFodselsnummer(), is(expectedFodselsnr));
-        assertThat(doneIntern.getGrupperingsId(), is(expectedGrupperingsId));
+        assertThat(doneLegacy.getFodselsnummer(), is(expectedFodselsnr));
+        assertThat(doneLegacy.getGrupperingsId(), is(expectedGrupperingsId));
         long expectedTidspunktAsUtcLong = expectedTidspunkt.toInstant(ZoneOffset.UTC).toEpochMilli();
-        assertThat(doneIntern.getTidspunkt(), is(expectedTidspunktAsUtcLong));
+        assertThat(doneLegacy.getTidspunkt(), is(expectedTidspunktAsUtcLong));
     }
 
     @Test
     void skalIkkeGodtaForLangtFodselsnummer() {
         String tooLongFodselsnummer = String.join("", Collections.nCopies(11, "12"));
-        DoneInternBuilder builder = getBuilderWithDefaultValues().withFodselsnummer(tooLongFodselsnummer);
+        DoneLegacyBuilder builder = getBuilderWithDefaultValues().withFodselsnummer(tooLongFodselsnummer);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("fodselsnummer"));
     }
 
     @Test
     void skalIkkeGodtaManglendeFodselsnummer() {
-        DoneInternBuilder builder = getBuilderWithDefaultValues().withFodselsnummer(null);
+        DoneLegacyBuilder builder = getBuilderWithDefaultValues().withFodselsnummer(null);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("fodselsnummer"));
     }
@@ -49,27 +49,27 @@ public class DoneInternBuilderTest {
     @Test
     void skalIkkeGodtaForLangGrupperingsId() {
         String tooLongGrupperingsId = String.join("", Collections.nCopies(101, "1"));
-        DoneInternBuilder builder = getBuilderWithDefaultValues().withGrupperingsId(tooLongGrupperingsId);
+        DoneLegacyBuilder builder = getBuilderWithDefaultValues().withGrupperingsId(tooLongGrupperingsId);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("grupperingsId"));
     }
 
     @Test
     void skalIkkeGodtaManglendeGrupperingsId() {
-        DoneInternBuilder builder = getBuilderWithDefaultValues().withGrupperingsId(null);
+        DoneLegacyBuilder builder = getBuilderWithDefaultValues().withGrupperingsId(null);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("grupperingsId"));
     }
 
     @Test
     void skalIkkeGodtaManglendeEventtidspunkt() {
-        DoneInternBuilder builder = getBuilderWithDefaultValues().withTidspunkt(null);
+        DoneLegacyBuilder builder = getBuilderWithDefaultValues().withTidspunkt(null);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("tidspunkt"));
     }
 
-    private DoneInternBuilder getBuilderWithDefaultValues() {
-        return new DoneInternBuilder()
+    private DoneLegacyBuilder getBuilderWithDefaultValues() {
+        return new DoneLegacyBuilder()
                 .withFodselsnummer(expectedFodselsnr)
                 .withGrupperingsId(expectedGrupperingsId)
                 .withTidspunkt(expectedTidspunkt);

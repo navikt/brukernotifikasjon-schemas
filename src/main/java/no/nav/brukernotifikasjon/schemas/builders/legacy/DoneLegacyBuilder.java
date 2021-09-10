@@ -1,33 +1,33 @@
-package no.nav.brukernotifikasjon.schemas.builders.intern;
+package no.nav.brukernotifikasjon.schemas.builders.legacy;
 
-import no.nav.brukernotifikasjon.schemas.intern.DoneIntern;
+import no.nav.brukernotifikasjon.schemas.legacy.DoneLegacy;
 import no.nav.brukernotifikasjon.schemas.builders.util.ValidationUtil;
 
 import java.time.LocalDateTime;
 
-public class DoneInternBuilder {
+public class DoneLegacyBuilder {
 
     private LocalDateTime tidspunkt;
     private String fodselsnummer;
     private String grupperingsId;
 
-    public DoneInternBuilder withTidspunkt(LocalDateTime tidspunkt) {
+    public DoneLegacyBuilder withTidspunkt(LocalDateTime tidspunkt) {
         this.tidspunkt = tidspunkt;
         return this;
     }
 
-    public DoneInternBuilder withFodselsnummer(String fodselsnummer) {
+    public DoneLegacyBuilder withFodselsnummer(String fodselsnummer) {
         this.fodselsnummer = fodselsnummer;
         return this;
     }
 
-    public DoneInternBuilder withGrupperingsId(String grupperingsId) {
+    public DoneLegacyBuilder withGrupperingsId(String grupperingsId) {
         this.grupperingsId = grupperingsId;
         return this;
     }
 
-    public DoneIntern build() {
-        return new DoneIntern(
+    public DoneLegacy build() {
+        return new DoneLegacy(
                 ValidationUtil.localDateTimeToUtcTimestamp(tidspunkt, "tidspunkt", ValidationUtil.IS_REQUIRED_TIDSPUNKT),
                 ValidationUtil.validateFodselsnummer(fodselsnummer),
                 ValidationUtil.validateNonNullFieldMaxLength(grupperingsId, "grupperingsId", ValidationUtil.MAX_LENGTH_GRUPPERINGSID)
