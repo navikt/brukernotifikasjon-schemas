@@ -66,7 +66,7 @@ public class StatusoppdateringLegacyBuilder {
                 ValidationUtil.validateLinkAndConvertToString(link, "link", ValidationUtil.MAX_LENGTH_LINK, ValidationUtil.isLinkRequired(Eventtype.STATUSOPPDATERING)),
                 ValidationUtil.validateSikkerhetsnivaa(sikkerhetsnivaa),
                 ValidationUtil.validateStatusGlobal(statusGlobal),
-                ValidationUtil.validateNonNullFieldMaxLength(statusIntern, "statusIntern", ValidationUtil.MAX_LENGTH_StatusIntern),
+                ValidationUtil.validateNonNullFieldMaxLength(statusIntern, "statusIntern", ValidationUtil.MAX_LENGTH_STATUSINTERN),
                 ValidationUtil.validateNonNullFieldMaxLength(sakstema, "sakstema", ValidationUtil.MAX_LENGTH_SAKSTEMA),
                 ValidationUtil.validateFodselsnummer(fodselsnummer)
         );
