@@ -1,7 +1,7 @@
 {
     "type": "record",
-    "namespace": "no.nav.brukernotifikasjon.schemas",
-    "name": "Beskjed",
+    "namespace": "no.nav.brukernotifikasjon.schemas.legacy",
+    "name": "OppgaveLegacy",
     "fields": [
         {
             "name": "tidspunkt",
@@ -9,10 +9,12 @@
             "logicalType": "timestamp-millis"
         },
         {
-            "name": "synligFremTil",
-            "type": ["null", "long"],
-            "logicalType": "timestamp-millis",
-            "default": null
+            "name": "fodselsnummer",
+            "type": "string"
+        },
+        {
+            "name": "grupperingsId",
+            "type": "string"
         },
         {
             "name": "tekst",

@@ -4,11 +4,23 @@
     "name": "Nokkel",
     "fields": [
         {
-            "name": "systembruker",
+            "name": "eventId",
             "type": "string"
         },
         {
-            "name": "eventId",
+            "name": "grupperingsId",
+            "type": "string"
+        },
+        {
+            "name": "fodselsnummer",
+            "type": "string"
+        },
+        {
+            "name": "namespace",
+            "type": "string"
+        },
+        {
+            "name": "appnavn",
             "type": "string"
         }
     ]

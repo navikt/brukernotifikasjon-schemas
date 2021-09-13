@@ -1,6 +1,5 @@
 package no.nav.brukernotifikasjon.schemas.builders;
 
-import no.nav.brukernotifikasjon.schemas.Beskjed;
 import no.nav.brukernotifikasjon.schemas.Statusoppdatering;
 import no.nav.brukernotifikasjon.schemas.builders.domain.StatusGlobal;
 import org.junit.jupiter.api.Test;
@@ -31,11 +30,9 @@ public class StatusoppdateringAvroTest {
     private Statusoppdatering getStatusoppdateringWithDefaultValues() {
         return Statusoppdatering.newBuilder()
                 .setTidspunkt(LocalDateTime.now().toEpochSecond(ZoneOffset.UTC))
-                .setGrupperingsId("3456789123456")
                 .setLink("https://gyldig.url")
                 .setStatusGlobal(StatusGlobal.UNDER_BEHANDLING.toString())
                 .setSakstema("FP")
-                .setFodselsnummer("12345678901")
                 .build();
     }
 }

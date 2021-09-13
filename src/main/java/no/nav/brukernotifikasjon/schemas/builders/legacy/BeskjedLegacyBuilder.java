@@ -1,7 +1,6 @@
-package no.nav.brukernotifikasjon.schemas.builders;
+package no.nav.brukernotifikasjon.schemas.builders.legacy;
 
-
-import no.nav.brukernotifikasjon.schemas.Beskjed;
+import no.nav.brukernotifikasjon.schemas.legacy.BeskjedLegacy;
 import no.nav.brukernotifikasjon.schemas.builders.domain.Eventtype;
 import no.nav.brukernotifikasjon.schemas.builders.domain.PreferertKanal;
 import no.nav.brukernotifikasjon.schemas.builders.util.ValidationUtil;
@@ -11,57 +10,71 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
-public class BeskjedBuilder {
+public class BeskjedLegacyBuilder {
 
     private LocalDateTime tidspunkt;
     private LocalDateTime synligFremTil;
+    private String fodselsnummer;
+    private String grupperingsId;
     private String tekst;
     private URL link;
     private Integer sikkerhetsnivaa;
     private Boolean eksternVarsling = false;
     private List<PreferertKanal> prefererteKanaler;
 
-    public BeskjedBuilder withTidspunkt(LocalDateTime tidspunkt) {
+    public BeskjedLegacyBuilder withTidspunkt(LocalDateTime tidspunkt) {
         this.tidspunkt = tidspunkt;
         return this;
     }
 
-    public BeskjedBuilder withSynligFremTil(LocalDateTime synligFremTil) {
+    public BeskjedLegacyBuilder withSynligFremTil(LocalDateTime synligFremTil) {
         this.synligFremTil = synligFremTil;
         return this;
     }
 
-    public BeskjedBuilder withTekst(String tekst) {
+    public BeskjedLegacyBuilder withFodselsnummer(String fodselsnummer) {
+        this.fodselsnummer = fodselsnummer;
+        return this;
+    }
+
+    public BeskjedLegacyBuilder withGrupperingsId(String grupperingsId) {
+        this.grupperingsId = grupperingsId;
+        return this;
+    }
+
+    public BeskjedLegacyBuilder withTekst(String tekst) {
         this.tekst = tekst;
         return this;
     }
 
-    public BeskjedBuilder withLink(URL link) {
+    public BeskjedLegacyBuilder withLink(URL link) {
         this.link = link;
         return this;
     }
 
-    public BeskjedBuilder withSikkerhetsnivaa(Integer sikkerhetsnivaa) {
+    public BeskjedLegacyBuilder withSikkerhetsnivaa(Integer sikkerhetsnivaa) {
         this.sikkerhetsnivaa = sikkerhetsnivaa;
         return this;
     }
 
-    public BeskjedBuilder withEksternVarsling(Boolean eksternVarsling) {
+    public BeskjedLegacyBuilder withEksternVarsling(Boolean eksternVarsling) {
         this.eksternVarsling = eksternVarsling;
         return this;
     }
 
-    public BeskjedBuilder withPrefererteKanaler(PreferertKanal... prefererteKanaler) {
+    public BeskjedLegacyBuilder withPrefererteKanaler(PreferertKanal... prefererteKanaler) {
         if(prefererteKanaler != null) {
             this.prefererteKanaler = Arrays.asList(prefererteKanaler);
         }
         return this;
     }
 
-    public Beskjed build() {
-        return new Beskjed(
+    public BeskjedLegacy build() {
+        return new BeskjedLegacy(
                 ValidationUtil.localDateTimeToUtcTimestamp(tidspunkt, "tidspunkt", ValidationUtil.IS_REQUIRED_TIDSPUNKT),
                 ValidationUtil.localDateTimeToUtcTimestamp(synligFremTil, "synligFremTil", ValidationUtil.IS_REQUIRED_SYNLIGFREMTIL),
+                ValidationUtil.validateFodselsnummer(fodselsnummer),
+                ValidationUtil.validateNonNullFieldMaxLength(grupperingsId, "grupperingsId", ValidationUtil.MAX_LENGTH_GRUPPERINGSID),
                 ValidationUtil.validateNonNullFieldMaxLength(tekst, "tekst", ValidationUtil.MAX_LENGTH_TEXT_BESKJED),
                 ValidationUtil.validateLinkAndConvertToString(link, "link", ValidationUtil.MAX_LENGTH_LINK, ValidationUtil.isLinkRequired(Eventtype.BESKJED)),
                 ValidationUtil.validateSikkerhetsnivaa(sikkerhetsnivaa),

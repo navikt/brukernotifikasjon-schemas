@@ -1,12 +1,16 @@
 {
     "type": "record",
-    "namespace": "no.nav.brukernotifikasjon.schemas",
-    "name": "Statusoppdatering",
+    "namespace": "no.nav.brukernotifikasjon.schemas.legacy",
+    "name": "StatusoppdateringLegacy",
     "fields": [
         {
             "name": "tidspunkt",
             "type": "long",
             "logicalType": "timestamp-millis"
+        },
+        {
+            "name": "grupperingsId",
+            "type": "string"
         },
         {
             "name": "link",
@@ -28,6 +32,10 @@
         },
         {
             "name": "sakstema",
+            "type": "string"
+        },
+        {
+            "name": "fodselsnummer",
             "type": "string"
         }
     ]

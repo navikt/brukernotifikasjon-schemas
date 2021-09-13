@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 import java.util.regex.Pattern;
 
 import static java.util.Collections.emptyList;
@@ -29,10 +30,20 @@ public class ValidationUtil {
     public static final int MAX_LENGTH_SAKSTEMA = 50;
     public static final int MAX_LENGTH_FODSELSNUMMER = 11;
     public static final int MAX_LENGTH_UID = 100;
+    public static final int MAX_LENGTH_APP_NAME = 100;
+    public static final int MAX_LENGTH_NAMESPACE = 63;
     public static final boolean IS_REQUIRED_TIDSPUNKT = true;
     public static final boolean IS_REQUIRED_SYNLIGFREMTIL = false;
 
     private static Pattern elevenDigits = Pattern.compile("[\\d]{11}");
+
+    private static String BASE_16 = "[0-9a-fA-F]";
+    private static String UUID_PATTERN_STRING = String.format("^%1$s{8}-%1$s{4}-%1$s{4}-%1$s{4}-%1$s{12}$", BASE_16);
+    private static Pattern UUID_PATTERN = Pattern.compile(UUID_PATTERN_STRING);
+
+    private static String BASE_32_ULID = "[0-9ABCDEFGHJKMNPQRSTVWXYZabcdefghjkmnpqrstvwxyz]";
+    private static String ULID_PATTERN_STRING = String.format("^([a-zA-Z])(%1$s{8}-%1$s{4}-%1$s{4}-%1$s{4}-%1$s{12}$)", BASE_32_ULID);
+    private static Pattern ULID_PATTERN = Pattern.compile(ULID_PATTERN_STRING);
 
     public static String validateFodselsnummer(String fodselsnummer) {
         validateNonNullField(fodselsnummer, "fodselsnummer");
@@ -151,6 +162,17 @@ public class ValidationUtil {
             return prefererteKanaler;
         } else {
             return emptyList();
+        }
+    }
+
+    public static String validateEventId(String eventId) {
+        validateNonNullFieldMaxLength(eventId, "eventId", MAX_LENGTH_EVENTID);
+        if (UUID_PATTERN.matcher(eventId).find()) {
+            return eventId;
+        } else if (ULID_PATTERN.matcher(eventId).find()) {
+            return eventId;
+        } else {
+            throw new FieldValidationException("Feltet eventId må enten være en standard UUID eller ULID");
         }
     }
 

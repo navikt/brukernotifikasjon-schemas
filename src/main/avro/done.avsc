@@ -7,14 +7,6 @@
             "name": "tidspunkt",
             "type": "long",
             "logicalType": "timestamp-millis"
-        },
-        {
-            "name": "fodselsnummer",
-            "type": "string"
-        },
-        {
-            "name": "grupperingsId",
-            "type": "string"
         }
     ]
 }
