@@ -1,6 +1,7 @@
 package no.nav.brukernotifikasjon.schemas.builders;
 
 import no.nav.brukernotifikasjon.schemas.Innboks;
+import no.nav.brukernotifikasjon.schemas.builders.domain.PreferertKanal;
 import no.nav.brukernotifikasjon.schemas.builders.exception.FieldValidationException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -12,7 +13,9 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.util.Collections;
+import java.util.List;
 
+import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -26,6 +29,8 @@ public class InnboksBuilderTest {
     private URL expectedLink;
     private String expectedTekst;
     private LocalDateTime expectedTidspunkt;
+    private Boolean expectedEksternVarsling;
+    private List<PreferertKanal> expectedPrefererteKanaler;
 
     @BeforeAll
     void setUp() throws MalformedURLException {
@@ -33,6 +38,8 @@ public class InnboksBuilderTest {
         expectedLink = new URL("https://gyldig.url");
         expectedTekst = "Dette er informasjon du må lese";
         expectedTidspunkt = LocalDateTime.now(ZoneId.of("UTC"));
+        expectedEksternVarsling = true;
+        expectedPrefererteKanaler = asList(PreferertKanal.SMS);
     }
 
     @Test
@@ -91,11 +98,41 @@ public class InnboksBuilderTest {
         assertThat(exceptionThrown.getMessage(), containsString("tidspunkt"));
     }
 
+    @Test
+    void skalIkkeGodtaPrefertKanalHvisIkkeEksternVarslingErSatt() {
+        InnboksBuilder builder = getBuilderWithDefaultValues()
+                .withEksternVarsling(false)
+                .withPrefererteKanaler(PreferertKanal.SMS);
+        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
+        assertThat(exceptionThrown.getMessage(), containsString("prefererteKanaler"));
+    }
+
+    @Test
+    void skalGodtaNullSomPreferertKanal() {
+        InnboksBuilder builder = getBuilderWithDefaultValues()
+                .withEksternVarsling(true)
+                .withPrefererteKanaler(null);
+        assertDoesNotThrow(() -> builder.build());
+    }
+
+    @Test
+    void skalGodtaManglendePreferertKanal() {
+        InnboksBuilder builder = new InnboksBuilder()
+                .withSikkerhetsnivaa(expectedSikkerhetsnivaa)
+                .withLink(expectedLink)
+                .withTekst(expectedTekst)
+                .withTidspunkt(expectedTidspunkt)
+                .withEksternVarsling(true);
+        assertDoesNotThrow(() -> builder.build());
+    }
+
     private InnboksBuilder getBuilderWithDefaultValues() {
         return new InnboksBuilder()
                 .withSikkerhetsnivaa(expectedSikkerhetsnivaa)
                 .withLink(expectedLink)
                 .withTekst(expectedTekst)
-                .withTidspunkt(expectedTidspunkt);
+                .withTidspunkt(expectedTidspunkt)
+                .withEksternVarsling(expectedEksternVarsling)
+                .withPrefererteKanaler(expectedPrefererteKanaler.toArray(new PreferertKanal[1]));
     }
 }
