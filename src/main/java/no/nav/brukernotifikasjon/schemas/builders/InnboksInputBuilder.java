@@ -1,17 +1,16 @@
 package no.nav.brukernotifikasjon.schemas.builders;
 
-
-import no.nav.brukernotifikasjon.schemas.Oppgave;
 import no.nav.brukernotifikasjon.schemas.builders.domain.Eventtype;
 import no.nav.brukernotifikasjon.schemas.builders.domain.PreferertKanal;
 import no.nav.brukernotifikasjon.schemas.builders.util.ValidationUtil;
+import no.nav.brukernotifikasjon.schemas.input.InnboksInput;
 
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
-public class OppgaveBuilder {
+public class InnboksInputBuilder {
 
     private LocalDateTime tidspunkt;
     private String tekst;
@@ -20,43 +19,43 @@ public class OppgaveBuilder {
     private Boolean eksternVarsling = false;
     private List<PreferertKanal> prefererteKanaler;
 
-    public OppgaveBuilder withTidspunkt(LocalDateTime tidspunkt) {
+    public InnboksInputBuilder withTidspunkt(LocalDateTime tidspunkt) {
         this.tidspunkt = tidspunkt;
         return this;
     }
 
-    public OppgaveBuilder withTekst(String tekst) {
+    public InnboksInputBuilder withTekst(String tekst) {
         this.tekst = tekst;
         return this;
     }
 
-    public OppgaveBuilder withLink(URL link) {
+    public InnboksInputBuilder withLink(URL link) {
         this.link = link;
         return this;
     }
 
-    public OppgaveBuilder withSikkerhetsnivaa(Integer sikkerhetsnivaa) {
+    public InnboksInputBuilder withSikkerhetsnivaa(Integer sikkerhetsnivaa) {
         this.sikkerhetsnivaa = sikkerhetsnivaa;
         return this;
     }
 
-    public OppgaveBuilder withEksternVarsling(Boolean eksternVarsling) {
+    public InnboksInputBuilder withEksternVarsling(Boolean eksternVarsling) {
         this.eksternVarsling = eksternVarsling;
         return this;
     }
 
-    public OppgaveBuilder withPrefererteKanaler(PreferertKanal... prefererteKanaler) {
+    public InnboksInputBuilder withPrefererteKanaler(PreferertKanal... prefererteKanaler) {
         if(prefererteKanaler != null) {
             this.prefererteKanaler = Arrays.asList(prefererteKanaler);
         }
         return this;
     }
 
-    public Oppgave build() {
-        return new Oppgave(
+    public InnboksInput build() {
+        return new InnboksInput(
                 ValidationUtil.localDateTimeToUtcTimestamp(tidspunkt, "tidspunkt", ValidationUtil.IS_REQUIRED_TIDSPUNKT),
-                ValidationUtil.validateNonNullFieldMaxLength(tekst, "tekst", ValidationUtil.MAX_LENGTH_TEXT_OPPGAVE),
-                ValidationUtil.validateLinkAndConvertToString(link, "link", ValidationUtil.MAX_LENGTH_LINK, ValidationUtil.isLinkRequired(Eventtype.OPPGAVE)),
+                ValidationUtil.validateNonNullFieldMaxLength(tekst, "tekst", ValidationUtil.MAX_LENGTH_TEXT_INNBOKS),
+                ValidationUtil.validateLinkAndConvertToString(link, "link", ValidationUtil.MAX_LENGTH_LINK, ValidationUtil.isLinkRequired(Eventtype.INNBOKS)),
                 ValidationUtil.validateSikkerhetsnivaa(sikkerhetsnivaa),
                 eksternVarsling,
                 ValidationUtil.validatePrefererteKanaler(eksternVarsling, prefererteKanaler)

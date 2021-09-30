@@ -1,6 +1,6 @@
 package no.nav.brukernotifikasjon.schemas.builders;
 
-import no.nav.brukernotifikasjon.schemas.Beskjed;
+import no.nav.brukernotifikasjon.schemas.input.InnboksInput;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -9,10 +9,10 @@ import java.util.List;
 
 import static java.util.Collections.emptyList;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class BeskjedAvroTest {
+
+public class InnboksInputAvroTest {
 
     private int expectedSikkerhetsnivaa = 4;
     private boolean expectedEksternVarsling = false;
@@ -20,30 +20,24 @@ public class BeskjedAvroTest {
 
     @Test
     void skalSetteDefaultverdiForSikkerhetsnivaa() {
-        Beskjed beskjed = getBeskjedWithDefaultValues();
-        assertThat(beskjed.getSikkerhetsnivaa(), is(expectedSikkerhetsnivaa));
+        InnboksInput innboks = getInnboksWithDefaultValues();
+        assertThat(innboks.getSikkerhetsnivaa(), is(expectedSikkerhetsnivaa));
     }
 
     @Test
     void skalSetteDefaultverdiForEksternVarsling() {
-        Beskjed beskjed = getBeskjedWithDefaultValues();
-        assertThat(beskjed.getEksternVarsling(), is(expectedEksternVarsling));
+        InnboksInput innboks = getInnboksWithDefaultValues();
+        assertThat(innboks.getEksternVarsling(), is(expectedEksternVarsling));
     }
 
     @Test
     void skalSetteDefaultVerdiForPrefererteKanaler() {
-        Beskjed beskjed = getBeskjedWithDefaultValues();
-        assertThat(beskjed.getPrefererteKanaler(), is(expectedPrefererteKanaler));
+        InnboksInput innboks = getInnboksWithDefaultValues();
+        assertThat(innboks.getPrefererteKanaler(), is(expectedPrefererteKanaler));
     }
 
-    @Test
-    void skalSetteNullSomDefaultverdiForSynligFremTil() {
-        Beskjed beskjed = getBeskjedWithDefaultValues();
-        assertThat(beskjed.getSynligFremTil(), is(nullValue()));
-    }
-
-    private Beskjed getBeskjedWithDefaultValues() {
-        return Beskjed.newBuilder()
+    private InnboksInput getInnboksWithDefaultValues() {
+        return InnboksInput.newBuilder()
                 .setTidspunkt(LocalDateTime.now().toEpochSecond(ZoneOffset.UTC))
                 .setTekst("Dette er informasjon du må lese")
                 .setLink("https://gyldig.url")

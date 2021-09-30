@@ -1,7 +1,7 @@
 package no.nav.brukernotifikasjon.schemas.builders;
 
-import no.nav.brukernotifikasjon.schemas.Nokkel;
 import no.nav.brukernotifikasjon.schemas.builders.exception.FieldValidationException;
+import no.nav.brukernotifikasjon.schemas.input.NokkelInput;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
@@ -13,7 +13,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class NokkelBuilderTest {
+public class NokkelInputBuilderTest {
 
     private String expectedEventID = UUID.randomUUID().toString();
     private String expectedGrupperingsId = "3456789123456";
@@ -24,15 +24,15 @@ public class NokkelBuilderTest {
 
     @Test
     void skalGodtaEventerMedGyldigeFeltverdier() {
-        NokkelBuilder builder = getBuilderWithDefaultValues();
-        Nokkel nokkel = builder.build();
+        NokkelInputBuilder builder = getBuilderWithDefaultValues();
+        NokkelInput nokkel = builder.build();
 
         assertThat(nokkel.getEventId(), is(expectedEventID));
     }
 
     @Test
     void skalIkkeGodtaManglendeEventId() {
-        NokkelBuilder builder = getBuilderWithDefaultValues().withEventId(null);
+        NokkelInputBuilder builder = getBuilderWithDefaultValues().withEventId(null);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("eventId"));
     }
@@ -40,7 +40,7 @@ public class NokkelBuilderTest {
     @Test
     void skalIkkeGodtaForLangEventId() {
         String tooLongEventId = String.join("", Collections.nCopies(MAX_LENGTH_EVENTID + 1, "n"));
-        NokkelBuilder builder = getBuilderWithDefaultValues().withEventId(tooLongEventId);
+        NokkelInputBuilder builder = getBuilderWithDefaultValues().withEventId(tooLongEventId);
 
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("eventId"));
@@ -49,7 +49,7 @@ public class NokkelBuilderTest {
     @Test
     void skalIkkeGodtaEventIdMedFeilFormat() {
         String notUuidOrUlid = "eventId123";
-        NokkelBuilder builder = getBuilderWithDefaultValues().withEventId(notUuidOrUlid);
+        NokkelInputBuilder builder = getBuilderWithDefaultValues().withEventId(notUuidOrUlid);
 
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("eventId"));
@@ -58,7 +58,7 @@ public class NokkelBuilderTest {
 
     @Test
     void skalIkkeGodtaManglendeFodselsnummer() {
-        NokkelBuilder builder = getBuilderWithDefaultValues().withFodselsnummer(null);
+        NokkelInputBuilder builder = getBuilderWithDefaultValues().withFodselsnummer(null);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("fodselsnummer"));
     }
@@ -66,7 +66,7 @@ public class NokkelBuilderTest {
     @Test
     void skalIkkeGodtaForLangtFodselsnummer() {
         String tooLongFodselsnummer = String.join("", Collections.nCopies(MAX_LENGTH_FODSELSNUMMER + 1, "n"));
-        NokkelBuilder builder = getBuilderWithDefaultValues().withFodselsnummer(tooLongFodselsnummer);
+        NokkelInputBuilder builder = getBuilderWithDefaultValues().withFodselsnummer(tooLongFodselsnummer);
 
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("fodselsnummer"));
@@ -74,7 +74,7 @@ public class NokkelBuilderTest {
 
     @Test
     void skalIkkeGodtaManglendeNamespace() {
-        NokkelBuilder builder = getBuilderWithDefaultValues().withNamespace(null);
+        NokkelInputBuilder builder = getBuilderWithDefaultValues().withNamespace(null);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("namespace"));
         assertThat(exceptionThrown.getMessage(), containsString("var null eller tomt"));
@@ -83,7 +83,7 @@ public class NokkelBuilderTest {
     @Test
     void skalIkkeGodtaForLangtNamespace() {
         String tooLongNamespace = String.join("", Collections.nCopies(MAX_LENGTH_NAMESPACE + 1, "n"));
-        NokkelBuilder builder = getBuilderWithDefaultValues().withNamespace(tooLongNamespace);
+        NokkelInputBuilder builder = getBuilderWithDefaultValues().withNamespace(tooLongNamespace);
 
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("namespace"));
@@ -91,7 +91,7 @@ public class NokkelBuilderTest {
 
     @Test
     void skalIkkeGodtaManglendeAppnavn() {
-        NokkelBuilder builder = getBuilderWithDefaultValues().withAppnavn(null);
+        NokkelInputBuilder builder = getBuilderWithDefaultValues().withAppnavn(null);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("appnavn"));
         assertThat(exceptionThrown.getMessage(), containsString("var null eller tomt"));
@@ -100,7 +100,7 @@ public class NokkelBuilderTest {
     @Test
     void skalIkkeGodtaForLangtAppnavn() {
         String tooLongAppnavn = String.join("", Collections.nCopies(MAX_LENGTH_APP_NAME + 1, "n"));
-        NokkelBuilder builder = getBuilderWithDefaultValues().withAppnavn(tooLongAppnavn);
+        NokkelInputBuilder builder = getBuilderWithDefaultValues().withAppnavn(tooLongAppnavn);
 
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("appnavn"));
@@ -109,21 +109,21 @@ public class NokkelBuilderTest {
     @Test
     void skalIkkeGodtaForLangGrupperingsId() {
         String tooLongGrupperingsId = String.join("", Collections.nCopies(101, "1"));
-        NokkelBuilder builder = getBuilderWithDefaultValues().withGrupperingsId(tooLongGrupperingsId);
+        NokkelInputBuilder builder = getBuilderWithDefaultValues().withGrupperingsId(tooLongGrupperingsId);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("grupperingsId"));
     }
 
     @Test
     void skalIkkeGodtaManglendeGrupperingsId() {
-        NokkelBuilder builder = getBuilderWithDefaultValues().withGrupperingsId(null);
+        NokkelInputBuilder builder = getBuilderWithDefaultValues().withGrupperingsId(null);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("grupperingsId"));
     }
 
 
-    private NokkelBuilder getBuilderWithDefaultValues() {
-        return new NokkelBuilder()
+    private NokkelInputBuilder getBuilderWithDefaultValues() {
+        return new NokkelInputBuilder()
                 .withEventId(expectedEventID)
                 .withGrupperingsId(expectedGrupperingsId)
                 .withFodselsnummer(expectedFodselsnr)

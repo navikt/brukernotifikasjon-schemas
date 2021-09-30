@@ -1,8 +1,8 @@
 package no.nav.brukernotifikasjon.schemas.builders;
 
-import no.nav.brukernotifikasjon.schemas.Innboks;
 import no.nav.brukernotifikasjon.schemas.builders.domain.PreferertKanal;
 import no.nav.brukernotifikasjon.schemas.builders.exception.FieldValidationException;
+import no.nav.brukernotifikasjon.schemas.input.InnboksInput;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class InnboksBuilderTest {
+public class InnboksInputBuilderTest {
 
     private int expectedSikkerhetsnivaa;
     private URL expectedLink;
@@ -44,8 +44,8 @@ public class InnboksBuilderTest {
 
     @Test
     void skalGodtaEventerMedGyldigeFeltverdier() {
-        InnboksBuilder builder = getBuilderWithDefaultValues();
-        Innboks innboks = builder.build();
+        InnboksInputBuilder builder = getBuilderWithDefaultValues();
+        InnboksInput innboks = builder.build();
 
         assertThat(innboks.getSikkerhetsnivaa(), is(expectedSikkerhetsnivaa));
         assertThat(innboks.getLink(), is(expectedLink.toString()));
@@ -57,7 +57,7 @@ public class InnboksBuilderTest {
     @Test
     void skalIkkeGodtaForLavtSikkerhetsnivaa() {
         int invalidSikkerhetsnivaa = 2;
-        InnboksBuilder builder = getBuilderWithDefaultValues().withSikkerhetsnivaa(invalidSikkerhetsnivaa);
+        InnboksInputBuilder builder = getBuilderWithDefaultValues().withSikkerhetsnivaa(invalidSikkerhetsnivaa);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("Sikkerhetsnivaa"));
     }
@@ -65,42 +65,42 @@ public class InnboksBuilderTest {
     @Test
     void skalIkkeGodtaForLangLink() throws MalformedURLException {
         URL invalidLink = new URL("https://" + String.join("", Collections.nCopies(201, "n")));
-        InnboksBuilder builder = getBuilderWithDefaultValues().withLink(invalidLink);
+        InnboksInputBuilder builder = getBuilderWithDefaultValues().withLink(invalidLink);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("link"));
     }
 
     @Test
     void skalGodtaManglendeLink() {
-        InnboksBuilder builder = getBuilderWithDefaultValues().withLink(null);
+        InnboksInputBuilder builder = getBuilderWithDefaultValues().withLink(null);
         assertDoesNotThrow(() -> builder.build());
     }
 
     @Test
     void skalIkkeGodtaForLangTekst() {
         String tooLongTekst = String.join("", Collections.nCopies(501, "n"));
-        InnboksBuilder builder = getBuilderWithDefaultValues().withTekst(tooLongTekst);
+        InnboksInputBuilder builder = getBuilderWithDefaultValues().withTekst(tooLongTekst);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("tekst"));
     }
 
     @Test
     void skalIkkeGodtaTomTekst() {
-        InnboksBuilder builder = getBuilderWithDefaultValues().withTekst("");
+        InnboksInputBuilder builder = getBuilderWithDefaultValues().withTekst("");
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("tekst"));
     }
 
     @Test
     void skalIkkeGodtaManglendeEventtidspunkt() {
-        InnboksBuilder builder = getBuilderWithDefaultValues().withTidspunkt(null);
+        InnboksInputBuilder builder = getBuilderWithDefaultValues().withTidspunkt(null);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("tidspunkt"));
     }
 
     @Test
     void skalIkkeGodtaPrefertKanalHvisIkkeEksternVarslingErSatt() {
-        InnboksBuilder builder = getBuilderWithDefaultValues()
+        InnboksInputBuilder builder = getBuilderWithDefaultValues()
                 .withEksternVarsling(false)
                 .withPrefererteKanaler(PreferertKanal.SMS);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
@@ -109,7 +109,7 @@ public class InnboksBuilderTest {
 
     @Test
     void skalGodtaNullSomPreferertKanal() {
-        InnboksBuilder builder = getBuilderWithDefaultValues()
+        InnboksInputBuilder builder = getBuilderWithDefaultValues()
                 .withEksternVarsling(true)
                 .withPrefererteKanaler(null);
         assertDoesNotThrow(() -> builder.build());
@@ -117,7 +117,7 @@ public class InnboksBuilderTest {
 
     @Test
     void skalGodtaManglendePreferertKanal() {
-        InnboksBuilder builder = new InnboksBuilder()
+        InnboksInputBuilder builder = new InnboksInputBuilder()
                 .withSikkerhetsnivaa(expectedSikkerhetsnivaa)
                 .withLink(expectedLink)
                 .withTekst(expectedTekst)
@@ -126,8 +126,8 @@ public class InnboksBuilderTest {
         assertDoesNotThrow(() -> builder.build());
     }
 
-    private InnboksBuilder getBuilderWithDefaultValues() {
-        return new InnboksBuilder()
+    private InnboksInputBuilder getBuilderWithDefaultValues() {
+        return new InnboksInputBuilder()
                 .withSikkerhetsnivaa(expectedSikkerhetsnivaa)
                 .withLink(expectedLink)
                 .withTekst(expectedTekst)

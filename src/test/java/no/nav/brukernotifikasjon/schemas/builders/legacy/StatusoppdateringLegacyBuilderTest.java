@@ -1,8 +1,8 @@
 package no.nav.brukernotifikasjon.schemas.builders.legacy;
 
+import no.nav.brukernotifikasjon.schemas.Statusoppdatering;
 import no.nav.brukernotifikasjon.schemas.builders.domain.StatusGlobal;
 import no.nav.brukernotifikasjon.schemas.builders.exception.FieldValidationException;
-import no.nav.brukernotifikasjon.schemas.legacy.StatusoppdateringLegacy;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -27,7 +27,7 @@ public class StatusoppdateringLegacyBuilderTest {
     private int expectedSikkerhetsnivaa;
     private URL expectedLink;
     private StatusGlobal expectedStatusGlobal;
-    private String expectedStausLegacy;
+    private String expectedStatus;
     private String expectedSakstema;
     private LocalDateTime expectedTidspunkt;
 
@@ -38,7 +38,7 @@ public class StatusoppdateringLegacyBuilderTest {
         expectedSikkerhetsnivaa = 4;
         expectedLink = new URL("https://gyldig.url");
         expectedStatusGlobal = StatusGlobal.UNDER_BEHANDLING;
-        expectedStausLegacy = "Vi behandler saken din";
+        expectedStatus = "Vi behandler saken din";
         expectedSakstema = "FP";
         expectedTidspunkt = LocalDateTime.now();
     }
@@ -46,17 +46,17 @@ public class StatusoppdateringLegacyBuilderTest {
     @Test
     void skalGodtaEventerMedGyldigeFeltverdier() {
         StatusoppdateringLegacyBuilder builder = getBuilderWithDefaultValues();
-        StatusoppdateringLegacy statusoppdateringLegacy = builder.build();
+        Statusoppdatering statusoppdatering = builder.build();
 
-        assertThat(statusoppdateringLegacy.getFodselsnummer(), is(expectedFodselsnr));
-        assertThat(statusoppdateringLegacy.getGrupperingsId(), is(expectedGrupperingsId));
-        assertThat(statusoppdateringLegacy.getSikkerhetsnivaa(), is(expectedSikkerhetsnivaa));
-        assertThat(statusoppdateringLegacy.getLink(), is(expectedLink.toString()));
-        assertThat(statusoppdateringLegacy.getStatusGlobal(), is(expectedStatusGlobal.toString()));
-        assertThat(statusoppdateringLegacy.getStatusIntern(), is(expectedStausLegacy));
-        assertThat(statusoppdateringLegacy.getSakstema(), is(expectedSakstema));
+        assertThat(statusoppdatering.getFodselsnummer(), is(expectedFodselsnr));
+        assertThat(statusoppdatering.getGrupperingsId(), is(expectedGrupperingsId));
+        assertThat(statusoppdatering.getSikkerhetsnivaa(), is(expectedSikkerhetsnivaa));
+        assertThat(statusoppdatering.getLink(), is(expectedLink.toString()));
+        assertThat(statusoppdatering.getStatusGlobal(), is(expectedStatusGlobal.toString()));
+        assertThat(statusoppdatering.getStatusIntern(), is(expectedStatus));
+        assertThat(statusoppdatering.getSakstema(), is(expectedSakstema));
         long expectedTidspunktAsUtcLong = expectedTidspunkt.toInstant(ZoneOffset.UTC).toEpochMilli();
-        assertThat(statusoppdateringLegacy.getTidspunkt(), is(expectedTidspunktAsUtcLong));
+        assertThat(statusoppdatering.getTidspunkt(), is(expectedTidspunktAsUtcLong));
     }
 
     @Test
@@ -163,7 +163,7 @@ public class StatusoppdateringLegacyBuilderTest {
                 .withSikkerhetsnivaa(expectedSikkerhetsnivaa)
                 .withLink(expectedLink)
                 .withStatusGlobal(expectedStatusGlobal)
-                .withStatusIntern(expectedStausLegacy)
+                .withStatusIntern(expectedStatus)
                 .withSakstema(expectedSakstema)
                 .withTidspunkt(expectedTidspunkt);
     }

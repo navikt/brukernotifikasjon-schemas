@@ -1,15 +1,15 @@
 package no.nav.brukernotifikasjon.schemas.builders;
 
 
-import no.nav.brukernotifikasjon.schemas.Statusoppdatering;
 import no.nav.brukernotifikasjon.schemas.builders.domain.Eventtype;
 import no.nav.brukernotifikasjon.schemas.builders.domain.StatusGlobal;
 import no.nav.brukernotifikasjon.schemas.builders.util.ValidationUtil;
+import no.nav.brukernotifikasjon.schemas.input.StatusoppdateringInput;
 
 import java.net.URL;
 import java.time.LocalDateTime;
 
-public class StatusoppdateringBuilder {
+public class StatusoppdateringInputBuilder {
 
     private LocalDateTime tidspunkt;
     private URL link;
@@ -18,38 +18,38 @@ public class StatusoppdateringBuilder {
     private String statusIntern;
     private String sakstema;
 
-    public StatusoppdateringBuilder withTidspunkt(LocalDateTime tidspunkt) {
+    public StatusoppdateringInputBuilder withTidspunkt(LocalDateTime tidspunkt) {
         this.tidspunkt = tidspunkt;
         return this;
     }
 
-    public StatusoppdateringBuilder withLink(URL link) {
+    public StatusoppdateringInputBuilder withLink(URL link) {
         this.link = link;
         return this;
     }
 
-    public StatusoppdateringBuilder withSikkerhetsnivaa(Integer sikkerhetsnivaa) {
+    public StatusoppdateringInputBuilder withSikkerhetsnivaa(Integer sikkerhetsnivaa) {
         this.sikkerhetsnivaa = sikkerhetsnivaa;
         return this;
     }
 
-    public StatusoppdateringBuilder withStatusGlobal(StatusGlobal statusGlobal) {
+    public StatusoppdateringInputBuilder withStatusGlobal(StatusGlobal statusGlobal) {
         this.statusGlobal = statusGlobal;
         return this;
     }
 
-    public StatusoppdateringBuilder withStatusIntern(String statusIntern) {
+    public StatusoppdateringInputBuilder withStatusIntern(String statusIntern) {
         this.statusIntern = statusIntern;
         return this;
     }
 
-    public StatusoppdateringBuilder withSakstema(String sakstema) {
+    public StatusoppdateringInputBuilder withSakstema(String sakstema) {
         this.sakstema = sakstema;
         return this;
     }
 
-    public Statusoppdatering build() {
-        return new Statusoppdatering(
+    public StatusoppdateringInput build() {
+        return new StatusoppdateringInput(
                 ValidationUtil.localDateTimeToUtcTimestamp(tidspunkt, "tidspunkt", ValidationUtil.IS_REQUIRED_TIDSPUNKT),
                 ValidationUtil.validateLinkAndConvertToString(link, "link", ValidationUtil.MAX_LENGTH_LINK, ValidationUtil.isLinkRequired(Eventtype.STATUSOPPDATERING)),
                 ValidationUtil.validateSikkerhetsnivaa(sikkerhetsnivaa),

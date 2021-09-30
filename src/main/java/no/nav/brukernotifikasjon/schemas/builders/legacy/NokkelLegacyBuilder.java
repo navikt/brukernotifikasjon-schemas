@@ -1,6 +1,6 @@
 package no.nav.brukernotifikasjon.schemas.builders.legacy;
 
-import no.nav.brukernotifikasjon.schemas.legacy.NokkelLegacy;
+import no.nav.brukernotifikasjon.schemas.Nokkel;
 import no.nav.brukernotifikasjon.schemas.builders.util.ValidationUtil;
 
 public class NokkelLegacyBuilder {
@@ -18,8 +18,8 @@ public class NokkelLegacyBuilder {
         return this;
     }
 
-    public NokkelLegacy build() {
-        return new NokkelLegacy(
+    public Nokkel build() {
+        return new Nokkel(
                 ValidationUtil.validateNonNullFieldMaxLength(systembruker, "systembruker", ValidationUtil.MAX_LENGTH_SYSTEMBRUKER),
                 ValidationUtil.validateNonNullFieldMaxLength(eventId, "eventId", ValidationUtil.MAX_LENGTH_EVENTID)
         );

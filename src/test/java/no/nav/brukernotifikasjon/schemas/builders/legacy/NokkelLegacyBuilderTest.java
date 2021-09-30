@@ -1,7 +1,7 @@
 package no.nav.brukernotifikasjon.schemas.builders.legacy;
 
+import no.nav.brukernotifikasjon.schemas.Nokkel;
 import no.nav.brukernotifikasjon.schemas.builders.exception.FieldValidationException;
-import no.nav.brukernotifikasjon.schemas.legacy.NokkelLegacy;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
@@ -20,10 +20,10 @@ public class NokkelLegacyBuilderTest {
     @Test
     void skalGodtaEventerMedGyldigeFeltverdier() {
         NokkelLegacyBuilder builder = getBuilderWithDefaultValues();
-        NokkelLegacy nokkelLegacy = builder.build();
+        Nokkel nokkel = builder.build();
 
-        assertThat(nokkelLegacy.getSystembruker(), is(expectedSystembruker));
-        assertThat(nokkelLegacy.getEventId(), is(expectedEventID));
+        assertThat(nokkel.getSystembruker(), is(expectedSystembruker));
+        assertThat(nokkel.getEventId(), is(expectedEventID));
     }
 
     @Test

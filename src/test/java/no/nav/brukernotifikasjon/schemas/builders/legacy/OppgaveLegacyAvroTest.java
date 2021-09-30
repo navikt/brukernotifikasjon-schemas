@@ -1,6 +1,6 @@
 package no.nav.brukernotifikasjon.schemas.builders.legacy;
 
-import no.nav.brukernotifikasjon.schemas.legacy.OppgaveLegacy;
+import no.nav.brukernotifikasjon.schemas.Oppgave;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -16,18 +16,18 @@ public class OppgaveLegacyAvroTest {
 
     @Test
     void skalSetteDefaultverdiForSikkerhetsnivaa() {
-        OppgaveLegacy oppgaveLegacy = getOppgaveLegacyWithDefaultValues();
-        assertThat(oppgaveLegacy.getSikkerhetsnivaa(), is(expectedSikkerhetsnivaa));
+        Oppgave oppgave = getOppgaveLegacyWithDefaultValues();
+        assertThat(oppgave.getSikkerhetsnivaa(), is(expectedSikkerhetsnivaa));
     }
 
     @Test
     void skalSetteDefaultverdiForEksternVarsling() {
-        OppgaveLegacy oppgaveLegacy = getOppgaveLegacyWithDefaultValues();
-        assertThat(oppgaveLegacy.getEksternVarsling(), is(expectedEksternVarsling));
+        Oppgave oppgave = getOppgaveLegacyWithDefaultValues();
+        assertThat(oppgave.getEksternVarsling(), is(expectedEksternVarsling));
     }
 
-    private OppgaveLegacy getOppgaveLegacyWithDefaultValues() {
-        return OppgaveLegacy.newBuilder()
+    private Oppgave getOppgaveLegacyWithDefaultValues() {
+        return Oppgave.newBuilder()
                 .setTidspunkt(LocalDateTime.now().toEpochSecond(ZoneOffset.UTC))
                 .setFodselsnummer("12345678901")
                 .setGrupperingsId("3456789123456")

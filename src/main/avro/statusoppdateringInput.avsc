@@ -1,7 +1,7 @@
 {
     "type": "record",
-    "namespace": "no.nav.brukernotifikasjon.schemas",
-    "name": "Statusoppdatering",
+    "namespace": "no.nav.brukernotifikasjon.schemas.input",
+    "name": "StatusoppdateringInput",
     "fields": [
         {
             "name": "tidspunkt",

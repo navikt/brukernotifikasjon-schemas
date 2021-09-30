@@ -1,7 +1,7 @@
 package no.nav.brukernotifikasjon.schemas.builders.legacy;
 
+import no.nav.brukernotifikasjon.schemas.Statusoppdatering;
 import no.nav.brukernotifikasjon.schemas.builders.domain.StatusGlobal;
-import no.nav.brukernotifikasjon.schemas.legacy.StatusoppdateringLegacy;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -17,18 +17,18 @@ public class StatusoppdateringLegacyAvroTest {
 
     @Test
     void skalSetteDefaultverdiForSikkerhetsnivaa() {
-        StatusoppdateringLegacy statusoppdateringLegacy = getStatusoppdateringLegacyWithDefaultValues();
-        assertThat(statusoppdateringLegacy.getSikkerhetsnivaa(), is(expectedSikkerhetsnivaa));
+        Statusoppdatering statusoppdatering = getStatusoppdateringLegacyWithDefaultValues();
+        assertThat(statusoppdatering.getSikkerhetsnivaa(), is(expectedSikkerhetsnivaa));
     }
 
     @Test
     void skalSetteNullSomDefaultverdiForStatusIntern() {
-        StatusoppdateringLegacy statusoppdateringLegacy = getStatusoppdateringLegacyWithDefaultValues();
-        assertThat(statusoppdateringLegacy.getStatusIntern(), is(nullValue()));
+        Statusoppdatering statusoppdatering = getStatusoppdateringLegacyWithDefaultValues();
+        assertThat(statusoppdatering.getStatusIntern(), is(nullValue()));
     }
 
-    private StatusoppdateringLegacy getStatusoppdateringLegacyWithDefaultValues() {
-        return StatusoppdateringLegacy.newBuilder()
+    private Statusoppdatering getStatusoppdateringLegacyWithDefaultValues() {
+        return Statusoppdatering.newBuilder()
                 .setTidspunkt(LocalDateTime.now().toEpochSecond(ZoneOffset.UTC))
                 .setGrupperingsId("3456789123456")
                 .setLink("https://gyldig.url")

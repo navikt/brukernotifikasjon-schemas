@@ -1,8 +1,8 @@
 package no.nav.brukernotifikasjon.schemas.builders.legacy;
 
+import no.nav.brukernotifikasjon.schemas.Beskjed;
 import no.nav.brukernotifikasjon.schemas.builders.domain.PreferertKanal;
 import no.nav.brukernotifikasjon.schemas.builders.exception.FieldValidationException;
-import no.nav.brukernotifikasjon.schemas.legacy.BeskjedLegacy;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -52,19 +52,19 @@ public class BeskjedLegacyBuilderTest {
     @Test
     void skalGodtaEventerMedGyldigeFeltverdier() {
         BeskjedLegacyBuilder builder = getBuilderWithDefaultValues();
-        BeskjedLegacy beskjedLegacy = builder.build();
+        Beskjed beskjed = builder.build();
 
-        assertThat(beskjedLegacy.getFodselsnummer(), is(expectedFodselsnr));
-        assertThat(beskjedLegacy.getGrupperingsId(), is(expectedGrupperingsId));
-        assertThat(beskjedLegacy.getSikkerhetsnivaa(), is(expectedSikkerhetsnivaa));
-        assertThat(beskjedLegacy.getLink(), is(expectedLink.toString()));
-        assertThat(beskjedLegacy.getTekst(), is(expectedTekst));
+        assertThat(beskjed.getFodselsnummer(), is(expectedFodselsnr));
+        assertThat(beskjed.getGrupperingsId(), is(expectedGrupperingsId));
+        assertThat(beskjed.getSikkerhetsnivaa(), is(expectedSikkerhetsnivaa));
+        assertThat(beskjed.getLink(), is(expectedLink.toString()));
+        assertThat(beskjed.getTekst(), is(expectedTekst));
         long expectedTidspunktAsUtcLong = expectedTidspunkt.toInstant(ZoneOffset.UTC).toEpochMilli();
-        assertThat(beskjedLegacy.getTidspunkt(), is(expectedTidspunktAsUtcLong));
+        assertThat(beskjed.getTidspunkt(), is(expectedTidspunktAsUtcLong));
         long expectedSynligFremTilAsUtcLong = expectedSynligFremTil.toInstant(ZoneOffset.UTC).toEpochMilli();
-        assertThat(beskjedLegacy.getSynligFremTil(), is(expectedSynligFremTilAsUtcLong));
-        assertThat(beskjedLegacy.getEksternVarsling(), is(expectedEksternVarsling));
-        assertThat(beskjedLegacy.getPrefererteKanaler(), is(expectedPrefererteKanaler.stream().map(preferertKanal -> preferertKanal.toString()).collect(toList())));
+        assertThat(beskjed.getSynligFremTil(), is(expectedSynligFremTilAsUtcLong));
+        assertThat(beskjed.getEksternVarsling(), is(expectedEksternVarsling));
+        assertThat(beskjed.getPrefererteKanaler(), is(expectedPrefererteKanaler.stream().map(preferertKanal -> preferertKanal.toString()).collect(toList())));
     }
 
     @Test

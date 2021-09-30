@@ -1,7 +1,7 @@
 package no.nav.brukernotifikasjon.schemas.builders.legacy;
 
+import no.nav.brukernotifikasjon.schemas.Done;
 import no.nav.brukernotifikasjon.schemas.builders.exception.FieldValidationException;
-import no.nav.brukernotifikasjon.schemas.legacy.DoneLegacy;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -23,12 +23,12 @@ public class DoneLegacyBuilderTest {
     @Test
     void skalGodtaEventerMedGyldigeFeltverdier() {
         DoneLegacyBuilder builder = getBuilderWithDefaultValues();
-        DoneLegacy doneLegacy = builder.build();
+        Done done = builder.build();
 
-        assertThat(doneLegacy.getFodselsnummer(), is(expectedFodselsnr));
-        assertThat(doneLegacy.getGrupperingsId(), is(expectedGrupperingsId));
+        assertThat(done.getFodselsnummer(), is(expectedFodselsnr));
+        assertThat(done.getGrupperingsId(), is(expectedGrupperingsId));
         long expectedTidspunktAsUtcLong = expectedTidspunkt.toInstant(ZoneOffset.UTC).toEpochMilli();
-        assertThat(doneLegacy.getTidspunkt(), is(expectedTidspunktAsUtcLong));
+        assertThat(done.getTidspunkt(), is(expectedTidspunktAsUtcLong));
     }
 
     @Test

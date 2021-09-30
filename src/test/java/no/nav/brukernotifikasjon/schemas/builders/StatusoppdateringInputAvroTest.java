@@ -1,7 +1,7 @@
 package no.nav.brukernotifikasjon.schemas.builders;
 
-import no.nav.brukernotifikasjon.schemas.Statusoppdatering;
 import no.nav.brukernotifikasjon.schemas.builders.domain.StatusGlobal;
+import no.nav.brukernotifikasjon.schemas.input.StatusoppdateringInput;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -11,24 +11,24 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class StatusoppdateringAvroTest {
+public class StatusoppdateringInputAvroTest {
 
     private int expectedSikkerhetsnivaa = 4;
 
     @Test
     void skalSetteDefaultverdiForSikkerhetsnivaa() {
-        Statusoppdatering statusoppdatering = getStatusoppdateringWithDefaultValues();
+        StatusoppdateringInput statusoppdatering = getStatusoppdateringWithDefaultValues();
         assertThat(statusoppdatering.getSikkerhetsnivaa(), is(expectedSikkerhetsnivaa));
     }
 
     @Test
     void skalSetteNullSomDefaultverdiForStatusIntern() {
-        Statusoppdatering statusoppdatering = getStatusoppdateringWithDefaultValues();
+        StatusoppdateringInput statusoppdatering = getStatusoppdateringWithDefaultValues();
         assertThat(statusoppdatering.getStatusIntern(), is(nullValue()));
     }
 
-    private Statusoppdatering getStatusoppdateringWithDefaultValues() {
-        return Statusoppdatering.newBuilder()
+    private StatusoppdateringInput getStatusoppdateringWithDefaultValues() {
+        return StatusoppdateringInput.newBuilder()
                 .setTidspunkt(LocalDateTime.now().toEpochSecond(ZoneOffset.UTC))
                 .setLink("https://gyldig.url")
                 .setStatusGlobal(StatusGlobal.UNDER_BEHANDLING.toString())

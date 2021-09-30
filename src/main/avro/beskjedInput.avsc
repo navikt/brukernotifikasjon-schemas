@@ -1,12 +1,18 @@
 {
     "type": "record",
-    "namespace": "no.nav.brukernotifikasjon.schemas",
-    "name": "Innboks",
+    "namespace": "no.nav.brukernotifikasjon.schemas.input",
+    "name": "BeskjedInput",
     "fields": [
         {
             "name": "tidspunkt",
             "type": "long",
             "logicalType": "timestamp-millis"
+        },
+        {
+            "name": "synligFremTil",
+            "type": ["null", "long"],
+            "logicalType": "timestamp-millis",
+            "default": null
         },
         {
             "name": "tekst",
@@ -29,8 +35,8 @@
         {
             "name": "prefererteKanaler",
             "type": {
-                "type": "array",
-                "items": "string"
+               "type": "array",
+               "items": "string"
             },
             "default": []
         }

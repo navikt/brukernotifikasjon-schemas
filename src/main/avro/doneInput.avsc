@@ -1,7 +1,7 @@
 {
     "type": "record",
-    "namespace": "no.nav.brukernotifikasjon.schemas",
-    "name": "Done",
+    "namespace": "no.nav.brukernotifikasjon.schemas.input",
+    "name": "DoneInput",
     "fields": [
         {
             "name": "tidspunkt",

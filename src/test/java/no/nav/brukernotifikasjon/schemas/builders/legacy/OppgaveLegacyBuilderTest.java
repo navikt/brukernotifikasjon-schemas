@@ -1,8 +1,8 @@
 package no.nav.brukernotifikasjon.schemas.builders.legacy;
 
+import no.nav.brukernotifikasjon.schemas.Oppgave;
 import no.nav.brukernotifikasjon.schemas.builders.domain.PreferertKanal;
 import no.nav.brukernotifikasjon.schemas.builders.exception.FieldValidationException;
-import no.nav.brukernotifikasjon.schemas.legacy.OppgaveLegacy;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -49,17 +49,17 @@ class OppgaveLegacyBuilderTest {
     @Test
     void skalGodtaEventerMedGyldigeFeltverdier() {
         OppgaveLegacyBuilder builder = getBuilderWithDefaultValues();
-        OppgaveLegacy oppgaveLegacy = builder.build();
+        Oppgave oppgave = builder.build();
 
-        assertThat(oppgaveLegacy.getFodselsnummer(), is(expectedFodselsnr));
-        assertThat(oppgaveLegacy.getGrupperingsId(), is(expectedGrupperingsId));
-        assertThat(oppgaveLegacy.getSikkerhetsnivaa(), is(expectedSikkerhetsnivaa));
-        assertThat(oppgaveLegacy.getLink(), is(expectedLink.toString()));
-        assertThat(oppgaveLegacy.getTekst(), is(expectedTekst));
+        assertThat(oppgave.getFodselsnummer(), is(expectedFodselsnr));
+        assertThat(oppgave.getGrupperingsId(), is(expectedGrupperingsId));
+        assertThat(oppgave.getSikkerhetsnivaa(), is(expectedSikkerhetsnivaa));
+        assertThat(oppgave.getLink(), is(expectedLink.toString()));
+        assertThat(oppgave.getTekst(), is(expectedTekst));
         long expectedTidspunktAsUtcLong = expectedTidspunkt.toInstant(ZoneOffset.UTC).toEpochMilli();
-        assertThat(oppgaveLegacy.getTidspunkt(), is(expectedTidspunktAsUtcLong));
-        assertThat(oppgaveLegacy.getEksternVarsling(), is(expectedEksternVarsling));
-        assertThat(oppgaveLegacy.getPrefererteKanaler(), is(expectedPrefererteKanaler.stream().map(preferertKanal -> preferertKanal.toString()).collect(toList())));
+        assertThat(oppgave.getTidspunkt(), is(expectedTidspunktAsUtcLong));
+        assertThat(oppgave.getEksternVarsling(), is(expectedEksternVarsling));
+        assertThat(oppgave.getPrefererteKanaler(), is(expectedPrefererteKanaler.stream().map(preferertKanal -> preferertKanal.toString()).collect(toList())));
     }
 
     @Test

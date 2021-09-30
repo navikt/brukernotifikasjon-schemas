@@ -3,7 +3,7 @@ package no.nav.brukernotifikasjon.schemas.builders.legacy;
 import no.nav.brukernotifikasjon.schemas.builders.domain.Eventtype;
 import no.nav.brukernotifikasjon.schemas.builders.domain.StatusGlobal;
 import no.nav.brukernotifikasjon.schemas.builders.util.ValidationUtil;
-import no.nav.brukernotifikasjon.schemas.legacy.StatusoppdateringLegacy;
+import no.nav.brukernotifikasjon.schemas.Statusoppdatering;
 
 import java.net.URL;
 import java.time.LocalDateTime;
@@ -59,8 +59,8 @@ public class StatusoppdateringLegacyBuilder {
         return this;
     }
 
-    public StatusoppdateringLegacy build() {
-        return new StatusoppdateringLegacy(
+    public Statusoppdatering build() {
+        return new Statusoppdatering(
                 ValidationUtil.localDateTimeToUtcTimestamp(tidspunkt, "tidspunkt", ValidationUtil.IS_REQUIRED_TIDSPUNKT),
                 ValidationUtil.validateNonNullFieldMaxLength(grupperingsId, "grupperingsId", ValidationUtil.MAX_LENGTH_GRUPPERINGSID),
                 ValidationUtil.validateLinkAndConvertToString(link, "link", ValidationUtil.MAX_LENGTH_LINK, ValidationUtil.isLinkRequired(Eventtype.STATUSOPPDATERING)),

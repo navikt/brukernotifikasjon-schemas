@@ -3,7 +3,7 @@ package no.nav.brukernotifikasjon.schemas.builders.legacy;
 import no.nav.brukernotifikasjon.schemas.builders.domain.Eventtype;
 import no.nav.brukernotifikasjon.schemas.builders.domain.PreferertKanal;
 import no.nav.brukernotifikasjon.schemas.builders.util.ValidationUtil;
-import no.nav.brukernotifikasjon.schemas.legacy.OppgaveLegacy;
+import no.nav.brukernotifikasjon.schemas.Oppgave;
 
 import java.net.URL;
 import java.time.LocalDateTime;
@@ -63,8 +63,8 @@ public class OppgaveLegacyBuilder {
         return this;
     }
 
-    public OppgaveLegacy build() {
-        return new OppgaveLegacy(
+    public Oppgave build() {
+        return new Oppgave(
                 ValidationUtil.localDateTimeToUtcTimestamp(tidspunkt, "tidspunkt", ValidationUtil.IS_REQUIRED_TIDSPUNKT),
                 ValidationUtil.validateFodselsnummer(fodselsnummer),
                 ValidationUtil.validateNonNullFieldMaxLength(grupperingsId, "grupperingsId", ValidationUtil.MAX_LENGTH_GRUPPERINGSID),

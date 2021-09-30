@@ -1,6 +1,6 @@
 package no.nav.brukernotifikasjon.schemas.builders.legacy;
 
-import no.nav.brukernotifikasjon.schemas.legacy.DoneLegacy;
+import no.nav.brukernotifikasjon.schemas.Done;
 import no.nav.brukernotifikasjon.schemas.builders.util.ValidationUtil;
 
 import java.time.LocalDateTime;
@@ -26,8 +26,8 @@ public class DoneLegacyBuilder {
         return this;
     }
 
-    public DoneLegacy build() {
-        return new DoneLegacy(
+    public Done build() {
+        return new Done(
                 ValidationUtil.localDateTimeToUtcTimestamp(tidspunkt, "tidspunkt", ValidationUtil.IS_REQUIRED_TIDSPUNKT),
                 ValidationUtil.validateFodselsnummer(fodselsnummer),
                 ValidationUtil.validateNonNullFieldMaxLength(grupperingsId, "grupperingsId", ValidationUtil.MAX_LENGTH_GRUPPERINGSID)

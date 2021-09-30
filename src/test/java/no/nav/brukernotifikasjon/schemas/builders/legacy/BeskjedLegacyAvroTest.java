@@ -1,6 +1,6 @@
 package no.nav.brukernotifikasjon.schemas.builders.legacy;
 
-import no.nav.brukernotifikasjon.schemas.legacy.BeskjedLegacy;
+import no.nav.brukernotifikasjon.schemas.Beskjed;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -17,24 +17,24 @@ public class BeskjedLegacyAvroTest {
 
     @Test
     void skalSetteDefaultverdiForSikkerhetsnivaa() {
-        BeskjedLegacy beskjedLegacy = getBeskjedLegacyWithDefaultValues();
-        assertThat(beskjedLegacy.getSikkerhetsnivaa(), is(expectedSikkerhetsnivaa));
+        Beskjed beskjed = getBeskjedLegacyWithDefaultValues();
+        assertThat(beskjed.getSikkerhetsnivaa(), is(expectedSikkerhetsnivaa));
     }
 
     @Test
     void skalSetteDefaultverdiForEksternVarsling() {
-        BeskjedLegacy beskjedLegacy = getBeskjedLegacyWithDefaultValues();
-        assertThat(beskjedLegacy.getEksternVarsling(), is(expectedEksternVarsling));
+        Beskjed beskjed = getBeskjedLegacyWithDefaultValues();
+        assertThat(beskjed.getEksternVarsling(), is(expectedEksternVarsling));
     }
 
     @Test
     void skalSetteNullSomDefaultverdiForSynligFremTil() {
-        BeskjedLegacy beskjedLegacy = getBeskjedLegacyWithDefaultValues();
-        assertThat(beskjedLegacy.getSynligFremTil(), is(nullValue()));
+        Beskjed beskjed = getBeskjedLegacyWithDefaultValues();
+        assertThat(beskjed.getSynligFremTil(), is(nullValue()));
     }
 
-    private BeskjedLegacy getBeskjedLegacyWithDefaultValues() {
-        return BeskjedLegacy.newBuilder()
+    private Beskjed getBeskjedLegacyWithDefaultValues() {
+        return Beskjed.newBuilder()
                 .setTidspunkt(LocalDateTime.now().toEpochSecond(ZoneOffset.UTC))
                 .setFodselsnummer("12345678901")
                 .setGrupperingsId("3456789123456")

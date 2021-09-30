@@ -1,7 +1,7 @@
 {
     "type": "record",
-    "namespace": "no.nav.brukernotifikasjon.schemas.legacy",
-    "name": "BeskjedLegacy",
+    "namespace": "no.nav.brukernotifikasjon.schemas",
+    "name": "Beskjed",
     "fields": [
         {
             "name": "tidspunkt",
