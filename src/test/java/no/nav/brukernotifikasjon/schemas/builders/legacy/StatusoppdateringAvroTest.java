@@ -11,23 +11,23 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class StatusoppdateringLegacyAvroTest {
+public class StatusoppdateringAvroTest {
 
     private int expectedSikkerhetsnivaa = 4;
 
     @Test
     void skalSetteDefaultverdiForSikkerhetsnivaa() {
-        Statusoppdatering statusoppdatering = getStatusoppdateringLegacyWithDefaultValues();
+        Statusoppdatering statusoppdatering = getStatusoppdateringWithDefaultValues();
         assertThat(statusoppdatering.getSikkerhetsnivaa(), is(expectedSikkerhetsnivaa));
     }
 
     @Test
     void skalSetteNullSomDefaultverdiForStatusIntern() {
-        Statusoppdatering statusoppdatering = getStatusoppdateringLegacyWithDefaultValues();
+        Statusoppdatering statusoppdatering = getStatusoppdateringWithDefaultValues();
         assertThat(statusoppdatering.getStatusIntern(), is(nullValue()));
     }
 
-    private Statusoppdatering getStatusoppdateringLegacyWithDefaultValues() {
+    private Statusoppdatering getStatusoppdateringWithDefaultValues() {
         return Statusoppdatering.newBuilder()
                 .setTidspunkt(LocalDateTime.now().toEpochSecond(ZoneOffset.UTC))
                 .setGrupperingsId("3456789123456")

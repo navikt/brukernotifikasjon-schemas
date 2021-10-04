@@ -10,30 +10,30 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class BeskjedLegacyAvroTest {
+public class BeskjedAvroTest {
 
     private int expectedSikkerhetsnivaa = 4;
     private boolean expectedEksternVarsling = false;
 
     @Test
     void skalSetteDefaultverdiForSikkerhetsnivaa() {
-        Beskjed beskjed = getBeskjedLegacyWithDefaultValues();
+        Beskjed beskjed = getBeskjedWithDefaultValues();
         assertThat(beskjed.getSikkerhetsnivaa(), is(expectedSikkerhetsnivaa));
     }
 
     @Test
     void skalSetteDefaultverdiForEksternVarsling() {
-        Beskjed beskjed = getBeskjedLegacyWithDefaultValues();
+        Beskjed beskjed = getBeskjedWithDefaultValues();
         assertThat(beskjed.getEksternVarsling(), is(expectedEksternVarsling));
     }
 
     @Test
     void skalSetteNullSomDefaultverdiForSynligFremTil() {
-        Beskjed beskjed = getBeskjedLegacyWithDefaultValues();
+        Beskjed beskjed = getBeskjedWithDefaultValues();
         assertThat(beskjed.getSynligFremTil(), is(nullValue()));
     }
 
-    private Beskjed getBeskjedLegacyWithDefaultValues() {
+    private Beskjed getBeskjedWithDefaultValues() {
         return Beskjed.newBuilder()
                 .setTidspunkt(LocalDateTime.now().toEpochSecond(ZoneOffset.UTC))
                 .setFodselsnummer("12345678901")

@@ -9,24 +9,24 @@ import java.time.ZoneOffset;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class OppgaveLegacyAvroTest {
+public class OppgaveAvroTest {
 
     private int expectedSikkerhetsnivaa = 4;
     private boolean expectedEksternVarsling = false;
 
     @Test
     void skalSetteDefaultverdiForSikkerhetsnivaa() {
-        Oppgave oppgave = getOppgaveLegacyWithDefaultValues();
+        Oppgave oppgave = getOppgaveWithDefaultValues();
         assertThat(oppgave.getSikkerhetsnivaa(), is(expectedSikkerhetsnivaa));
     }
 
     @Test
     void skalSetteDefaultverdiForEksternVarsling() {
-        Oppgave oppgave = getOppgaveLegacyWithDefaultValues();
+        Oppgave oppgave = getOppgaveWithDefaultValues();
         assertThat(oppgave.getEksternVarsling(), is(expectedEksternVarsling));
     }
 
-    private Oppgave getOppgaveLegacyWithDefaultValues() {
+    private Oppgave getOppgaveWithDefaultValues() {
         return Oppgave.newBuilder()
                 .setTidspunkt(LocalDateTime.now().toEpochSecond(ZoneOffset.UTC))
                 .setFodselsnummer("12345678901")
