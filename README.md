@@ -3,6 +3,7 @@
 
 Avro-skjemaer for brukernotifikasjon-Kafka-topic-ene som bla DittNAV bruker for å vise notifikasjoner til sluttbrukere. Se alle releases [her](https://jitpack.io/#navikt/brukernotifikasjon-schemas).
 
+Versjon 1.x.x er kun ment å brukes on-prem. På aiven er kun versjon 2.0.0 og høyere gyldig.
 
 # Feltbeskrivelser
 
