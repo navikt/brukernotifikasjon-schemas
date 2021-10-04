@@ -1,6 +1,6 @@
 package no.nav.brukernotifikasjon.schemas.builders.legacy;
 
-import no.nav.brukernotifikasjon.schemas.Beskjed;
+import no.nav.brukernotifikasjon.schemas.Oppgave;
 import no.nav.brukernotifikasjon.schemas.builders.domain.PreferertKanal;
 import no.nav.brukernotifikasjon.schemas.builders.exception.FieldValidationException;
 import org.junit.jupiter.api.BeforeAll;
@@ -10,7 +10,6 @@ import org.junit.jupiter.api.TestInstance;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.util.Collections;
 import java.util.List;
@@ -24,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class BeskjedLegacyBuilderTest {
+class OppgaveBuilderTest {
 
     private String expectedFodselsnr;
     private String expectedGrupperingsId;
@@ -32,7 +31,6 @@ public class BeskjedLegacyBuilderTest {
     private URL expectedLink;
     private String expectedTekst;
     private LocalDateTime expectedTidspunkt;
-    private LocalDateTime expectedSynligFremTil;
     private Boolean expectedEksternVarsling;
     private List<PreferertKanal> expectedPrefererteKanaler;
 
@@ -42,42 +40,39 @@ public class BeskjedLegacyBuilderTest {
         expectedGrupperingsId = "3456789123456";
         expectedSikkerhetsnivaa = 4;
         expectedLink = new URL("https://gyldig.url");
-        expectedTekst = "Dette er informasjon du må lese";
-        expectedTidspunkt = LocalDateTime.now(ZoneId.of("UTC"));
-        expectedSynligFremTil = expectedTidspunkt.plusDays(2);
+        expectedTekst = "Du må sende nytt meldekort";
+        expectedTidspunkt = LocalDateTime.now();
         expectedEksternVarsling = true;
         expectedPrefererteKanaler = asList(PreferertKanal.SMS);
     }
 
     @Test
     void skalGodtaEventerMedGyldigeFeltverdier() {
-        BeskjedLegacyBuilder builder = getBuilderWithDefaultValues();
-        Beskjed beskjed = builder.build();
+        OppgaveBuilder builder = getBuilderWithDefaultValues();
+        Oppgave oppgave = builder.build();
 
-        assertThat(beskjed.getFodselsnummer(), is(expectedFodselsnr));
-        assertThat(beskjed.getGrupperingsId(), is(expectedGrupperingsId));
-        assertThat(beskjed.getSikkerhetsnivaa(), is(expectedSikkerhetsnivaa));
-        assertThat(beskjed.getLink(), is(expectedLink.toString()));
-        assertThat(beskjed.getTekst(), is(expectedTekst));
+        assertThat(oppgave.getFodselsnummer(), is(expectedFodselsnr));
+        assertThat(oppgave.getGrupperingsId(), is(expectedGrupperingsId));
+        assertThat(oppgave.getSikkerhetsnivaa(), is(expectedSikkerhetsnivaa));
+        assertThat(oppgave.getLink(), is(expectedLink.toString()));
+        assertThat(oppgave.getTekst(), is(expectedTekst));
         long expectedTidspunktAsUtcLong = expectedTidspunkt.toInstant(ZoneOffset.UTC).toEpochMilli();
-        assertThat(beskjed.getTidspunkt(), is(expectedTidspunktAsUtcLong));
-        long expectedSynligFremTilAsUtcLong = expectedSynligFremTil.toInstant(ZoneOffset.UTC).toEpochMilli();
-        assertThat(beskjed.getSynligFremTil(), is(expectedSynligFremTilAsUtcLong));
-        assertThat(beskjed.getEksternVarsling(), is(expectedEksternVarsling));
-        assertThat(beskjed.getPrefererteKanaler(), is(expectedPrefererteKanaler.stream().map(preferertKanal -> preferertKanal.toString()).collect(toList())));
+        assertThat(oppgave.getTidspunkt(), is(expectedTidspunktAsUtcLong));
+        assertThat(oppgave.getEksternVarsling(), is(expectedEksternVarsling));
+        assertThat(oppgave.getPrefererteKanaler(), is(expectedPrefererteKanaler.stream().map(preferertKanal -> preferertKanal.toString()).collect(toList())));
     }
 
     @Test
     void skalIkkeGodtaUgyldigFodselsnummer() {
         String tooLongFodselsnummer = String.join("", Collections.nCopies(11, "12"));
-        BeskjedLegacyBuilder builder = getBuilderWithDefaultValues().withFodselsnummer(tooLongFodselsnummer);
+        OppgaveBuilder builder = getBuilderWithDefaultValues().withFodselsnummer(tooLongFodselsnummer);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("fodselsnummer"));
     }
 
     @Test
     void skalIkkeGodtaManglendeFodselsnummer() {
-        BeskjedLegacyBuilder builder = getBuilderWithDefaultValues().withFodselsnummer(null);
+        OppgaveBuilder builder = getBuilderWithDefaultValues().withFodselsnummer(null);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("fodselsnummer"));
     }
@@ -85,14 +80,14 @@ public class BeskjedLegacyBuilderTest {
     @Test
     void skalIkkeGodtaForLangGrupperingsId() {
         String tooLongGrupperingsId = String.join("", Collections.nCopies(101, "1"));
-        BeskjedLegacyBuilder builder = getBuilderWithDefaultValues().withGrupperingsId(tooLongGrupperingsId);
+        OppgaveBuilder builder = getBuilderWithDefaultValues().withGrupperingsId(tooLongGrupperingsId);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("grupperingsId"));
     }
 
     @Test
     void skalIkkeGodtaManglendeGrupperingsId() {
-        BeskjedLegacyBuilder builder = getBuilderWithDefaultValues().withGrupperingsId(null);
+        OppgaveBuilder builder = getBuilderWithDefaultValues().withGrupperingsId(null);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("grupperingsId"));
     }
@@ -100,7 +95,7 @@ public class BeskjedLegacyBuilderTest {
     @Test
     void skalIkkeGodtaForLavtSikkerhetsnivaa() {
         int invalidSikkerhetsnivaa = 2;
-        BeskjedLegacyBuilder builder = getBuilderWithDefaultValues().withSikkerhetsnivaa(invalidSikkerhetsnivaa);
+        OppgaveBuilder builder = getBuilderWithDefaultValues().withSikkerhetsnivaa(invalidSikkerhetsnivaa);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("Sikkerhetsnivaa"));
     }
@@ -108,48 +103,43 @@ public class BeskjedLegacyBuilderTest {
     @Test
     void skalIkkeGodtaForLangLink() throws MalformedURLException {
         URL invalidLink = new URL("https://" + String.join("", Collections.nCopies(201, "n")));
-        BeskjedLegacyBuilder builder = getBuilderWithDefaultValues().withLink(invalidLink);
+        OppgaveBuilder builder = getBuilderWithDefaultValues().withLink(invalidLink);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("link"));
     }
 
     @Test
-    void skalGodtaManglendeLink() {
-        BeskjedLegacyBuilder builder = getBuilderWithDefaultValues().withLink(null);
-        assertDoesNotThrow(() -> builder.build());
+    void skalIkkeGodtaManglendeLink() {
+        OppgaveBuilder builder = getBuilderWithDefaultValues().withLink(null);
+        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
+        assertThat(exceptionThrown.getMessage(), containsString("link"));
     }
 
     @Test
     void skalIkkeGodtaForLangTekst() {
         String tooLongTekst = String.join("", Collections.nCopies(501, "n"));
-        BeskjedLegacyBuilder builder = getBuilderWithDefaultValues().withTekst(tooLongTekst);
+        OppgaveBuilder builder = getBuilderWithDefaultValues().withTekst(tooLongTekst);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("tekst"));
     }
 
     @Test
     void skalIkkeGodtaTomTekst() {
-        BeskjedLegacyBuilder builder = getBuilderWithDefaultValues().withTekst("");
+        OppgaveBuilder builder = getBuilderWithDefaultValues().withTekst("");
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("tekst"));
     }
 
     @Test
     void skalIkkeGodtaManglendeEventtidspunkt() {
-        BeskjedLegacyBuilder builder = getBuilderWithDefaultValues().withTidspunkt(null);
+        OppgaveBuilder builder = getBuilderWithDefaultValues().withTidspunkt(null);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("tidspunkt"));
     }
 
     @Test
-    void skalGodtaMangledeSynligFremTil() {
-        BeskjedLegacyBuilder builder = getBuilderWithDefaultValues().withSynligFremTil(null);
-        assertDoesNotThrow(() -> builder.build());
-    }
-
-    @Test
     void skalIkkeGodtaPrefertKanalHvisIkkeEksternVarslingErSatt() {
-        BeskjedLegacyBuilder builder = getBuilderWithDefaultValues()
+        OppgaveBuilder builder = getBuilderWithDefaultValues()
                 .withEksternVarsling(false)
                 .withPrefererteKanaler(PreferertKanal.SMS);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
@@ -157,36 +147,21 @@ public class BeskjedLegacyBuilderTest {
     }
 
     @Test
-    void skalGodtaNullSomPreferertKanal() {
-        BeskjedLegacyBuilder builder = getBuilderWithDefaultValues()
+    void skalGodtaManglendePreferertKanal() {
+        OppgaveBuilder builder = getBuilderWithDefaultValues()
                 .withEksternVarsling(true)
                 .withPrefererteKanaler(null);
         assertDoesNotThrow(() -> builder.build());
     }
 
-    @Test
-    void skalGodtaManglendePreferertKanal() {
-        BeskjedLegacyBuilder builder = new BeskjedLegacyBuilder()
+    private OppgaveBuilder getBuilderWithDefaultValues() {
+        return new OppgaveBuilder()
                 .withFodselsnummer(expectedFodselsnr)
                 .withGrupperingsId(expectedGrupperingsId)
                 .withSikkerhetsnivaa(expectedSikkerhetsnivaa)
                 .withLink(expectedLink)
                 .withTekst(expectedTekst)
                 .withTidspunkt(expectedTidspunkt)
-                .withSynligFremTil(expectedSynligFremTil)
-                .withEksternVarsling(true);
-        assertDoesNotThrow(() -> builder.build());
-    }
-
-    private BeskjedLegacyBuilder getBuilderWithDefaultValues() {
-        return new BeskjedLegacyBuilder()
-                .withFodselsnummer(expectedFodselsnr)
-                .withGrupperingsId(expectedGrupperingsId)
-                .withSikkerhetsnivaa(expectedSikkerhetsnivaa)
-                .withLink(expectedLink)
-                .withTekst(expectedTekst)
-                .withTidspunkt(expectedTidspunkt)
-                .withSynligFremTil(expectedSynligFremTil)
                 .withEksternVarsling(expectedEksternVarsling)
                 .withPrefererteKanaler(expectedPrefererteKanaler.toArray(new PreferertKanal[1]));
     }

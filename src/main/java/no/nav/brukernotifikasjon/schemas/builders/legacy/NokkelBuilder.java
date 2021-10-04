@@ -3,17 +3,17 @@ package no.nav.brukernotifikasjon.schemas.builders.legacy;
 import no.nav.brukernotifikasjon.schemas.Nokkel;
 import no.nav.brukernotifikasjon.schemas.builders.util.ValidationUtil;
 
-public class NokkelLegacyBuilder {
+public class NokkelBuilder {
 
     private String systembruker;
     private String eventId;
 
-    public NokkelLegacyBuilder withSystembruker(String systembruker) {
+    public NokkelBuilder withSystembruker(String systembruker) {
         this.systembruker = systembruker;
         return this;
     }
 
-    public NokkelLegacyBuilder withEventId(String eventId) {
+    public NokkelBuilder withEventId(String eventId) {
         this.eventId = eventId;
         return this;
     }

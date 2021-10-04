@@ -12,14 +12,14 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class NokkelLegacyBuilderTest {
+public class NokkelBuilderTest {
 
     private String expectedSystembruker = "enSystemBruker";
     private String expectedEventID = UUID.randomUUID().toString();
 
     @Test
     void skalGodtaEventerMedGyldigeFeltverdier() {
-        NokkelLegacyBuilder builder = getBuilderWithDefaultValues();
+        NokkelBuilder builder = getBuilderWithDefaultValues();
         Nokkel nokkel = builder.build();
 
         assertThat(nokkel.getSystembruker(), is(expectedSystembruker));
@@ -29,20 +29,20 @@ public class NokkelLegacyBuilderTest {
     @Test
     void skalIkkeGodtaForLangSystembruker() {
         String tooLongSystembruker = String.join("", Collections.nCopies(101, "n"));
-        NokkelLegacyBuilder builder = getBuilderWithDefaultValues().withSystembruker(tooLongSystembruker);
+        NokkelBuilder builder = getBuilderWithDefaultValues().withSystembruker(tooLongSystembruker);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("systembruker"));
     }
 
     @Test
     void skalIkkeGodtaManglendeSystembruker() {
-        NokkelLegacyBuilder builder = getBuilderWithDefaultValues().withSystembruker(null);
+        NokkelBuilder builder = getBuilderWithDefaultValues().withSystembruker(null);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("systembruker"));
     }
 
-    private NokkelLegacyBuilder getBuilderWithDefaultValues() {
-        return new NokkelLegacyBuilder()
+    private NokkelBuilder getBuilderWithDefaultValues() {
+        return new NokkelBuilder()
                 .withSystembruker(expectedSystembruker)
                 .withEventId(expectedEventID);
     }

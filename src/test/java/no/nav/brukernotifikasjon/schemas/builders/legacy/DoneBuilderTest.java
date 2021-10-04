@@ -14,7 +14,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class DoneLegacyBuilderTest {
+public class DoneBuilderTest {
 
     private String expectedFodselsnr = "12345678901";
     private String expectedGrupperingsId = "3456789123456";
@@ -22,7 +22,7 @@ public class DoneLegacyBuilderTest {
 
     @Test
     void skalGodtaEventerMedGyldigeFeltverdier() {
-        DoneLegacyBuilder builder = getBuilderWithDefaultValues();
+        DoneBuilder builder = getBuilderWithDefaultValues();
         Done done = builder.build();
 
         assertThat(done.getFodselsnummer(), is(expectedFodselsnr));
@@ -34,14 +34,14 @@ public class DoneLegacyBuilderTest {
     @Test
     void skalIkkeGodtaForLangtFodselsnummer() {
         String tooLongFodselsnummer = String.join("", Collections.nCopies(11, "12"));
-        DoneLegacyBuilder builder = getBuilderWithDefaultValues().withFodselsnummer(tooLongFodselsnummer);
+        DoneBuilder builder = getBuilderWithDefaultValues().withFodselsnummer(tooLongFodselsnummer);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("fodselsnummer"));
     }
 
     @Test
     void skalIkkeGodtaManglendeFodselsnummer() {
-        DoneLegacyBuilder builder = getBuilderWithDefaultValues().withFodselsnummer(null);
+        DoneBuilder builder = getBuilderWithDefaultValues().withFodselsnummer(null);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("fodselsnummer"));
     }
@@ -49,27 +49,27 @@ public class DoneLegacyBuilderTest {
     @Test
     void skalIkkeGodtaForLangGrupperingsId() {
         String tooLongGrupperingsId = String.join("", Collections.nCopies(101, "1"));
-        DoneLegacyBuilder builder = getBuilderWithDefaultValues().withGrupperingsId(tooLongGrupperingsId);
+        DoneBuilder builder = getBuilderWithDefaultValues().withGrupperingsId(tooLongGrupperingsId);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("grupperingsId"));
     }
 
     @Test
     void skalIkkeGodtaManglendeGrupperingsId() {
-        DoneLegacyBuilder builder = getBuilderWithDefaultValues().withGrupperingsId(null);
+        DoneBuilder builder = getBuilderWithDefaultValues().withGrupperingsId(null);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("grupperingsId"));
     }
 
     @Test
     void skalIkkeGodtaManglendeEventtidspunkt() {
-        DoneLegacyBuilder builder = getBuilderWithDefaultValues().withTidspunkt(null);
+        DoneBuilder builder = getBuilderWithDefaultValues().withTidspunkt(null);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("tidspunkt"));
     }
 
-    private DoneLegacyBuilder getBuilderWithDefaultValues() {
-        return new DoneLegacyBuilder()
+    private DoneBuilder getBuilderWithDefaultValues() {
+        return new DoneBuilder()
                 .withFodselsnummer(expectedFodselsnr)
                 .withGrupperingsId(expectedGrupperingsId)
                 .withTidspunkt(expectedTidspunkt);

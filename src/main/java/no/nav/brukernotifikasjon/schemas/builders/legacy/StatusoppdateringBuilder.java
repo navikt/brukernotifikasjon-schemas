@@ -8,7 +8,7 @@ import no.nav.brukernotifikasjon.schemas.Statusoppdatering;
 import java.net.URL;
 import java.time.LocalDateTime;
 
-public class StatusoppdateringLegacyBuilder {
+public class StatusoppdateringBuilder {
 
     private LocalDateTime tidspunkt;
     private String grupperingsId;
@@ -19,42 +19,42 @@ public class StatusoppdateringLegacyBuilder {
     private String sakstema;
     private String fodselsnummer;
 
-    public StatusoppdateringLegacyBuilder withTidspunkt(LocalDateTime tidspunkt) {
+    public StatusoppdateringBuilder withTidspunkt(LocalDateTime tidspunkt) {
         this.tidspunkt = tidspunkt;
         return this;
     }
 
-    public StatusoppdateringLegacyBuilder withGrupperingsId(String grupperingsId) {
+    public StatusoppdateringBuilder withGrupperingsId(String grupperingsId) {
         this.grupperingsId = grupperingsId;
         return this;
     }
 
-    public StatusoppdateringLegacyBuilder withLink(URL link) {
+    public StatusoppdateringBuilder withLink(URL link) {
         this.link = link;
         return this;
     }
 
-    public StatusoppdateringLegacyBuilder withSikkerhetsnivaa(Integer sikkerhetsnivaa) {
+    public StatusoppdateringBuilder withSikkerhetsnivaa(Integer sikkerhetsnivaa) {
         this.sikkerhetsnivaa = sikkerhetsnivaa;
         return this;
     }
 
-    public StatusoppdateringLegacyBuilder withStatusGlobal(StatusGlobal statusGlobal) {
+    public StatusoppdateringBuilder withStatusGlobal(StatusGlobal statusGlobal) {
         this.statusGlobal = statusGlobal;
         return this;
     }
 
-    public StatusoppdateringLegacyBuilder withStatusIntern(String statusIntern) {
+    public StatusoppdateringBuilder withStatusIntern(String statusIntern) {
         this.statusIntern = statusIntern;
         return this;
     }
 
-    public StatusoppdateringLegacyBuilder withSakstema(String sakstema) {
+    public StatusoppdateringBuilder withSakstema(String sakstema) {
         this.sakstema = sakstema;
         return this;
     }
 
-    public StatusoppdateringLegacyBuilder withFodselsnummer(String fodselsnummer) {
+    public StatusoppdateringBuilder withFodselsnummer(String fodselsnummer) {
         this.fodselsnummer = fodselsnummer;
         return this;
     }

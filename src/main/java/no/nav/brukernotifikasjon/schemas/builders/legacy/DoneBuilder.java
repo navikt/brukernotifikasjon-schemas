@@ -5,23 +5,23 @@ import no.nav.brukernotifikasjon.schemas.builders.util.ValidationUtil;
 
 import java.time.LocalDateTime;
 
-public class DoneLegacyBuilder {
+public class DoneBuilder {
 
     private LocalDateTime tidspunkt;
     private String fodselsnummer;
     private String grupperingsId;
 
-    public DoneLegacyBuilder withTidspunkt(LocalDateTime tidspunkt) {
+    public DoneBuilder withTidspunkt(LocalDateTime tidspunkt) {
         this.tidspunkt = tidspunkt;
         return this;
     }
 
-    public DoneLegacyBuilder withFodselsnummer(String fodselsnummer) {
+    public DoneBuilder withFodselsnummer(String fodselsnummer) {
         this.fodselsnummer = fodselsnummer;
         return this;
     }
 
-    public DoneLegacyBuilder withGrupperingsId(String grupperingsId) {
+    public DoneBuilder withGrupperingsId(String grupperingsId) {
         this.grupperingsId = grupperingsId;
         return this;
     }

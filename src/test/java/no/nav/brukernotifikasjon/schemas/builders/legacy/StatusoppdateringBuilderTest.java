@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class StatusoppdateringLegacyBuilderTest {
+public class StatusoppdateringBuilderTest {
 
     private String expectedFodselsnr;
     private String expectedGrupperingsId;
@@ -45,7 +45,7 @@ public class StatusoppdateringLegacyBuilderTest {
 
     @Test
     void skalGodtaEventerMedGyldigeFeltverdier() {
-        StatusoppdateringLegacyBuilder builder = getBuilderWithDefaultValues();
+        StatusoppdateringBuilder builder = getBuilderWithDefaultValues();
         Statusoppdatering statusoppdatering = builder.build();
 
         assertThat(statusoppdatering.getFodselsnummer(), is(expectedFodselsnr));
@@ -62,14 +62,14 @@ public class StatusoppdateringLegacyBuilderTest {
     @Test
     void skalIkkeGodtaUgyldigFodselsnummer() {
         String tooLongFodselsnummer = String.join("", Collections.nCopies(11, "12"));
-        StatusoppdateringLegacyBuilder builder = getBuilderWithDefaultValues().withFodselsnummer(tooLongFodselsnummer);
+        StatusoppdateringBuilder builder = getBuilderWithDefaultValues().withFodselsnummer(tooLongFodselsnummer);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("fodselsnummer"));
     }
 
     @Test
     void skalIkkeGodtaManglendeFodselsnummer() {
-        StatusoppdateringLegacyBuilder builder = getBuilderWithDefaultValues().withFodselsnummer(null);
+        StatusoppdateringBuilder builder = getBuilderWithDefaultValues().withFodselsnummer(null);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("fodselsnummer"));
     }
@@ -77,14 +77,14 @@ public class StatusoppdateringLegacyBuilderTest {
     @Test
     void skalIkkeGodtaForLangGrupperingsId() {
         String tooLongGrupperingsId = String.join("", Collections.nCopies(101, "1"));
-        StatusoppdateringLegacyBuilder builder = getBuilderWithDefaultValues().withGrupperingsId(tooLongGrupperingsId);
+        StatusoppdateringBuilder builder = getBuilderWithDefaultValues().withGrupperingsId(tooLongGrupperingsId);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("grupperingsId"));
     }
 
     @Test
     void skalIkkeGodtaManglendeGrupperingsId() {
-        StatusoppdateringLegacyBuilder builder = getBuilderWithDefaultValues().withGrupperingsId(null);
+        StatusoppdateringBuilder builder = getBuilderWithDefaultValues().withGrupperingsId(null);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("grupperingsId"));
     }
@@ -92,7 +92,7 @@ public class StatusoppdateringLegacyBuilderTest {
     @Test
     void skalIkkeGodtaForLavtSikkerhetsnivaa() {
         int invalidSikkerhetsnivaa = 2;
-        StatusoppdateringLegacyBuilder builder = getBuilderWithDefaultValues().withSikkerhetsnivaa(invalidSikkerhetsnivaa);
+        StatusoppdateringBuilder builder = getBuilderWithDefaultValues().withSikkerhetsnivaa(invalidSikkerhetsnivaa);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("Sikkerhetsnivaa"));
     }
@@ -100,20 +100,20 @@ public class StatusoppdateringLegacyBuilderTest {
     @Test
     void skalIkkeGodtaForLangLink() throws MalformedURLException {
         URL invalidLink = new URL("https://" + String.join("", Collections.nCopies(201, "n")));
-        StatusoppdateringLegacyBuilder builder = getBuilderWithDefaultValues().withLink(invalidLink);
+        StatusoppdateringBuilder builder = getBuilderWithDefaultValues().withLink(invalidLink);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("link"));
     }
 
     @Test
     void skalGodtaManglendeLink() {
-        StatusoppdateringLegacyBuilder builder = getBuilderWithDefaultValues().withLink(null);
+        StatusoppdateringBuilder builder = getBuilderWithDefaultValues().withLink(null);
         assertDoesNotThrow(() -> builder.build());
     }
 
     @Test
     void skalIkkeGodtaManglendeStatusGlobal() {
-        StatusoppdateringLegacyBuilder builder = getBuilderWithDefaultValues().withStatusGlobal(null);
+        StatusoppdateringBuilder builder = getBuilderWithDefaultValues().withStatusGlobal(null);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("statusGlobal"));
     }
@@ -121,14 +121,14 @@ public class StatusoppdateringLegacyBuilderTest {
     @Test
     void skalIkkeGodtaForLangStatusIntern() {
         String tooLongStatusIntern = String.join("", Collections.nCopies(101, "n"));
-        StatusoppdateringLegacyBuilder builder = getBuilderWithDefaultValues().withStatusIntern(tooLongStatusIntern);
+        StatusoppdateringBuilder builder = getBuilderWithDefaultValues().withStatusIntern(tooLongStatusIntern);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("statusIntern"));
     }
 
     @Test
     void skalIkkeGodtaManglendeStatusIntern() {
-        StatusoppdateringLegacyBuilder builder = getBuilderWithDefaultValues().withStatusIntern(null);
+        StatusoppdateringBuilder builder = getBuilderWithDefaultValues().withStatusIntern(null);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("statusIntern"));
     }
@@ -136,7 +136,7 @@ public class StatusoppdateringLegacyBuilderTest {
     @Test
     void skalIkkeGodtaForLangSakstema() {
         String tooLongSakstema = String.join("", Collections.nCopies(51, "n"));
-        StatusoppdateringLegacyBuilder builder = getBuilderWithDefaultValues().withSakstema(tooLongSakstema);
+        StatusoppdateringBuilder builder = getBuilderWithDefaultValues().withSakstema(tooLongSakstema);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("sakstema"));
     }
@@ -144,20 +144,20 @@ public class StatusoppdateringLegacyBuilderTest {
     @Test
     void skalIkkeGodtaManglendeSakstema() {
         String tooLongSakstema = String.join("", Collections.nCopies(51, "n"));
-        StatusoppdateringLegacyBuilder builder = getBuilderWithDefaultValues().withSakstema(tooLongSakstema);
+        StatusoppdateringBuilder builder = getBuilderWithDefaultValues().withSakstema(tooLongSakstema);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("sakstema"));
     }
 
     @Test
     void skalIkkeGodtaManglendeEventtidspunkt() {
-        StatusoppdateringLegacyBuilder builder = getBuilderWithDefaultValues().withTidspunkt(null);
+        StatusoppdateringBuilder builder = getBuilderWithDefaultValues().withTidspunkt(null);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("tidspunkt"));
     }
 
-    private StatusoppdateringLegacyBuilder getBuilderWithDefaultValues() {
-        return new StatusoppdateringLegacyBuilder()
+    private StatusoppdateringBuilder getBuilderWithDefaultValues() {
+        return new StatusoppdateringBuilder()
                 .withFodselsnummer(expectedFodselsnr)
                 .withGrupperingsId(expectedGrupperingsId)
                 .withSikkerhetsnivaa(expectedSikkerhetsnivaa)
