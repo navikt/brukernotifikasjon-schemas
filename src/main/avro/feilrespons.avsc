@@ -1,0 +1,20 @@
+{
+    "type": "record",
+    "namespace": "no.nav.brukernotifikasjon.schemas.output",
+    "name": "Feilrespons",
+    "fields": [
+        {
+            "name": "tidspunkt",
+            "type": "long",
+            "logicalType": "timestamp-millis"
+        },
+        {
+            "name": "begrunnelse",
+            "type": "string"
+        },
+        {
+            "name": "feilmelding",
+            "type": "string"
+        }
+    ]
+}
