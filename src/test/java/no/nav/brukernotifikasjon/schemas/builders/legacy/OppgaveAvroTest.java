@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class OppgaveAvroTest {
@@ -24,6 +25,12 @@ public class OppgaveAvroTest {
     void skalSetteDefaultverdiForEksternVarsling() {
         Oppgave oppgave = getOppgaveWithDefaultValues();
         assertThat(oppgave.getEksternVarsling(), is(expectedEksternVarsling));
+    }
+
+    @Test
+    void skalSetteNullSomDefaultverdiForSynligFremTil() {
+        Oppgave oppgave = getOppgaveWithDefaultValues();
+        assertThat(oppgave.getSynligFremTil(), is(nullValue()));
     }
 
     private Oppgave getOppgaveWithDefaultValues() {

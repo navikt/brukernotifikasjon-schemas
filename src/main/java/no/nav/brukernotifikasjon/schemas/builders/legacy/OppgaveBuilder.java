@@ -13,6 +13,7 @@ import java.util.List;
 public class OppgaveBuilder {
 
     private LocalDateTime tidspunkt;
+    private LocalDateTime synligFremTil;
     private String fodselsnummer;
     private String grupperingsId;
     private String tekst;
@@ -23,6 +24,11 @@ public class OppgaveBuilder {
 
     public OppgaveBuilder withTidspunkt(LocalDateTime tidspunkt) {
         this.tidspunkt = tidspunkt;
+        return this;
+    }
+
+    public OppgaveBuilder withSynligFremTil(LocalDateTime synligFremTil) {
+        this.synligFremTil = synligFremTil;
         return this;
     }
 
@@ -66,6 +72,7 @@ public class OppgaveBuilder {
     public Oppgave build() {
         return new Oppgave(
                 ValidationUtil.localDateTimeToUtcTimestamp(tidspunkt, "tidspunkt", ValidationUtil.IS_REQUIRED_TIDSPUNKT),
+                ValidationUtil.localDateTimeToUtcTimestamp(synligFremTil, "synligFremTil", ValidationUtil.IS_REQUIRED_SYNLIGFREMTIL),
                 ValidationUtil.validateFodselsnummer(fodselsnummer),
                 ValidationUtil.validateNonNullFieldMaxLength(grupperingsId, "grupperingsId", ValidationUtil.MAX_LENGTH_GRUPPERINGSID),
                 ValidationUtil.validateNonNullFieldMaxLength(tekst, "tekst", ValidationUtil.MAX_LENGTH_TEXT_OPPGAVE),

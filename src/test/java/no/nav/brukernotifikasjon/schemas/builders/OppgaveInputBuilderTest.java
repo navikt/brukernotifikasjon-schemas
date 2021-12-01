@@ -29,6 +29,7 @@ class OppgaveInputBuilderTest {
     private URL expectedLink;
     private String expectedTekst;
     private LocalDateTime expectedTidspunkt;
+    private LocalDateTime expectedSynligFremTil;
     private Boolean expectedEksternVarsling;
     private List<PreferertKanal> expectedPrefererteKanaler;
 
@@ -38,6 +39,7 @@ class OppgaveInputBuilderTest {
         expectedLink = new URL("https://gyldig.url");
         expectedTekst = "Du må sende nytt meldekort";
         expectedTidspunkt = LocalDateTime.now();
+        expectedSynligFremTil = expectedTidspunkt.plusDays(2);
         expectedEksternVarsling = true;
         expectedPrefererteKanaler = asList(PreferertKanal.SMS);
     }
@@ -102,6 +104,12 @@ class OppgaveInputBuilderTest {
     }
 
     @Test
+    void skalGodtaMangledeSynligFremTil() {
+        OppgaveInputBuilder builder = getBuilderWithDefaultValues().withSynligFremTil(null);
+        assertDoesNotThrow(() -> builder.build());
+    }
+
+    @Test
     void skalIkkeGodtaPrefertKanalHvisIkkeEksternVarslingErSatt() {
         OppgaveInputBuilder builder = getBuilderWithDefaultValues()
                 .withEksternVarsling(false)
@@ -124,6 +132,7 @@ class OppgaveInputBuilderTest {
                 .withLink(expectedLink)
                 .withTekst(expectedTekst)
                 .withTidspunkt(expectedTidspunkt)
+                .withSynligFremTil(expectedSynligFremTil)
                 .withEksternVarsling(expectedEksternVarsling)
                 .withPrefererteKanaler(expectedPrefererteKanaler.toArray(new PreferertKanal[1]));
     }
