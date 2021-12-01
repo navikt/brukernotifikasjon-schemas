@@ -33,6 +33,12 @@
                "items": "string"
             },
             "default": []
+        },
+        {
+            "name": "gyldigFremTil",
+            "type": ["null", "long"],
+            "logicalType": "timestamp-millis",
+            "default": null
         }
     ]
 }
