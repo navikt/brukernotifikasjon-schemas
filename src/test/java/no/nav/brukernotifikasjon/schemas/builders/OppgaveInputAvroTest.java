@@ -9,6 +9,7 @@ import java.util.List;
 
 import static java.util.Collections.emptyList;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class OppgaveInputAvroTest {
@@ -33,6 +34,12 @@ public class OppgaveInputAvroTest {
     void skalSetteDefaultVerdiForPrefererteKanaler() {
         OppgaveInput oppgave = getOppgaveWithDefaultValues();
         assertThat(oppgave.getPrefererteKanaler(), is(expectedPrefererteKanaler));
+    }
+
+    @Test
+    void skalSetteNullSomDefaultverdiForSynligFremTil() {
+        OppgaveInput oppgave = getOppgaveWithDefaultValues();
+        assertThat(oppgave.getSynligFremTil(), is(nullValue()));
     }
 
     private OppgaveInput getOppgaveWithDefaultValues() {

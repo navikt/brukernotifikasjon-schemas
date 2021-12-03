@@ -14,6 +14,7 @@ import java.util.List;
 public class OppgaveInputBuilder {
 
     private LocalDateTime tidspunkt;
+    private LocalDateTime synligFremTil;
     private String tekst;
     private URL link;
     private Integer sikkerhetsnivaa;
@@ -22,6 +23,11 @@ public class OppgaveInputBuilder {
 
     public OppgaveInputBuilder withTidspunkt(LocalDateTime tidspunkt) {
         this.tidspunkt = tidspunkt;
+        return this;
+    }
+
+    public OppgaveInputBuilder withSynligFremTil(LocalDateTime synligFremTil) {
+        this.synligFremTil = synligFremTil;
         return this;
     }
 
@@ -55,6 +61,7 @@ public class OppgaveInputBuilder {
     public OppgaveInput build() {
         return new OppgaveInput(
                 ValidationUtil.localDateTimeToUtcTimestamp(tidspunkt, "tidspunkt", ValidationUtil.IS_REQUIRED_TIDSPUNKT),
+                ValidationUtil.localDateTimeToUtcTimestamp(synligFremTil, "synligFremTil", ValidationUtil.IS_REQUIRED_SYNLIGFREMTIL),
                 ValidationUtil.validateNonNullFieldMaxLength(tekst, "tekst", ValidationUtil.MAX_LENGTH_TEXT_OPPGAVE),
                 ValidationUtil.validateLinkAndConvertToString(link, "link", ValidationUtil.MAX_LENGTH_LINK, ValidationUtil.isLinkRequired(Eventtype.OPPGAVE)),
                 ValidationUtil.validateSikkerhetsnivaa(sikkerhetsnivaa),

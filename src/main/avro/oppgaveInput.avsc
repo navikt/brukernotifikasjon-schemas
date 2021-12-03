@@ -9,6 +9,12 @@
             "logicalType": "timestamp-millis"
         },
         {
+            "name": "synligFremTil",
+            "type": ["null", "long"],
+            "logicalType": "timestamp-millis",
+            "default": null
+        },
+        {
             "name": "tekst",
             "type": "string"
         },
