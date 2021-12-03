@@ -31,6 +31,7 @@ class OppgaveBuilderTest {
     private URL expectedLink;
     private String expectedTekst;
     private LocalDateTime expectedTidspunkt;
+    private LocalDateTime expectedSynligFremTil;
     private Boolean expectedEksternVarsling;
     private List<PreferertKanal> expectedPrefererteKanaler;
 
@@ -42,6 +43,7 @@ class OppgaveBuilderTest {
         expectedLink = new URL("https://gyldig.url");
         expectedTekst = "Du må sende nytt meldekort";
         expectedTidspunkt = LocalDateTime.now();
+        expectedSynligFremTil = expectedTidspunkt.plusDays(2);
         expectedEksternVarsling = true;
         expectedPrefererteKanaler = asList(PreferertKanal.SMS);
     }
@@ -58,6 +60,8 @@ class OppgaveBuilderTest {
         assertThat(oppgave.getTekst(), is(expectedTekst));
         long expectedTidspunktAsUtcLong = expectedTidspunkt.toInstant(ZoneOffset.UTC).toEpochMilli();
         assertThat(oppgave.getTidspunkt(), is(expectedTidspunktAsUtcLong));
+        long expectedSynligFremTilAsUtcLong = expectedSynligFremTil.toInstant(ZoneOffset.UTC).toEpochMilli();
+        assertThat(oppgave.getSynligFremTil(), is(expectedSynligFremTilAsUtcLong));
         assertThat(oppgave.getEksternVarsling(), is(expectedEksternVarsling));
         assertThat(oppgave.getPrefererteKanaler(), is(expectedPrefererteKanaler.stream().map(preferertKanal -> preferertKanal.toString()).collect(toList())));
     }
@@ -138,6 +142,12 @@ class OppgaveBuilderTest {
     }
 
     @Test
+    void skalGodtaMangledeSynligFremTil() {
+        OppgaveBuilder builder = getBuilderWithDefaultValues().withSynligFremTil(null);
+        assertDoesNotThrow(() -> builder.build());
+    }
+
+    @Test
     void skalIkkeGodtaPrefertKanalHvisIkkeEksternVarslingErSatt() {
         OppgaveBuilder builder = getBuilderWithDefaultValues()
                 .withEksternVarsling(false)
@@ -162,6 +172,7 @@ class OppgaveBuilderTest {
                 .withLink(expectedLink)
                 .withTekst(expectedTekst)
                 .withTidspunkt(expectedTidspunkt)
+                .withSynligFremTil(expectedSynligFremTil)
                 .withEksternVarsling(expectedEksternVarsling)
                 .withPrefererteKanaler(expectedPrefererteKanaler.toArray(new PreferertKanal[1]));
     }
