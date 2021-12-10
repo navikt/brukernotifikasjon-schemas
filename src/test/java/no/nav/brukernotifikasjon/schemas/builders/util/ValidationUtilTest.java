@@ -1,5 +1,6 @@
 package no.nav.brukernotifikasjon.schemas.builders.util;
 
+import de.huxhorn.sulky.ulid.ULID;
 import no.nav.brukernotifikasjon.schemas.builders.domain.Eventtype;
 import no.nav.brukernotifikasjon.schemas.builders.domain.PreferertKanal;
 import no.nav.brukernotifikasjon.schemas.builders.exception.FieldValidationException;
@@ -8,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.net.URL;
 import java.util.Arrays;
+import java.util.UUID;
 
 import static java.util.Collections.emptyList;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -147,5 +149,19 @@ class ValidationUtilTest {
     @Test
     void skalKasteExceptionHvisPreferteKanalerSettesUtenAtEksternVarslingErSattTilTrue() {
         assertThrows(FieldValidationException.class, () -> ValidationUtil.validatePrefererteKanaler(false, Arrays.asList(PreferertKanal.EPOST)));
+    }
+
+    @Test
+    void skalGodtaUuidSomEventId() {
+        String uuidEventId = UUID.randomUUID().toString();
+
+        assertDoesNotThrow(() -> ValidationUtil.validateEventId(uuidEventId));
+    }
+
+    @Test
+    void skalGodtaUlidSomEventId() {
+        String ulidEventId = new ULID().nextULID();
+
+        assertDoesNotThrow(() -> ValidationUtil.validateEventId(ulidEventId));
     }
 }

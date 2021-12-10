@@ -42,7 +42,7 @@ public class ValidationUtil {
     private static Pattern UUID_PATTERN = Pattern.compile(UUID_PATTERN_STRING);
 
     private static String BASE_32_ULID = "[0-9ABCDEFGHJKMNPQRSTVWXYZabcdefghjkmnpqrstvwxyz]";
-    private static String ULID_PATTERN_STRING = String.format("^([a-zA-Z])(%1$s{8}-%1$s{4}-%1$s{4}-%1$s{4}-%1$s{12}$)", BASE_32_ULID);
+    private static String ULID_PATTERN_STRING = String.format("^[0-7]%1$s{25}$", BASE_32_ULID);
     private static Pattern ULID_PATTERN = Pattern.compile(ULID_PATTERN_STRING);
 
     public static String validateFodselsnummer(String fodselsnummer) {
