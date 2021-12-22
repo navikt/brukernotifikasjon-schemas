@@ -22,6 +22,7 @@ public class ValidationUtil {
     public static final int MAX_LENGTH_TEXT_BESKJED = 300;
     public static final int MAX_LENGTH_TEXT_OPPGAVE = 500;
     public static final int MAX_LENGTH_TEXT_INNBOKS = 500;
+    public static final int MAX_LENGTH_SMS_VARSLINGSTEKST = 160;
     public static final int MAX_LENGTH_LINK = 200;
     public static final int MAX_LENGTH_GRUPPERINGSID = 100;
     public static final int MAX_LENGTH_EVENTID = 50;
@@ -186,7 +187,7 @@ public class ValidationUtil {
 
     public static String validateMaxLength(String field, String fieldName, int maxLength) {
         if (field.length() > maxLength) {
-            FieldValidationException fve = new FieldValidationException("Feltet " + fieldName + " kan ikke inneholde mer enn $maxLength tegn.");
+            FieldValidationException fve = new FieldValidationException("Feltet " + fieldName + " kan ikke inneholde mer enn " + maxLength + " tegn.");
             fve.addContext("rejectedFieldValueLength", field.length());
             throw fve;
         }
@@ -195,5 +196,22 @@ public class ValidationUtil {
 
     private static boolean isCorrectLengthForFodselsnummer(String field) {
         return field.length() == MAX_LENGTH_FODSELSNUMMER;
+    }
+
+    public static String validateNullableMaxLength(String field, String fieldName, int maxLength) {
+        if (field == null) {
+            return null;
+        }
+        return validateMaxLength(field, fieldName, maxLength);
+    }
+
+    public static String validateNullableOrNotBlank(String field, String fieldName) {
+        if (field == null) {
+            return null;
+        }
+        if (field.trim().isEmpty()) {
+            throw new FieldValidationException("Feltet " + fieldName + " må enten være null eller ikke tom.");
+        }
+        return field;
     }
 }

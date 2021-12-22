@@ -1,5 +1,6 @@
 package no.nav.brukernotifikasjon.schemas.builders;
 
+import no.nav.brukernotifikasjon.schemas.Oppgave;
 import no.nav.brukernotifikasjon.schemas.input.InnboksInput;
 import org.junit.jupiter.api.Test;
 
@@ -9,6 +10,7 @@ import java.util.List;
 
 import static java.util.Collections.emptyList;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 
@@ -34,6 +36,18 @@ public class InnboksInputAvroTest {
     void skalSetteDefaultVerdiForPrefererteKanaler() {
         InnboksInput innboks = getInnboksWithDefaultValues();
         assertThat(innboks.getPrefererteKanaler(), is(expectedPrefererteKanaler));
+    }
+
+    @Test
+    void skalSetteNullSomDefaultverdiEpostVarslingstekst() {
+        InnboksInput innboks = getInnboksWithDefaultValues();
+        assertThat(innboks.getEpostVarslingstekst(), is(nullValue()));
+    }
+
+    @Test
+    void skalSetteNullSomDefaultverdiSmsVarslingstekst() {
+        InnboksInput innboks = getInnboksWithDefaultValues();
+        assertThat(innboks.getSmsVarslingstekst(), is(nullValue()));
     }
 
     private InnboksInput getInnboksWithDefaultValues() {

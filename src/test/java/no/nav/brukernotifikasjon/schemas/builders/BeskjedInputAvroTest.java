@@ -1,5 +1,6 @@
 package no.nav.brukernotifikasjon.schemas.builders;
 
+import no.nav.brukernotifikasjon.schemas.Oppgave;
 import no.nav.brukernotifikasjon.schemas.input.BeskjedInput;
 import org.junit.jupiter.api.Test;
 
@@ -40,6 +41,18 @@ public class BeskjedInputAvroTest {
     void skalSetteNullSomDefaultverdiForSynligFremTil() {
         BeskjedInput beskjed = getBeskjedWithDefaultValues();
         assertThat(beskjed.getSynligFremTil(), is(nullValue()));
+    }
+
+    @Test
+    void skalSetteNullSomDefaultverdiEpostVarslingstekst() {
+        BeskjedInput beskjed = getBeskjedWithDefaultValues();
+        assertThat(beskjed.getEpostVarslingstekst(), is(nullValue()));
+    }
+
+    @Test
+    void skalSetteNullSomDefaultverdiSmsVarslingstekst() {
+        BeskjedInput beskjed = getBeskjedWithDefaultValues();
+        assertThat(beskjed.getSmsVarslingstekst(), is(nullValue()));
     }
 
     private BeskjedInput getBeskjedWithDefaultValues() {

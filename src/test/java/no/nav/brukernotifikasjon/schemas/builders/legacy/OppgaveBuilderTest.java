@@ -164,6 +164,22 @@ class OppgaveBuilderTest {
         assertDoesNotThrow(() -> builder.build());
     }
 
+    @Test
+    void skalIkkeGodtaForLangSmsVarslingstekst() {
+        String tooLongSmsVarslingstekst = String.join("", Collections.nCopies(161, "1"));
+        OppgaveBuilder builder = getBuilderWithDefaultValues().withSmsVarslingstekst(tooLongSmsVarslingstekst);
+        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
+        assertThat(exceptionThrown.getMessage(), containsString("smsVarslingstekst"));
+    }
+
+    @Test
+    void skalIkkeGodtaTomEpostVarslingstekst() {
+        String tomEpostVarslingstekst = " ";
+        OppgaveBuilder builder = getBuilderWithDefaultValues().withEpostVarslingstekst(tomEpostVarslingstekst);
+        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
+        assertThat(exceptionThrown.getMessage(), containsString("epostVarslingstekst"));
+    }
+
     private OppgaveBuilder getBuilderWithDefaultValues() {
         return new OppgaveBuilder()
                 .withFodselsnummer(expectedFodselsnr)

@@ -1,5 +1,6 @@
 package no.nav.brukernotifikasjon.schemas.builders;
 
+import no.nav.brukernotifikasjon.schemas.Oppgave;
 import no.nav.brukernotifikasjon.schemas.input.OppgaveInput;
 import org.junit.jupiter.api.Test;
 
@@ -40,6 +41,18 @@ public class OppgaveInputAvroTest {
     void skalSetteNullSomDefaultverdiForSynligFremTil() {
         OppgaveInput oppgave = getOppgaveWithDefaultValues();
         assertThat(oppgave.getSynligFremTil(), is(nullValue()));
+    }
+
+    @Test
+    void skalSetteNullSomDefaultverdiEpostVarslingstekst() {
+        OppgaveInput oppgave = getOppgaveWithDefaultValues();
+        assertThat(oppgave.getEpostVarslingstekst(), is(nullValue()));
+    }
+
+    @Test
+    void skalSetteNullSomDefaultverdiSmsVarslingstekst() {
+        OppgaveInput oppgave = getOppgaveWithDefaultValues();
+        assertThat(oppgave.getSmsVarslingstekst(), is(nullValue()));
     }
 
     private OppgaveInput getOppgaveWithDefaultValues() {

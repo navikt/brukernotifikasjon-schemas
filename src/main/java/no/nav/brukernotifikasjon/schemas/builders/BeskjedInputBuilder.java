@@ -3,6 +3,7 @@ package no.nav.brukernotifikasjon.schemas.builders;
 
 import no.nav.brukernotifikasjon.schemas.builders.domain.Eventtype;
 import no.nav.brukernotifikasjon.schemas.builders.domain.PreferertKanal;
+import no.nav.brukernotifikasjon.schemas.builders.legacy.OppgaveBuilder;
 import no.nav.brukernotifikasjon.schemas.builders.util.ValidationUtil;
 import no.nav.brukernotifikasjon.schemas.input.BeskjedInput;
 
@@ -20,6 +21,8 @@ public class BeskjedInputBuilder {
     private Integer sikkerhetsnivaa;
     private Boolean eksternVarsling = false;
     private List<PreferertKanal> prefererteKanaler;
+    private String epostVarslingstekst;
+    private String smsVarslingstekst;
 
     public BeskjedInputBuilder withTidspunkt(LocalDateTime tidspunkt) {
         this.tidspunkt = tidspunkt;
@@ -58,6 +61,16 @@ public class BeskjedInputBuilder {
         return this;
     }
 
+    public BeskjedInputBuilder withEpostVarslingstekst(String epostVarslingstekst) {
+        this.epostVarslingstekst = epostVarslingstekst;
+        return this;
+    }
+
+    public BeskjedInputBuilder withSmsVarslingstekst(String smsVarslingstekst) {
+        this.smsVarslingstekst = smsVarslingstekst;
+        return this;
+    }
+
     public BeskjedInput build() {
         return new BeskjedInput(
                 ValidationUtil.localDateTimeToUtcTimestamp(tidspunkt, "tidspunkt", ValidationUtil.IS_REQUIRED_TIDSPUNKT),
@@ -66,7 +79,9 @@ public class BeskjedInputBuilder {
                 ValidationUtil.validateLinkAndConvertToString(link, "link", ValidationUtil.MAX_LENGTH_LINK, ValidationUtil.isLinkRequired(Eventtype.BESKJED)),
                 ValidationUtil.validateSikkerhetsnivaa(sikkerhetsnivaa),
                 eksternVarsling,
-                ValidationUtil.validatePrefererteKanaler(eksternVarsling, prefererteKanaler)
+                ValidationUtil.validatePrefererteKanaler(eksternVarsling, prefererteKanaler),
+                ValidationUtil.validateNullableOrNotBlank(epostVarslingstekst, "epostVarslingstekst"),
+                ValidationUtil.validateNullableMaxLength(smsVarslingstekst, "smsVarslingstekst", ValidationUtil.MAX_LENGTH_SMS_VARSLINGSTEKST)
         );
     }
 }

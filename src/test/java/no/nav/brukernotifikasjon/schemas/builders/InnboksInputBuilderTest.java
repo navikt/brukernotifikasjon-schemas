@@ -2,6 +2,7 @@ package no.nav.brukernotifikasjon.schemas.builders;
 
 import no.nav.brukernotifikasjon.schemas.builders.domain.PreferertKanal;
 import no.nav.brukernotifikasjon.schemas.builders.exception.FieldValidationException;
+import no.nav.brukernotifikasjon.schemas.builders.legacy.BeskjedBuilder;
 import no.nav.brukernotifikasjon.schemas.input.InnboksInput;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -124,6 +125,22 @@ public class InnboksInputBuilderTest {
                 .withTidspunkt(expectedTidspunkt)
                 .withEksternVarsling(true);
         assertDoesNotThrow(() -> builder.build());
+    }
+
+    @Test
+    void skalIkkeGodtaForLangSmsVarslingstekst() {
+        String tooLongSmsVarslingstekst = String.join("", Collections.nCopies(161, "1"));
+        InnboksInputBuilder builder = getBuilderWithDefaultValues().withSmsVarslingstekst(tooLongSmsVarslingstekst);
+        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
+        assertThat(exceptionThrown.getMessage(), containsString("smsVarslingstekst"));
+    }
+
+    @Test
+    void skalIkkeGodtaTomEpostVarslingstekst() {
+        String tomEpostVarslingstekst = " ";
+        InnboksInputBuilder builder = getBuilderWithDefaultValues().withEpostVarslingstekst(tomEpostVarslingstekst);
+        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
+        assertThat(exceptionThrown.getMessage(), containsString("epostVarslingstekst"));
     }
 
     private InnboksInputBuilder getBuilderWithDefaultValues() {

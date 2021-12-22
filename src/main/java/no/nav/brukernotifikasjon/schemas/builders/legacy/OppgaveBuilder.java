@@ -21,6 +21,8 @@ public class OppgaveBuilder {
     private Integer sikkerhetsnivaa;
     private Boolean eksternVarsling = false;
     private List<PreferertKanal> prefererteKanaler;
+    private String epostVarslingstekst;
+    private String smsVarslingstekst;
 
     public OppgaveBuilder withTidspunkt(LocalDateTime tidspunkt) {
         this.tidspunkt = tidspunkt;
@@ -69,6 +71,16 @@ public class OppgaveBuilder {
         return this;
     }
 
+    public OppgaveBuilder withEpostVarslingstekst(String epostVarslingstekst) {
+        this.epostVarslingstekst = epostVarslingstekst;
+        return this;
+    }
+
+    public OppgaveBuilder withSmsVarslingstekst(String smsVarslingstekst) {
+        this.smsVarslingstekst = smsVarslingstekst;
+        return this;
+    }
+
     public Oppgave build() {
         return new Oppgave(
                 ValidationUtil.localDateTimeToUtcTimestamp(tidspunkt, "tidspunkt", ValidationUtil.IS_REQUIRED_TIDSPUNKT),
@@ -79,7 +91,9 @@ public class OppgaveBuilder {
                 ValidationUtil.validateLinkAndConvertToString(link, "link", ValidationUtil.MAX_LENGTH_LINK, ValidationUtil.isLinkRequired(Eventtype.OPPGAVE)),
                 ValidationUtil.validateSikkerhetsnivaa(sikkerhetsnivaa),
                 eksternVarsling,
-                ValidationUtil.validatePrefererteKanaler(eksternVarsling, prefererteKanaler)
+                ValidationUtil.validatePrefererteKanaler(eksternVarsling, prefererteKanaler),
+                ValidationUtil.validateNullableOrNotBlank(epostVarslingstekst, "epostVarslingstekst"),
+                ValidationUtil.validateNullableMaxLength(smsVarslingstekst, "smsVarslingstekst", ValidationUtil.MAX_LENGTH_SMS_VARSLINGSTEKST)
         );
     }
 }
