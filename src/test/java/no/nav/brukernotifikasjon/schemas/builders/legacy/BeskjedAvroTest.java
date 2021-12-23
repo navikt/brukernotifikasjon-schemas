@@ -12,8 +12,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class BeskjedAvroTest {
 
-    private int expectedSikkerhetsnivaa = 4;
-    private boolean expectedEksternVarsling = false;
+    private final int expectedSikkerhetsnivaa = 4;
+    private final boolean expectedEksternVarsling = false;
 
     @Test
     void skalSetteDefaultverdiForSikkerhetsnivaa() {
