@@ -1,6 +1,5 @@
 package no.nav.brukernotifikasjon.schemas.builders;
 
-import no.nav.brukernotifikasjon.schemas.Oppgave;
 import no.nav.brukernotifikasjon.schemas.input.OppgaveInput;
 import org.junit.jupiter.api.Test;
 

@@ -1,7 +1,6 @@
 package no.nav.brukernotifikasjon.schemas.builders.legacy;
 
 import no.nav.brukernotifikasjon.schemas.Beskjed;
-import no.nav.brukernotifikasjon.schemas.Oppgave;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;

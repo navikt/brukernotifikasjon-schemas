@@ -2,7 +2,6 @@ package no.nav.brukernotifikasjon.schemas.builders;
 
 import no.nav.brukernotifikasjon.schemas.builders.domain.PreferertKanal;
 import no.nav.brukernotifikasjon.schemas.builders.exception.FieldValidationException;
-import no.nav.brukernotifikasjon.schemas.builders.legacy.BeskjedBuilder;
 import no.nav.brukernotifikasjon.schemas.input.BeskjedInput;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
