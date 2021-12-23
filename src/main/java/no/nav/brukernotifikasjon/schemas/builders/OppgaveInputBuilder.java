@@ -3,7 +3,6 @@ package no.nav.brukernotifikasjon.schemas.builders;
 
 import no.nav.brukernotifikasjon.schemas.builders.domain.Eventtype;
 import no.nav.brukernotifikasjon.schemas.builders.domain.PreferertKanal;
-import no.nav.brukernotifikasjon.schemas.builders.legacy.OppgaveBuilder;
 import no.nav.brukernotifikasjon.schemas.builders.util.ValidationUtil;
 import no.nav.brukernotifikasjon.schemas.input.OppgaveInput;
 
