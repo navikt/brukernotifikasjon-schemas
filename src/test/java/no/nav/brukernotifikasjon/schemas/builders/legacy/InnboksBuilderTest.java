@@ -149,6 +149,22 @@ public class InnboksBuilderTest {
     }
 
     @Test
+    void skalIkkeGodtaForLangSmsVarslingstekst() {
+        String tooLongSmsVarslingstekst = String.join("", Collections.nCopies(161, "1"));
+        InnboksBuilder builder = getBuilderWithDefaultValues().withSmsVarslingstekst(tooLongSmsVarslingstekst);
+        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
+        assertThat(exceptionThrown.getMessage(), containsString("smsVarslingstekst"));
+    }
+
+    @Test
+    void skalIkkeGodtaTomEpostVarslingstekst() {
+        String tomEpostVarslingstekst = " ";
+        InnboksBuilder builder = getBuilderWithDefaultValues().withEpostVarslingstekst(tomEpostVarslingstekst);
+        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
+        assertThat(exceptionThrown.getMessage(), containsString("epostVarslingstekst"));
+    }
+
+    @Test
     void skalGodtaNullSomPreferertKanal() {
         InnboksBuilder builder = getBuilderWithDefaultValues()
                 .withEksternVarsling(true)
