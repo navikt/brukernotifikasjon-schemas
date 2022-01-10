@@ -149,9 +149,45 @@ public class BeskjedInputBuilderTest {
     }
 
     @Test
+    void skalIkkeGodtaTomSmsVarslingstekst() {
+        String tomSmsVarslingstekst = " ";
+        BeskjedInputBuilder builder = getBuilderWithDefaultValues().withSmsVarslingstekst(tomSmsVarslingstekst);
+        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
+        assertThat(exceptionThrown.getMessage(), containsString("smsVarslingstekst"));
+    }
+
+    @Test
+    void skalIkkeGodtaSmsVarslingstekstHvisIkkeEksternVarslingErSatt() {
+        BeskjedInputBuilder builder = getBuilderWithDefaultValues()
+                .withEksternVarsling(false)
+                .withPrefererteKanaler(Collections.emptyList().toArray(new PreferertKanal[]{}))
+                .withSmsVarslingstekst(String.join("", Collections.nCopies(100, "1")));
+        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
+        assertThat(exceptionThrown.getMessage(), containsString("smsVarslingstekst"));
+    }
+
+    @Test
     void skalIkkeGodtaTomEpostVarslingstekst() {
         String tomEpostVarslingstekst = " ";
         BeskjedInputBuilder builder = getBuilderWithDefaultValues().withEpostVarslingstekst(tomEpostVarslingstekst);
+        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
+        assertThat(exceptionThrown.getMessage(), containsString("epostVarslingstekst"));
+    }
+
+    @Test
+    void skalIkkeGodtaForLangEpostVarslingstekst() {
+        String tooLongEpostVarslingstekst = String.join("", Collections.nCopies(10_001, "1"));
+        BeskjedInputBuilder builder = getBuilderWithDefaultValues().withEpostVarslingstekst(tooLongEpostVarslingstekst);
+        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
+        assertThat(exceptionThrown.getMessage(), containsString("epostVarslingstekst"));
+    }
+
+    @Test
+    void skalIkkeGodtaEpostVarslingstekstHvisIkkeEksternVarslingErSatt() {
+        BeskjedInputBuilder builder = getBuilderWithDefaultValues()
+                .withEksternVarsling(false)
+                .withPrefererteKanaler(Collections.emptyList().toArray(new PreferertKanal[]{}))
+                .withEpostVarslingstekst("<p>Hei!</p>");
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("epostVarslingstekst"));
     }

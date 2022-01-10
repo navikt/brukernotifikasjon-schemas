@@ -137,9 +137,45 @@ class OppgaveInputBuilderTest {
     }
 
     @Test
+    void skalIkkeGodtaTomSmsVarslingstekst() {
+        String tomSmsVarslingstekst = " ";
+        OppgaveInputBuilder builder = getBuilderWithDefaultValues().withSmsVarslingstekst(tomSmsVarslingstekst);
+        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
+        assertThat(exceptionThrown.getMessage(), containsString("smsVarslingstekst"));
+    }
+
+    @Test
+    void skalIkkeGodtaSmsVarslingstekstHvisIkkeEksternVarslingErSatt() {
+        OppgaveInputBuilder builder = getBuilderWithDefaultValues()
+                .withEksternVarsling(false)
+                .withPrefererteKanaler(Collections.emptyList().toArray(new PreferertKanal[]{}))
+                .withSmsVarslingstekst(String.join("", Collections.nCopies(100, "1")));
+        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
+        assertThat(exceptionThrown.getMessage(), containsString("smsVarslingstekst"));
+    }
+
+    @Test
     void skalIkkeGodtaTomEpostVarslingstekst() {
         String tomEpostVarslingstekst = " ";
         OppgaveInputBuilder builder = getBuilderWithDefaultValues().withEpostVarslingstekst(tomEpostVarslingstekst);
+        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
+        assertThat(exceptionThrown.getMessage(), containsString("epostVarslingstekst"));
+    }
+
+    @Test
+    void skalIkkeGodtaForLangEpostVarslingstekst() {
+        String tooLongEpostVarslingstekst = String.join("", Collections.nCopies(10_001, "1"));
+        OppgaveInputBuilder builder = getBuilderWithDefaultValues().withEpostVarslingstekst(tooLongEpostVarslingstekst);
+        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
+        assertThat(exceptionThrown.getMessage(), containsString("epostVarslingstekst"));
+    }
+
+    @Test
+    void skalIkkeGodtaEpostVarslingstekstHvisIkkeEksternVarslingErSatt() {
+        OppgaveInputBuilder builder = getBuilderWithDefaultValues()
+                .withEksternVarsling(false)
+                .withPrefererteKanaler(Collections.emptyList().toArray(new PreferertKanal[]{}))
+                .withEpostVarslingstekst("<p>Hei!</p>");
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("epostVarslingstekst"));
     }

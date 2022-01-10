@@ -92,8 +92,8 @@ public class OppgaveBuilder {
                 ValidationUtil.validateSikkerhetsnivaa(sikkerhetsnivaa),
                 eksternVarsling,
                 ValidationUtil.validatePrefererteKanaler(eksternVarsling, prefererteKanaler),
-                ValidationUtil.validateNullableOrNotBlank(epostVarslingstekst, "epostVarslingstekst"),
-                ValidationUtil.validateNullableMaxLength(smsVarslingstekst, "smsVarslingstekst", ValidationUtil.MAX_LENGTH_SMS_VARSLINGSTEKST)
+                ValidationUtil.validateEpostVarslingstekst(eksternVarsling, epostVarslingstekst),
+                ValidationUtil.validateSmsVarslingstekst(eksternVarsling, smsVarslingstekst)
         );
     }
 }
