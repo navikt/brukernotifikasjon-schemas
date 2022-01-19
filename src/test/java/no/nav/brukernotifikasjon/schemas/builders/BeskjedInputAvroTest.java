@@ -49,6 +49,12 @@ public class BeskjedInputAvroTest {
     }
 
     @Test
+    void skalSetteNullSomDefaultverdiEpostVarslingstittel() {
+        BeskjedInput beskjed = getBeskjedWithDefaultValues();
+        assertThat(beskjed.getEpostVarslingstittel(), is(nullValue()));
+    }
+
+    @Test
     void skalSetteNullSomDefaultverdiSmsVarslingstekst() {
         BeskjedInput beskjed = getBeskjedWithDefaultValues();
         assertThat(beskjed.getSmsVarslingstekst(), is(nullValue()));

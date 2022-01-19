@@ -178,6 +178,32 @@ public class InnboksInputBuilderTest {
         assertThat(exceptionThrown.getMessage(), containsString("epostVarslingstekst"));
     }
 
+    @Test
+    void skalIkkeGodtaTomEpostVarslingstittel() {
+        String tomEpostVarslingstittel = " ";
+        InnboksInputBuilder builder = getBuilderWithDefaultValues().withEpostVarslingstittel(tomEpostVarslingstittel);
+        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
+        assertThat(exceptionThrown.getMessage(), containsString("epostVarslingstittel"));
+    }
+
+    @Test
+    void skalIkkeGodtaForLangEpostVarslingstittel() {
+        String tooLongEpostVarslingstittel = String.join("", Collections.nCopies(201, "1"));
+        InnboksInputBuilder builder = getBuilderWithDefaultValues().withEpostVarslingstittel(tooLongEpostVarslingstittel);
+        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
+        assertThat(exceptionThrown.getMessage(), containsString("epostVarslingstittel"));
+    }
+
+    @Test
+    void skalIkkeGodtaEpostVarslingstittelHvisIkkeEksternVarslingErSatt() {
+        InnboksInputBuilder builder = getBuilderWithDefaultValues()
+                .withEksternVarsling(false)
+                .withPrefererteKanaler(Collections.emptyList().toArray(new PreferertKanal[]{}))
+                .withEpostVarslingstittel("<p>Hei!</p>");
+        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
+        assertThat(exceptionThrown.getMessage(), containsString("epostVarslingstittel"));
+    }
+
     private InnboksInputBuilder getBuilderWithDefaultValues() {
         return new InnboksInputBuilder()
                 .withSikkerhetsnivaa(expectedSikkerhetsnivaa)

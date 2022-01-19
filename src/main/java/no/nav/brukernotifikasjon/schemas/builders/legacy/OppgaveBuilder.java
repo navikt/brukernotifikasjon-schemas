@@ -1,9 +1,9 @@
 package no.nav.brukernotifikasjon.schemas.builders.legacy;
 
+import no.nav.brukernotifikasjon.schemas.Oppgave;
 import no.nav.brukernotifikasjon.schemas.builders.domain.Eventtype;
 import no.nav.brukernotifikasjon.schemas.builders.domain.PreferertKanal;
 import no.nav.brukernotifikasjon.schemas.builders.util.ValidationUtil;
-import no.nav.brukernotifikasjon.schemas.Oppgave;
 
 import java.net.URL;
 import java.time.LocalDateTime;
@@ -22,6 +22,7 @@ public class OppgaveBuilder {
     private Boolean eksternVarsling = false;
     private List<PreferertKanal> prefererteKanaler;
     private String epostVarslingstekst;
+    private String epostVarslingstittel;
     private String smsVarslingstekst;
 
     public OppgaveBuilder withTidspunkt(LocalDateTime tidspunkt) {
@@ -76,6 +77,11 @@ public class OppgaveBuilder {
         return this;
     }
 
+    public OppgaveBuilder withEpostVarslingstittel(String epostVarslingstittel) {
+        this.epostVarslingstittel = epostVarslingstittel;
+        return this;
+    }
+
     public OppgaveBuilder withSmsVarslingstekst(String smsVarslingstekst) {
         this.smsVarslingstekst = smsVarslingstekst;
         return this;
@@ -93,6 +99,7 @@ public class OppgaveBuilder {
                 eksternVarsling,
                 ValidationUtil.validatePrefererteKanaler(eksternVarsling, prefererteKanaler),
                 ValidationUtil.validateEpostVarslingstekst(eksternVarsling, epostVarslingstekst),
+                ValidationUtil.validateEpostVarslingstittel(eksternVarsling, epostVarslingstittel),
                 ValidationUtil.validateSmsVarslingstekst(eksternVarsling, smsVarslingstekst)
         );
     }

@@ -1,6 +1,7 @@
 package no.nav.brukernotifikasjon.schemas.builders.legacy;
 
 import no.nav.brukernotifikasjon.schemas.Innboks;
+import no.nav.brukernotifikasjon.schemas.builders.BeskjedInputBuilder;
 import no.nav.brukernotifikasjon.schemas.builders.domain.PreferertKanal;
 import no.nav.brukernotifikasjon.schemas.builders.exception.FieldValidationException;
 import org.junit.jupiter.api.BeforeAll;
@@ -219,6 +220,32 @@ public class InnboksBuilderTest {
                 .withEpostVarslingstekst("<p>Hei!</p>");
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("epostVarslingstekst"));
+    }
+
+    @Test
+    void skalIkkeGodtaTomEpostVarslingstittel() {
+        String tomEpostVarslingstittel = " ";
+        InnboksBuilder builder = getBuilderWithDefaultValues().withEpostVarslingstittel(tomEpostVarslingstittel);
+        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
+        assertThat(exceptionThrown.getMessage(), containsString("epostVarslingstittel"));
+    }
+
+    @Test
+    void skalIkkeGodtaForLangEpostVarslingstittel() {
+        String tooLongEpostVarslingstittel = String.join("", Collections.nCopies(201, "1"));
+        InnboksBuilder builder = getBuilderWithDefaultValues().withEpostVarslingstittel(tooLongEpostVarslingstittel);
+        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
+        assertThat(exceptionThrown.getMessage(), containsString("epostVarslingstittel"));
+    }
+
+    @Test
+    void skalIkkeGodtaEpostVarslingstittelHvisIkkeEksternVarslingErSatt() {
+        InnboksBuilder builder = getBuilderWithDefaultValues()
+                .withEksternVarsling(false)
+                .withPrefererteKanaler(Collections.emptyList().toArray(new PreferertKanal[]{}))
+                .withEpostVarslingstittel("<p>Hei!</p>");
+        FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
+        assertThat(exceptionThrown.getMessage(), containsString("epostVarslingstittel"));
     }
 
     private InnboksBuilder getBuilderWithDefaultValues() {
