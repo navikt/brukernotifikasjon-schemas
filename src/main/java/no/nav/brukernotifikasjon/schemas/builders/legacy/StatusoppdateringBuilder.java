@@ -1,9 +1,9 @@
 package no.nav.brukernotifikasjon.schemas.builders.legacy;
 
+import no.nav.brukernotifikasjon.schemas.Statusoppdatering;
 import no.nav.brukernotifikasjon.schemas.builders.domain.Eventtype;
 import no.nav.brukernotifikasjon.schemas.builders.domain.StatusGlobal;
 import no.nav.brukernotifikasjon.schemas.builders.util.ValidationUtil;
-import no.nav.brukernotifikasjon.schemas.Statusoppdatering;
 
 import java.net.URL;
 import java.time.LocalDateTime;

@@ -9,9 +9,7 @@ import no.nav.brukernotifikasjon.schemas.builders.exception.UnknownEventtypeExce
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 import java.util.regex.Pattern;
 
 import static java.util.Collections.emptyList;
