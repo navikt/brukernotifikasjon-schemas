@@ -21,6 +21,7 @@ public class OppgaveInputBuilder {
     private Boolean eksternVarsling = false;
     private List<PreferertKanal> prefererteKanaler;
     private String epostVarslingstekst;
+    private String epostVarslingstittel;
     private String smsVarslingstekst;
 
     public OppgaveInputBuilder withTidspunkt(LocalDateTime tidspunkt) {
@@ -65,6 +66,11 @@ public class OppgaveInputBuilder {
         return this;
     }
 
+    public OppgaveInputBuilder withEpostVarslingstittel(String epostVarslingstittel) {
+        this.epostVarslingstittel = epostVarslingstittel;
+        return this;
+    }
+
     public OppgaveInputBuilder withSmsVarslingstekst(String smsVarslingstekst) {
         this.smsVarslingstekst = smsVarslingstekst;
         return this;
@@ -80,6 +86,7 @@ public class OppgaveInputBuilder {
                 eksternVarsling,
                 ValidationUtil.validatePrefererteKanaler(eksternVarsling, prefererteKanaler),
                 ValidationUtil.validateEpostVarslingstekst(eksternVarsling, epostVarslingstekst),
+                ValidationUtil.validateEpostVarslingstittel(eksternVarsling, epostVarslingstittel),
                 ValidationUtil.validateSmsVarslingstekst(eksternVarsling, smsVarslingstekst)
         );
     }

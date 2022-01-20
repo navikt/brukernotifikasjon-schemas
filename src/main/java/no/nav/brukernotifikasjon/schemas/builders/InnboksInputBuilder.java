@@ -19,6 +19,7 @@ public class InnboksInputBuilder {
     private Boolean eksternVarsling = false;
     private List<PreferertKanal> prefererteKanaler;
     private String epostVarslingstekst;
+    private String epostVarslingstittel;
     private String smsVarslingstekst;
 
     public InnboksInputBuilder withTidspunkt(LocalDateTime tidspunkt) {
@@ -58,6 +59,11 @@ public class InnboksInputBuilder {
         return this;
     }
 
+    public InnboksInputBuilder withEpostVarslingstittel(String epostVarslingstittel) {
+        this.epostVarslingstittel = epostVarslingstittel;
+        return this;
+    }
+
     public InnboksInputBuilder withSmsVarslingstekst(String smsVarslingstekst) {
         this.smsVarslingstekst = smsVarslingstekst;
         return this;
@@ -72,6 +78,7 @@ public class InnboksInputBuilder {
                 eksternVarsling,
                 ValidationUtil.validatePrefererteKanaler(eksternVarsling, prefererteKanaler),
                 ValidationUtil.validateEpostVarslingstekst(eksternVarsling, epostVarslingstekst),
+                ValidationUtil.validateEpostVarslingstittel(eksternVarsling, epostVarslingstittel),
                 ValidationUtil.validateSmsVarslingstekst(eksternVarsling, smsVarslingstekst)
         );
     }

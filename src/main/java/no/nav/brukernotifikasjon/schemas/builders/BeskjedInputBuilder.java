@@ -21,6 +21,7 @@ public class BeskjedInputBuilder {
     private Boolean eksternVarsling = false;
     private List<PreferertKanal> prefererteKanaler;
     private String epostVarslingstekst;
+    private String epostVarslingstittel;
     private String smsVarslingstekst;
 
     public BeskjedInputBuilder withTidspunkt(LocalDateTime tidspunkt) {
@@ -65,6 +66,11 @@ public class BeskjedInputBuilder {
         return this;
     }
 
+    public BeskjedInputBuilder withEpostVarslingstittel(String epostVarslingstittel) {
+        this.epostVarslingstittel = epostVarslingstittel;
+        return this;
+    }
+
     public BeskjedInputBuilder withSmsVarslingstekst(String smsVarslingstekst) {
         this.smsVarslingstekst = smsVarslingstekst;
         return this;
@@ -80,6 +86,7 @@ public class BeskjedInputBuilder {
                 eksternVarsling,
                 ValidationUtil.validatePrefererteKanaler(eksternVarsling, prefererteKanaler),
                 ValidationUtil.validateEpostVarslingstekst(eksternVarsling, epostVarslingstekst),
+                ValidationUtil.validateEpostVarslingstittel(eksternVarsling, epostVarslingstittel),
                 ValidationUtil.validateSmsVarslingstekst(eksternVarsling, smsVarslingstekst)
         );
     }

@@ -1,5 +1,6 @@
 package no.nav.brukernotifikasjon.schemas.builders;
 
+import no.nav.brukernotifikasjon.schemas.input.BeskjedInput;
 import no.nav.brukernotifikasjon.schemas.input.InnboksInput;
 import org.junit.jupiter.api.Test;
 
@@ -47,6 +48,12 @@ public class InnboksInputAvroTest {
     void skalSetteNullSomDefaultverdiSmsVarslingstekst() {
         InnboksInput innboks = getInnboksWithDefaultValues();
         assertThat(innboks.getSmsVarslingstekst(), is(nullValue()));
+    }
+
+    @Test
+    void skalSetteNullSomDefaultverdiEpostVarslingstittel() {
+        InnboksInput innboks = getInnboksWithDefaultValues();
+        assertThat(innboks.getEpostVarslingstittel(), is(nullValue()));
     }
 
     private InnboksInput getInnboksWithDefaultValues() {

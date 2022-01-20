@@ -24,6 +24,7 @@ public class ValidationUtil {
     public static final int MAX_LENGTH_TEXT_INNBOKS = 500;
     public static final int MAX_LENGTH_SMS_VARSLINGSTEKST = 160;
     public static final int MAX_LENGTH_EPOST_VARSLINGSTEKST = 10_000;
+    private static final int MAX_LENGTH_EPOST_VARSLINGSTTITTEL = 200;
     public static final int MAX_LENGTH_LINK = 200;
     public static final int MAX_LENGTH_GRUPPERINGSID = 100;
     public static final int MAX_LENGTH_EVENTID = 50;
@@ -250,5 +251,23 @@ public class ValidationUtil {
             throw fve;
         }
         return smsVarslingstekst;
+    }
+
+    public static String validateEpostVarslingstittel(Boolean eksternVarsling, String epostVarslingstittel) {
+        if (epostVarslingstittel == null) {
+            return null;
+        }
+        if (!eksternVarsling) {
+            throw new FieldValidationException("Feltet epostVarslingstittel kan ikke settes hvis eksternVarsling er satt til false.");
+        }
+        if (epostVarslingstittel.trim().isEmpty()) {
+            throw new FieldValidationException("Feltet epostVarslingstittel må enten være null eller ikke tom.");
+        }
+        if (epostVarslingstittel.length() > MAX_LENGTH_EPOST_VARSLINGSTTITTEL) {
+            FieldValidationException fve = new FieldValidationException("Feltet epostVarslingstittel kan ikke inneholde mer enn " + MAX_LENGTH_SMS_VARSLINGSTEKST + " tegn.");
+            fve.addContext("rejectedFieldValueLength", epostVarslingstittel.length());
+            throw fve;
+        }
+        return epostVarslingstittel;
     }
 }
