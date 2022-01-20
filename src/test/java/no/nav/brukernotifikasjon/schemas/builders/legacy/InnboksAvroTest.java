@@ -1,5 +1,6 @@
 package no.nav.brukernotifikasjon.schemas.builders.legacy;
 
+import no.nav.brukernotifikasjon.schemas.Beskjed;
 import no.nav.brukernotifikasjon.schemas.Innboks;
 import org.junit.jupiter.api.Test;
 
@@ -40,6 +41,12 @@ public class InnboksAvroTest {
     void skalSetteNullSomDefaultverdiEpostVarslingstekst() {
         Innboks innboks = getInnboksWithDefaultValues();
         assertThat(innboks.getEpostVarslingstekst(), is(nullValue()));
+    }
+
+    @Test
+    void skalSetteNullSomDefaultverdiSmsVarslingstittel() {
+        Innboks innboks = getInnboksWithDefaultValues();
+        assertThat(innboks.getEpostVarslingstittel(), is(nullValue()));
     }
 
     @Test

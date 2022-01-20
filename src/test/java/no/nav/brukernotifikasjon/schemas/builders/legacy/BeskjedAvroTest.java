@@ -45,6 +45,12 @@ public class BeskjedAvroTest {
         assertThat(beskjed.getSmsVarslingstekst(), is(nullValue()));
     }
 
+    @Test
+    void skalSetteNullSomDefaultverdiSmsVarslingstittel() {
+        Beskjed beskjed = getBeskjedWithDefaultValues();
+        assertThat(beskjed.getEpostVarslingstittel(), is(nullValue()));
+    }
+
     private Beskjed getBeskjedWithDefaultValues() {
         return Beskjed.newBuilder()
                 .setTidspunkt(LocalDateTime.now().toEpochSecond(ZoneOffset.UTC))

@@ -1,5 +1,7 @@
 package no.nav.brukernotifikasjon.schemas.builders.legacy;
 
+import no.nav.brukernotifikasjon.schemas.Beskjed;
+import no.nav.brukernotifikasjon.schemas.Innboks;
 import no.nav.brukernotifikasjon.schemas.Oppgave;
 import org.junit.jupiter.api.Test;
 
@@ -37,6 +39,12 @@ public class OppgaveAvroTest {
     void skalSetteNullSomDefaultverdiEpostVarslingstekst() {
         Oppgave oppgave = getOppgaveWithDefaultValues();
         assertThat(oppgave.getEpostVarslingstekst(), is(nullValue()));
+    }
+
+    @Test
+    void skalSetteNullSomDefaultverdiSmsVarslingstittel() {
+        Oppgave oppgave = getOppgaveWithDefaultValues();
+        assertThat(oppgave.getEpostVarslingstittel(), is(nullValue()));
     }
 
     @Test
