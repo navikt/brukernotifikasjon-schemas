@@ -20,6 +20,9 @@ public class InnboksBuilder {
     private Integer sikkerhetsnivaa;
     private Boolean eksternVarsling = false;
     private List<PreferertKanal> prefererteKanaler;
+    private String epostVarslingstekst;
+    private String epostVarslingstittel;
+    private String smsVarslingstekst;
 
     public InnboksBuilder withTidspunkt(LocalDateTime tidspunkt) {
         this.tidspunkt = tidspunkt;
@@ -63,6 +66,21 @@ public class InnboksBuilder {
         return this;
     }
 
+    public InnboksBuilder withEpostVarslingstekst(String epostVarslingstekst) {
+        this.epostVarslingstekst = epostVarslingstekst;
+        return this;
+    }
+
+    public InnboksBuilder withEpostVarslingstittel(String epostVarslingstittel) {
+        this.epostVarslingstittel = epostVarslingstittel;
+        return this;
+    }
+
+    public InnboksBuilder withSmsVarslingstekst(String smsVarslingstekst) {
+        this.smsVarslingstekst = smsVarslingstekst;
+        return this;
+    }
+
     public Innboks build() {
         return new Innboks(
                 ValidationUtil.localDateTimeToUtcTimestamp(tidspunkt, "tidspunkt", ValidationUtil.IS_REQUIRED_TIDSPUNKT),
@@ -72,7 +90,10 @@ public class InnboksBuilder {
                 ValidationUtil.validateLinkAndConvertToString(link, "link", ValidationUtil.MAX_LENGTH_LINK, ValidationUtil.isLinkRequired(Eventtype.BESKJED)),
                 ValidationUtil.validateSikkerhetsnivaa(sikkerhetsnivaa),
                 eksternVarsling,
-                ValidationUtil.validatePrefererteKanaler(eksternVarsling, prefererteKanaler)
+                ValidationUtil.validatePrefererteKanaler(eksternVarsling, prefererteKanaler),
+                ValidationUtil.validateEpostVarslingstekst(eksternVarsling, epostVarslingstekst),
+                ValidationUtil.validateEpostVarslingstittel(eksternVarsling, epostVarslingstittel),
+                ValidationUtil.validateSmsVarslingstekst(eksternVarsling, smsVarslingstekst)
         );
     }
 }

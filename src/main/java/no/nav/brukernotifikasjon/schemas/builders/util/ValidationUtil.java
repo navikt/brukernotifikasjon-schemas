@@ -22,6 +22,9 @@ public class ValidationUtil {
     public static final int MAX_LENGTH_TEXT_BESKJED = 300;
     public static final int MAX_LENGTH_TEXT_OPPGAVE = 500;
     public static final int MAX_LENGTH_TEXT_INNBOKS = 500;
+    public static final int MAX_LENGTH_SMS_VARSLINGSTEKST = 160;
+    public static final int MAX_LENGTH_EPOST_VARSLINGSTEKST = 10_000;
+    private static final int MAX_LENGTH_EPOST_VARSLINGSTTITTEL = 200;
     public static final int MAX_LENGTH_LINK = 200;
     public static final int MAX_LENGTH_GRUPPERINGSID = 100;
     public static final int MAX_LENGTH_EVENTID = 50;
@@ -186,7 +189,7 @@ public class ValidationUtil {
 
     public static String validateMaxLength(String field, String fieldName, int maxLength) {
         if (field.length() > maxLength) {
-            FieldValidationException fve = new FieldValidationException("Feltet " + fieldName + " kan ikke inneholde mer enn $maxLength tegn.");
+            FieldValidationException fve = new FieldValidationException("Feltet " + fieldName + " kan ikke inneholde mer enn " + maxLength + " tegn.");
             fve.addContext("rejectedFieldValueLength", field.length());
             throw fve;
         }
@@ -195,5 +198,76 @@ public class ValidationUtil {
 
     private static boolean isCorrectLengthForFodselsnummer(String field) {
         return field.length() == MAX_LENGTH_FODSELSNUMMER;
+    }
+
+    public static String validateNullableMaxLength(String field, String fieldName, int maxLength) {
+        if (field == null) {
+            return null;
+        }
+        return validateMaxLength(field, fieldName, maxLength);
+    }
+
+    public static String validateNullableOrNotBlank(String field, String fieldName) {
+        if (field == null) {
+            return null;
+        }
+        if (field.trim().isEmpty()) {
+            throw new FieldValidationException("Feltet " + fieldName + " må enten være null eller ikke tom.");
+        }
+        return field;
+    }
+
+    public static String validateEpostVarslingstekst(Boolean eksternVarsling, String epostVarslingstekst) {
+        if (epostVarslingstekst == null) {
+            return null;
+        }
+        if (!eksternVarsling) {
+            throw new FieldValidationException("Feltet epostVarslingstekst kan ikke settes hvis eksternVarsling er satt til false.");
+        }
+        if (epostVarslingstekst.trim().isEmpty()) {
+            throw new FieldValidationException("Feltet epostVarslingstekst må enten være null eller ikke tom.");
+        }
+        if (epostVarslingstekst.length() > MAX_LENGTH_EPOST_VARSLINGSTEKST) {
+            FieldValidationException fve = new FieldValidationException("Feltet epostVarslingstekst kan ikke inneholde mer enn " + MAX_LENGTH_EPOST_VARSLINGSTEKST + " tegn.");
+            fve.addContext("rejectedFieldValueLength", epostVarslingstekst.length());
+            throw fve;
+        }
+        return epostVarslingstekst;
+    }
+
+    public static String validateSmsVarslingstekst(Boolean eksternVarsling, String smsVarslingstekst) {
+        if (smsVarslingstekst == null) {
+            return null;
+        }
+        if (!eksternVarsling) {
+            throw new FieldValidationException("Feltet smsVarslingstekst kan ikke settes hvis eksternVarsling er satt til false.");
+        }
+        if (smsVarslingstekst.trim().isEmpty()) {
+            throw new FieldValidationException("Feltet smsVarslingstekst må enten være null eller ikke tom.");
+        }
+        if (smsVarslingstekst.length() > MAX_LENGTH_SMS_VARSLINGSTEKST) {
+            FieldValidationException fve = new FieldValidationException("Feltet smsVarslingstekst kan ikke inneholde mer enn " + MAX_LENGTH_SMS_VARSLINGSTEKST + " tegn.");
+            fve.addContext("rejectedFieldValueLength", smsVarslingstekst.length());
+            throw fve;
+        }
+        return smsVarslingstekst;
+    }
+
+    public static String validateEpostVarslingstittel(Boolean eksternVarsling, String epostVarslingstittel) {
+        if (epostVarslingstittel == null) {
+            return null;
+        }
+        if (!eksternVarsling) {
+            throw new FieldValidationException("Feltet epostVarslingstittel kan ikke settes hvis eksternVarsling er satt til false.");
+        }
+        if (epostVarslingstittel.trim().isEmpty()) {
+            throw new FieldValidationException("Feltet epostVarslingstittel må enten være null eller ikke tom.");
+        }
+        if (epostVarslingstittel.length() > MAX_LENGTH_EPOST_VARSLINGSTTITTEL) {
+            FieldValidationException fve = new FieldValidationException("Feltet epostVarslingstittel kan ikke inneholde mer enn " + MAX_LENGTH_SMS_VARSLINGSTEKST + " tegn.");
+            fve.addContext("rejectedFieldValueLength", epostVarslingstittel.length());
+            throw fve;
+        }
+        return epostVarslingstittel;
     }
 }

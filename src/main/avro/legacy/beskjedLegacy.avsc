@@ -47,6 +47,21 @@
                "items": "string"
             },
             "default": []
+        },
+        {
+            "name": "epostVarslingstekst",
+            "type": ["null", "string"],
+            "default": null
+        },
+        {
+            "name": "epostVarslingstittel",
+            "type": ["null", "string"],
+            "default": null
+        },
+        {
+            "name": "smsVarslingstekst",
+            "type": ["null", "string"],
+            "default": null
         }
     ]
 }

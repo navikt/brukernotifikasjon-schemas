@@ -42,6 +42,24 @@ public class BeskjedInputAvroTest {
         assertThat(beskjed.getSynligFremTil(), is(nullValue()));
     }
 
+    @Test
+    void skalSetteNullSomDefaultverdiEpostVarslingstekst() {
+        BeskjedInput beskjed = getBeskjedWithDefaultValues();
+        assertThat(beskjed.getEpostVarslingstekst(), is(nullValue()));
+    }
+
+    @Test
+    void skalSetteNullSomDefaultverdiEpostVarslingstittel() {
+        BeskjedInput beskjed = getBeskjedWithDefaultValues();
+        assertThat(beskjed.getEpostVarslingstittel(), is(nullValue()));
+    }
+
+    @Test
+    void skalSetteNullSomDefaultverdiSmsVarslingstekst() {
+        BeskjedInput beskjed = getBeskjedWithDefaultValues();
+        assertThat(beskjed.getSmsVarslingstekst(), is(nullValue()));
+    }
+
     private BeskjedInput getBeskjedWithDefaultValues() {
         return BeskjedInput.newBuilder()
                 .setTidspunkt(LocalDateTime.now().toEpochSecond(ZoneOffset.UTC))
