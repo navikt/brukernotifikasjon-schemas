@@ -21,8 +21,8 @@ public class ValidationUtil {
     public static final int MAX_LENGTH_TEXT_OPPGAVE = 500;
     public static final int MAX_LENGTH_TEXT_INNBOKS = 500;
     public static final int MAX_LENGTH_SMS_VARSLINGSTEKST = 160;
-    public static final int MAX_LENGTH_EPOST_VARSLINGSTEKST = 10_000;
-    private static final int MAX_LENGTH_EPOST_VARSLINGSTTITTEL = 200;
+    public static final int MAX_LENGTH_EPOST_VARSLINGSTEKST = 4_000;
+    private static final int MAX_LENGTH_EPOST_VARSLINGSTTITTEL = 40;
     public static final int MAX_LENGTH_LINK = 200;
     public static final int MAX_LENGTH_GRUPPERINGSID = 100;
     public static final int MAX_LENGTH_EVENTID = 50;

@@ -162,7 +162,7 @@ public class InnboksInputBuilderTest {
 
     @Test
     void skalIkkeGodtaForLangEpostVarslingstekst() {
-        String tooLongEpostVarslingstekst = String.join("", Collections.nCopies(10_001, "1"));
+        String tooLongEpostVarslingstekst = String.join("", Collections.nCopies(4_001, "1"));
         InnboksInputBuilder builder = getBuilderWithDefaultValues().withEpostVarslingstekst(tooLongEpostVarslingstekst);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("epostVarslingstekst"));
@@ -188,7 +188,7 @@ public class InnboksInputBuilderTest {
 
     @Test
     void skalIkkeGodtaForLangEpostVarslingstittel() {
-        String tooLongEpostVarslingstittel = String.join("", Collections.nCopies(201, "1"));
+        String tooLongEpostVarslingstittel = String.join("", Collections.nCopies(41, "1"));
         InnboksInputBuilder builder = getBuilderWithDefaultValues().withEpostVarslingstittel(tooLongEpostVarslingstittel);
         FieldValidationException exceptionThrown = assertThrows(FieldValidationException.class, () -> builder.build());
         assertThat(exceptionThrown.getMessage(), containsString("epostVarslingstittel"));
