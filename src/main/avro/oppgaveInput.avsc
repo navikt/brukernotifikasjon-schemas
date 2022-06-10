@@ -5,13 +5,11 @@
     "fields": [
         {
             "name": "tidspunkt",
-            "type": "long",
-            "logicalType": "timestamp-millis"
+            "type": "long"
         },
         {
             "name": "synligFremTil",
             "type": ["null", "long"],
-            "logicalType": "timestamp-millis",
             "default": null
         },
         {
