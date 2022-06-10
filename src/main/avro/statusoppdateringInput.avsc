@@ -5,8 +5,7 @@
     "fields": [
         {
             "name": "tidspunkt",
-            "type": "long",
-            "logicalType": "timestamp-millis"
+            "type": "long"
         },
         {
             "name": "link",
