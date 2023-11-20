@@ -10,13 +10,23 @@ interface DependencyGroup {
     }
 }
 
-object Kotlin {
-    const val version = "1.8.21"
+object Avro: DependencyGroup {
+    override val groupId = "org.apache.avro"
+    override val version = "1.11.3"
+
+    val avro = dependency("avro")
 }
 
 object AvroPlugin {
     const val id = "com.github.davidmc24.gradle.plugin.avro"
     const val version = "1.9.1"
+}
+
+object Hamcrest: DependencyGroup {
+    override val groupId = "org.hamcrest"
+    override val version = "2.2"
+
+    val hamcrest = dependency("hamcrest")
 }
 
 object Junit: DependencyGroup {
@@ -25,21 +35,10 @@ object Junit: DependencyGroup {
 
     val api = dependency("junit-jupiter-api")
     val engine = dependency("junit-jupiter-engine")
-    val params = dependency("junit-jupiter-params")
 }
 
-object Avro: DependencyGroup {
-    override val groupId = "org.apache.avro"
-    override val version = "1.11.0"
-
-    val avro = dependency("avro")
-}
-
-object Hamcrest: DependencyGroup {
-    override val groupId = "org.hamcrest"
-    override val version = "2.2"
-
-    val hamcrest = dependency("hamcrest")
+object Kotlin {
+    const val version = "1.8.21"
 }
 
 
