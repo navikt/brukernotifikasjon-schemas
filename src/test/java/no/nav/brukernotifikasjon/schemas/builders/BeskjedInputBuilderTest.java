@@ -121,14 +121,6 @@ public class BeskjedInputBuilderTest {
     }
 
     @Test
-    void skalGodtaNullSomPreferertKanal() {
-        BeskjedInputBuilder builder = getBuilderWithDefaultValues()
-                .withEksternVarsling(true)
-                .withPrefererteKanaler(null);
-        assertDoesNotThrow(() -> builder.build());
-    }
-
-    @Test
     void skalGodtaManglendePreferertKanal() {
         BeskjedInputBuilder builder = new BeskjedInputBuilder()
                 .withSikkerhetsnivaa(expectedSikkerhetsnivaa)

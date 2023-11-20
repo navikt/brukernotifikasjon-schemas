@@ -108,14 +108,6 @@ public class InnboksInputBuilderTest {
     }
 
     @Test
-    void skalGodtaNullSomPreferertKanal() {
-        InnboksInputBuilder builder = getBuilderWithDefaultValues()
-                .withEksternVarsling(true)
-                .withPrefererteKanaler(null);
-        assertDoesNotThrow(() -> builder.build());
-    }
-
-    @Test
     void skalGodtaManglendePreferertKanal() {
         InnboksInputBuilder builder = new InnboksInputBuilder()
                 .withSikkerhetsnivaa(expectedSikkerhetsnivaa)

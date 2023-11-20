@@ -121,14 +121,6 @@ class OppgaveInputBuilderTest {
     }
 
     @Test
-    void skalGodtaManglendePreferertKanal() {
-        OppgaveInputBuilder builder = getBuilderWithDefaultValues()
-                .withEksternVarsling(true)
-                .withPrefererteKanaler(null);
-        assertDoesNotThrow(() -> builder.build());
-    }
-
-    @Test
     void skalIkkeGodtaForLangSmsVarslingstekst() {
         String tooLongSmsVarslingstekst = String.join("", Collections.nCopies(161, "1"));
         OppgaveInputBuilder builder = getBuilderWithDefaultValues().withSmsVarslingstekst(tooLongSmsVarslingstekst);

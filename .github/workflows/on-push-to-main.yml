@@ -11,31 +11,12 @@ jobs:
     steps:
 
       - name: Sjekk ut koden
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      - name: Kompiler
-        uses: navikt/pb-common-gh-actions/build@v1_java8
+      - name: Setup java
+        uses: actions/setup-java@v1
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          java-version: '17.x'
 
-  release:
-    name: Create Release
-    needs: build-and-publish-on-master
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Set release tag
-        run: |
-          export TAG_NAME="1.$(TZ="Europe/Oslo" date +%Y.%m.%d-%H.%M)-$(echo $GITHUB_SHA | cut -c 1-12)"
-          echo "RELEASE_TAG=$TAG_NAME" >> $GITHUB_ENV
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@latest
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ env.RELEASE_TAG }}
-          release_name: ${{ env.RELEASE_TAG }}
-          draft: false
-          prerelease: false
+      - name: Bygg og kjør tester
+        run: ./gradlew build
