@@ -1,6 +1,6 @@
 {
     "type": "record",
-    "namespace": "no.nav.tms.brukernotifikasjon.schemas.input",
+    "namespace": "no.nav.brukernotifikasjon.schemas.input",
     "name": "DoneInput",
     "fields": [
         {
